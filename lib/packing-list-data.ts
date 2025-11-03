@@ -33,49 +33,49 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Documents', item_name: 'G6PD test results', quantity: 1, notes: 'Upload to intakeQ to prevent PT restrictions' },
   { category: 'Documents', item_name: 'Questionnaires from intakeQ', quantity: 1, notes: 'Complete all required questionnaires' },
   
-  // REQUIRED UNIFORMS - UTILITY (OCP)
-  { category: 'Required', item_name: 'Coyote brown boots', quantity: 1, notes: 'Recommended: 2 pairs', amazon_search: 'coyote+brown+military+boots' },
-  { category: 'Required', item_name: 'OCP pants', quantity: 2, notes: 'Sex specific, 4 recommended', amazon_search: 'ocp+pants' },
-  { category: 'Required', item_name: 'OCP blouse', quantity: 2, notes: 'Sex specific, 4 recommended', amazon_search: 'ocp+blouse+top' },
-  { category: 'Required', item_name: 'OCP patrol cap', quantity: 2, notes: '6-point and ball cap NOT authorized, 3 recommended', amazon_search: 'ocp+patrol+cap' },
-  { category: 'Required', item_name: 'Rigger belt (Tan 499)', quantity: 1, amazon_search: 'tan+499+rigger+belt' },
-  { category: 'Required', item_name: 'Blousing straps', quantity: 2, notes: '4 recommended', amazon_search: 'boot+blousing+straps' },
-  { category: 'Required', item_name: 'Coyote brown crew neck t-shirts', quantity: 5, notes: '7 recommended', amazon_search: 'coyote+brown+crew+neck+tshirt' },
-  { category: 'Required', item_name: 'Coyote brown or DLA green OCP socks', quantity: 5, notes: '7 recommended', amazon_search: 'coyote+brown+boot+socks' },
+  // REQUIRED UNIFORMS - UTILITY (OCP) - Purchase from AAFES only
+  { category: 'Required', item_name: 'Coyote brown boots', quantity: 1, notes: 'Recommended: 2 pairs - Purchase from AAFES' },
+  { category: 'Required', item_name: 'OCP pants', quantity: 2, notes: 'Sex specific, 4 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'OCP blouse', quantity: 2, notes: 'Sex specific, 4 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'OCP patrol cap', quantity: 2, notes: '6-point and ball cap NOT authorized, 3 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Rigger belt (Tan 499)', quantity: 1, notes: 'Purchase from AAFES' },
+  { category: 'Required', item_name: 'Blousing straps', quantity: 2, notes: '4 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Coyote brown crew neck t-shirts', quantity: 5, notes: '7 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Coyote brown or DLA green OCP socks', quantity: 5, notes: '7 recommended - Purchase from AAFES' },
   
-  // REQUIRED UNIFORMS - SERVICE DRESS (BLUES)
-  { category: 'Required', item_name: 'Black dress oxford shoes', quantity: 1, notes: 'Plain toe, no high heels', amazon_search: 'black+military+oxford+shoes' },
-  { category: 'Required', item_name: 'Officer service coat', quantity: 1, notes: 'Must have dark braid and epaulets', amazon_search: 'air+force+service+dress+coat' },
-  { category: 'Required', item_name: 'Blues pants/skirt', quantity: 2, notes: 'Wool or polyester with minimum 1 wool', amazon_search: 'air+force+blues+pants' },
-  { category: 'Required', item_name: 'Long sleeve blues shirt', quantity: 1, notes: '2 recommended', amazon_search: 'air+force+blues+shirt+long+sleeve' },
-  { category: 'Required', item_name: 'Short sleeve blues shirt', quantity: 1, notes: '2 recommended', amazon_search: 'air+force+blues+shirt+short+sleeve' },
-  { category: 'Required', item_name: 'Flight cap', quantity: 1, notes: 'Silver/blue braiding, sex specific', amazon_search: 'air+force+flight+cap' },
-  { category: 'Required', item_name: 'Blues necktie/tab', quantity: 1, notes: 'Sex specific', amazon_search: 'air+force+blues+tie' },
-  { category: 'Required', item_name: 'Blue belt with chrome buckle', quantity: 1, amazon_search: 'air+force+blues+belt' },
+  // REQUIRED UNIFORMS - SERVICE DRESS (BLUES) - Purchase from AAFES only
+  { category: 'Required', item_name: 'Black dress oxford shoes', quantity: 1, notes: 'Plain toe, no high heels - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Officer service coat', quantity: 1, notes: 'Must have dark braid and epaulets - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Blues pants/skirt', quantity: 2, notes: 'Wool or polyester with minimum 1 wool - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Long sleeve blues shirt', quantity: 1, notes: '2 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Short sleeve blues shirt', quantity: 1, notes: '2 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Flight cap', quantity: 1, notes: 'Silver/blue braiding, sex specific - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Blues necktie/tab', quantity: 1, notes: 'Sex specific - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Blue belt with chrome buckle', quantity: 1, notes: 'Purchase from AAFES' },
   { category: 'Required', item_name: 'White V-neck undershirts', quantity: 2, notes: '3 recommended', amazon_search: 'white+v+neck+undershirt' },
   { category: 'Required', item_name: 'Black dress socks', quantity: 2, notes: '4 recommended', amazon_search: 'black+dress+socks' },
-  { category: 'Required', item_name: 'Shirt garters', quantity: 1, amazon_search: 'military+shirt+garters' },
-  { category: 'Required', item_name: 'Lightweight blue jacket', quantity: 1, notes: 'May be embroidered', amazon_search: 'air+force+lightweight+jacket' },
+  { category: 'Required', item_name: 'Shirt garters', quantity: 1, notes: 'Purchase from AAFES', amazon_search: 'military+shirt+garters' },
+  { category: 'Required', item_name: 'Lightweight blue jacket', quantity: 1, notes: 'May be embroidered - Purchase from AAFES' },
   
-  // REQUIRED UNIFORMS - PT GEAR
+  // REQUIRED UNIFORMS - PT GEAR - Purchase from AAFES only
   { category: 'Required', item_name: 'Running shoes', quantity: 1, amazon_search: 'running+shoes' },
-  { category: 'Required', item_name: 'PT shorts', quantity: 3, notes: 'IAW USAF/USSF regs, 5 recommended', amazon_search: 'air+force+pt+shorts' },
-  { category: 'Required', item_name: 'PT shirts', quantity: 3, notes: 'IAW USAF/USSF regs, 5 recommended', amazon_search: 'air+force+pt+shirt' },
-  { category: 'Required', item_name: 'PT pants', quantity: 1, notes: 'Running suit or sweats, 2 recommended', amazon_search: 'air+force+pt+pants' },
-  { category: 'Required', item_name: 'PT jacket', quantity: 1, notes: 'Running suit or sweats, 2 recommended', amazon_search: 'air+force+pt+jacket' },
+  { category: 'Required', item_name: 'PT shorts', quantity: 3, notes: 'IAW USAF/USSF regs, 5 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'PT shirts', quantity: 3, notes: 'IAW USAF/USSF regs, 5 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'PT pants', quantity: 1, notes: 'Running suit or sweats, 2 recommended - Purchase from AAFES' },
+  { category: 'Required', item_name: 'PT jacket', quantity: 1, notes: 'Running suit or sweats, 2 recommended - Purchase from AAFES' },
   { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_search: 'white+athletic+socks' },
   
-  // REQUIRED ACCOUTREMENTS - AIR FORCE
-  { category: 'Required', item_name: 'Name tapes (1" wide)', quantity: 2, notes: 'Spice brown on OCP (or blue for USSF)', amazon_search: 'ocp+name+tape+custom' },
-  { category: 'Required', item_name: 'USAF/USSF service tapes (1" wide)', quantity: 2, notes: 'Spice brown (or blue for USSF)', amazon_search: 'usaf+service+tape+ocp' },
-  { category: 'Required', item_name: 'US Flag patch', quantity: 2, notes: 'Spice brown embroidered (full color for USSF)', amazon_search: 'ocp+us+flag+patch+spice+brown' },
-  { category: 'Required', item_name: 'Velcro rank insignia', quantity: 2, notes: 'Spice brown embroidered (blue for USSF)', amazon_search: 'velcro+military+rank+insignia' },
-  { category: 'Required', item_name: 'Blues name tag', quantity: 1, notes: 'Blue plastic', amazon_search: 'air+force+blues+name+tag' },
-  { category: 'Required', item_name: 'Service dress name tag', quantity: 1, notes: 'Silver metal', amazon_search: 'air+force+service+dress+name+tag+silver' },
-  { category: 'Required', item_name: 'US Officer lapel pins', quantity: 1, notes: 'Set of 2 for service coat', amazon_search: 'us+officer+lapel+pin+air+force' },
-  { category: 'Required', item_name: 'Metal rank insignia', quantity: 3, notes: 'For service coat epaulet and flight cap', amazon_search: 'air+force+metal+rank+insignia' },
-  { category: 'Required', item_name: 'Epaulet rank', quantity: 1, notes: 'Set of 2, sex specific', amazon_search: 'air+force+epaulet+rank' },
-  { category: 'Required', item_name: 'Ribbon rack', quantity: 1, amazon_search: 'air+force+ribbon+rack' },
+  // REQUIRED ACCOUTREMENTS - AIR FORCE - Purchase from AAFES only
+  { category: 'Required', item_name: 'Name tapes (1" wide)', quantity: 2, notes: 'Spice brown on OCP (or blue for USSF) - Purchase from AAFES' },
+  { category: 'Required', item_name: 'USAF/USSF service tapes (1" wide)', quantity: 2, notes: 'Spice brown (or blue for USSF) - Purchase from AAFES' },
+  { category: 'Required', item_name: 'US Flag patch', quantity: 2, notes: 'Spice brown embroidered (full color for USSF) - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Velcro rank insignia', quantity: 2, notes: 'Spice brown embroidered (blue for USSF) - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Blues name tag', quantity: 1, notes: 'Blue plastic - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Service dress name tag', quantity: 1, notes: 'Silver metal - Purchase from AAFES' },
+  { category: 'Required', item_name: 'US Officer lapel pins', quantity: 1, notes: 'Set of 2 for service coat - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Metal rank insignia', quantity: 3, notes: 'For service coat epaulet and flight cap - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Epaulet rank', quantity: 1, notes: 'Set of 2, sex specific - Purchase from AAFES' },
+  { category: 'Required', item_name: 'Ribbon rack', quantity: 1, notes: 'Purchase from AAFES' },
   
   // REQUIRED PERSONAL ITEMS
   { category: 'Required', item_name: 'Prescription medications', quantity: 1, notes: '90-day supply in original containers' },
@@ -103,6 +103,7 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Cash', quantity: 1, notes: 'At least $2,000 accessible, $65-75 exact for field meals' },
   
   // RECOMMENDED ITEMS
+  { category: 'Recommended', item_name: 'Rechargeable fan', quantity: 1, notes: 'USB or battery powered for dorm', amazon_search: 'rechargeable+usb+fan+portable' },
   { category: 'Recommended', item_name: 'Electrolytes', quantity: 1, notes: 'For hydration pack', amazon_search: 'electrolyte+powder+packets' },
   { category: 'Recommended', item_name: 'Laptop with accessories', quantity: 1, notes: 'Surge protector, CAC reader, headphones, waterproof case', amazon_search: 'laptop' },
   { category: 'Recommended', item_name: 'Printer (optional)', quantity: 1, notes: 'Check current policy', amazon_search: 'compact+printer' },
@@ -119,10 +120,10 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Recommended', item_name: 'Sunscreen', quantity: 1, notes: 'SPF 30+', amazon_search: 'sunscreen+spf+50' },
   { category: 'Recommended', item_name: 'Blister prevention', quantity: 1, notes: 'Moleskin or similar', amazon_search: 'moleskin+blister+prevention' },
   { category: 'Recommended', item_name: 'Pain relief medication', quantity: 1, notes: 'Over-the-counter (Motrin, Tylenol)', amazon_search: 'ibuprofen+travel' },
-  { category: 'Recommended', item_name: 'OCP fleece jacket', quantity: 1, notes: 'Coyote brown, for cold weather (not June-Sept)', amazon_search: 'ocp+fleece+jacket+coyote+brown' },
-  { category: 'Recommended', item_name: 'Watch cap', quantity: 1, notes: 'Black or coyote brown (not June-Sept)', amazon_search: 'watch+cap+coyote+brown' },
+  { category: 'Recommended', item_name: 'OCP fleece jacket', quantity: 1, notes: 'Coyote brown, for cold weather (not June-Sept) - Purchase from AAFES' },
+  { category: 'Recommended', item_name: 'Watch cap', quantity: 1, notes: 'Black or coyote brown (not June-Sept) - Purchase from AAFES' },
   { category: 'Recommended', item_name: 'Gloves', quantity: 2, notes: '1 warm pair, 1 work pair (not June-Sept)', amazon_search: 'tactical+gloves+coyote+brown' },
-  { category: 'Recommended', item_name: 'OCP rain gear', quantity: 1, notes: 'All-Purpose Environmental Clothing System', amazon_search: 'ocp+rain+gear+apecs' },
+  { category: 'Recommended', item_name: 'OCP rain gear', quantity: 1, notes: 'All-Purpose Environmental Clothing System - Purchase from AAFES' },
   { category: 'Recommended', item_name: 'Religious items', quantity: 1, notes: 'Faith books, prayer mats, rosary, etc.' },
 ]
 
