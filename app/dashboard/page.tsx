@@ -1,86 +1,55 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
 import { PackingItem, defaultOTSPackingList, getAmazonLink } from '@/lib/packing-list-data'
 
 export default function Dashboard() {
   const [items, setItems] = useState<PackingItem[]>([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState<string>('all')
-  const [user, setUser] = useState<any>(null)
-  const router = useRouter()
-  const supabase = createClient()
 
   useEffect(() => {
-    checkUser()
+    loadItems()
   }, [])
 
-  const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      router.push('/auth')
-      return
-    }
-    setUser(user)
-    await loadItems(user.id)
-  }
-
-  const loadItems = async (userId: string) => {
-    setLoading(true)
-    const { data, error } = await supabase
-      .from('packing_items')
-      .select('*')
-      .eq('user_id', userId)
-      .order('category', { ascending: true })
-
-    if (error) {
-      console.error('Error loading items:', error)
-    } else if (data && data.length === 0) {
-      // Initialize with default items
-      await initializeDefaultItems(userId)
+  const loadItems = () => {
+    const stored = localStorage.getItem('ots-packing-list')
+    if (stored) {
+      setItems(JSON.parse(stored))
     } else {
-      setItems(data || [])
+      // Initialize with default items
+      const initialItems = defaultOTSPackingList.map((item, index) => ({
+        ...item,
+        id: `item-${index}`,
+        is_packed: false
+      }))
+      setItems(initialItems)
+      localStorage.setItem('ots-packing-list', JSON.stringify(initialItems))
     }
     setLoading(false)
   }
 
-  const initializeDefaultItems = async (userId: string) => {
-    const itemsToInsert = defaultOTSPackingList.map(item => ({
-      ...item,
-      user_id: userId,
-      is_packed: false
-    }))
+  const togglePacked = (id: string, currentStatus: boolean) => {
+    const updatedItems = items.map(item =>
+      item.id === id ? { ...item, is_packed: !currentStatus } : item
+    )
+    setItems(updatedItems)
+    localStorage.setItem('ots-packing-list', JSON.stringify(updatedItems))
+  }
 
-    const { data, error } = await supabase
-      .from('packing_items')
-      .insert(itemsToInsert)
-      .select()
-
-    if (error) {
-      console.error('Error initializing items:', error)
-    } else {
-      setItems(data || [])
+  const resetList = () => {
+    if (confirm('Are you sure you want to reset your packing list? This will uncheck all items.')) {
+      const resetItems = items.map(item => ({ ...item, is_packed: false }))
+      setItems(resetItems)
+      localStorage.setItem('ots-packing-list', JSON.stringify(resetItems))
     }
   }
 
-  const togglePacked = async (id: string, currentStatus: boolean) => {
-    const { error } = await supabase
-      .from('packing_items')
-      .update({ is_packed: !currentStatus })
-      .eq('id', id)
-
-    if (!error) {
-      setItems(items.map(item =>
-        item.id === id ? { ...item, is_packed: !currentStatus } : item
-      ))
+  const clearData = () => {
+    if (confirm('Are you sure you want to clear all data? This will reset everything to default.')) {
+      localStorage.removeItem('ots-packing-list')
+      loadItems()
     }
-  }
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/auth')
   }
 
   const categories = Array.from(new Set(items.map(item => item.category)))
@@ -113,12 +82,20 @@ export default function Dashboard() {
               <h1 className="text-2xl font-bold text-gray-900">OTS Packing List</h1>
               <p className="text-sm text-gray-600">Officer Training School Preparation</p>
             </div>
-            <button
-              onClick={handleSignOut}
-              className="px-4 py-2 text-sm bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
-            >
-              Sign Out
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={resetList}
+                className="px-4 py-2 text-sm bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
+              >
+                Reset Checks
+              </button>
+              <button
+                onClick={clearData}
+                className="px-4 py-2 text-sm bg-red-100 hover:bg-red-200 text-red-700 rounded-md transition-colors"
+              >
+                Clear Data
+              </button>
+            </div>
           </div>
         </div>
       </header>
