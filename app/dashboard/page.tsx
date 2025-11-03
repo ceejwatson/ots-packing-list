@@ -1,12 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { PackingItem, defaultOTSPackingList, getAmazonLink } from '@/lib/packing-list-data'
+
+type TabType = 'Required' | 'Recommended' | 'Uniform'
 
 export default function Dashboard() {
   const [items, setItems] = useState<PackingItem[]>([])
   const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState<string>('all')
+  const [activeTab, setActiveTab] = useState<TabType>('Required')
+  const router = useRouter()
 
   useEffect(() => {
     loadItems()
@@ -52,21 +56,21 @@ export default function Dashboard() {
     }
   }
 
-  const categories = Array.from(new Set(items.map(item => item.category)))
-  const filteredItems = filter === 'all'
-    ? items
-    : items.filter(item => item.category === filter)
-
-  const packedCount = items.filter(item => item.is_packed).length
-  const totalCount = items.length
-  const progress = totalCount > 0 ? Math.round((packedCount / totalCount) * 100) : 0
+  const filteredItems = items.filter(item => item.category === activeTab)
+  const packedInCategory = filteredItems.filter(item => item.is_packed).length
+  const totalInCategory = filteredItems.length
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
         <div className="text-center">
+          <img 
+            src="/ots-shield.png" 
+            alt="OTS Shield" 
+            className="w-24 h-24 mx-auto mb-4 animate-pulse"
+          />
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className="mt-4 text-blue-100">Loading your packing list...</p>
+          <p className="mt-4 text-blue-100 font-semibold">Loading your packing list...</p>
         </div>
       </div>
     )
@@ -74,16 +78,17 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-      {/* Header with Air Force branding */}
+      {/* Header with OTS Shield */}
       <header className="bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="text-center sm:text-left">
-              <div className="flex items-center gap-3 justify-center sm:justify-start">
-                {/* OTS Logo placeholder - replace with actual logo */}
-                <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center font-bold text-blue-900 text-xl border-4 border-blue-700">
-                  OTS
-                </div>
+              <div className="flex items-center gap-4 justify-center sm:justify-start">
+                <img 
+                  src="/ots-shield.png" 
+                  alt="OTS Shield" 
+                  className="w-20 h-20 object-contain"
+                />
                 <div>
                   <h1 className="text-3xl font-bold text-white tracking-wide">
                     OTS PACKING LIST
@@ -96,16 +101,22 @@ export default function Dashboard() {
             </div>
             <div className="flex gap-2">
               <button
+                onClick={() => router.push('/faqs')}
+                className="px-4 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
+              >
+                FAQs
+              </button>
+              <button
                 onClick={resetList}
                 className="px-4 py-2 text-sm bg-blue-700 hover:bg-blue-600 text-white rounded-md transition-colors border border-blue-500 font-semibold"
               >
-                Reset Checks
+                Reset
               </button>
               <button
                 onClick={clearData}
                 className="px-4 py-2 text-sm bg-red-700 hover:bg-red-600 text-white rounded-md transition-colors border border-red-500 font-semibold"
               >
-                Clear Data
+                Clear
               </button>
             </div>
           </div>
@@ -114,50 +125,60 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Progress Bar with Air Force styling */}
-        <div className="bg-white rounded-lg shadow-xl p-6 mb-6 border-t-4 border-yellow-400">
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-lg font-bold text-blue-900 uppercase tracking-wide">Mission Progress</h2>
-            <span className="text-3xl font-bold text-blue-900">{progress}%</span>
-          </div>
-          <div className="w-full bg-blue-200 rounded-full h-6 shadow-inner">
-            <div
-              className="bg-gradient-to-r from-blue-600 to-blue-800 h-6 rounded-full transition-all duration-300 shadow-lg flex items-center justify-end pr-2"
-              style={{ width: `${progress}%` }}
+        {/* Tabs */}
+        <div className="bg-white rounded-t-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
+          <div className="flex border-b-2 border-blue-200">
+            <button
+              onClick={() => setActiveTab('Required')}
+              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors ${
+                activeTab === 'Required'
+                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
+                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+              }`}
             >
-              {progress > 10 && (
-                <span className="text-xs font-bold text-white">{progress}%</span>
-              )}
+              Required ({items.filter(i => i.category === 'Required' && i.is_packed).length}/{items.filter(i => i.category === 'Required').length})
+            </button>
+            <button
+              onClick={() => setActiveTab('Recommended')}
+              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors ${
+                activeTab === 'Recommended'
+                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
+                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+              }`}
+            >
+              Recommended ({items.filter(i => i.category === 'Recommended' && i.is_packed).length}/{items.filter(i => i.category === 'Recommended').length})
+            </button>
+            <button
+              onClick={() => setActiveTab('Uniform')}
+              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors ${
+                activeTab === 'Uniform'
+                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
+                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+              }`}
+            >
+              Uniform ({items.filter(i => i.category === 'Uniform' && i.is_packed).length}/{items.filter(i => i.category === 'Uniform').length})
+            </button>
+          </div>
+
+          {/* Category Info */}
+          <div className="bg-blue-50 px-6 py-3 border-b-2 border-blue-200">
+            <div className="flex justify-between items-center">
+              <p className="text-sm font-semibold text-blue-900">
+                {activeTab === 'Required' && '✓ Essential items you MUST bring to OTS'}
+                {activeTab === 'Recommended' && '★ Highly suggested items for success at OTS'}
+                {activeTab === 'Uniform' && '⚡ Uniform items (most will be issued)'}
+              </p>
+              <p className="text-sm font-bold text-blue-700">
+                {packedInCategory}/{totalInCategory} packed
+              </p>
             </div>
           </div>
-          <p className="text-sm text-blue-700 mt-3 font-semibold">
-            {packedCount} of {totalCount} items packed • {totalCount - packedCount} remaining
-          </p>
-        </div>
 
-        {/* Filter */}
-        <div className="bg-white rounded-lg shadow-xl p-4 mb-6 border-l-4 border-yellow-400">
-          <label className="block text-sm font-bold text-blue-900 mb-2 uppercase tracking-wide">
-            Filter by Category
-          </label>
-          <select
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            className="w-full sm:w-auto px-4 py-2 border-2 border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-white text-blue-900 font-semibold"
-          >
-            <option value="all">All Categories</option>
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* Packing List */}
-        <div className="bg-white rounded-lg shadow-xl overflow-hidden border-t-4 border-blue-700">
-          <div className="divide-y divide-blue-100">
+          {/* Packing List */}
+          <div className="divide-y divide-blue-100 max-h-[600px] overflow-y-auto">
             {filteredItems.length === 0 ? (
               <div className="p-8 text-center text-blue-600 font-semibold">
-                No items found
+                No items in this category
               </div>
             ) : (
               filteredItems.map((item) => (
@@ -187,7 +208,7 @@ export default function Dashboard() {
                             {item.item_name}
                           </p>
                           <p className="text-xs text-blue-600 mt-1 font-medium">
-                            {item.category} • Qty: {item.quantity}
+                            Qty: {item.quantity}
                           </p>
                           {item.notes && (
                             <p className="text-xs text-blue-700 mt-1 italic bg-blue-50 inline-block px-2 py-1 rounded">
@@ -223,7 +244,7 @@ export default function Dashboard() {
             "Aim High... Fly-Fight-Win"
           </p>
           <p className="text-blue-300 text-xs mt-1">
-            Prepare for excellence at Maxwell AFB, Alabama
+            Maxwell AFB, Alabama • Prepare for Excellence
           </p>
         </div>
       </main>
