@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { PackingItem, defaultOTSPackingList, getAmazonLink } from '@/lib/packing-list-data'
 
-type TabType = 'Required' | 'Recommended' | 'Uniform'
+type TabType = 'Required' | 'Recommended'
 
 export default function Dashboard() {
   const [items, setItems] = useState<PackingItem[]>([])
@@ -94,7 +94,7 @@ export default function Dashboard() {
                     OTS PACKING LIST
                   </h1>
                   <p className="text-sm text-blue-200 font-semibold uppercase tracking-wider">
-                    Officer Training School • U.S. Air Force
+                    Official Orientation Guide • Class 06-10-2025
                   </p>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function Dashboard() {
                   : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
               }`}
             >
-              Required ({items.filter(i => i.category === 'Required' && i.is_packed).length}/{items.filter(i => i.category === 'Required').length})
+              ✓ Required ({items.filter(i => i.category === 'Required' && i.is_packed).length}/{items.filter(i => i.category === 'Required').length})
             </button>
             <button
               onClick={() => setActiveTab('Recommended')}
@@ -146,17 +146,7 @@ export default function Dashboard() {
                   : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
               }`}
             >
-              Recommended ({items.filter(i => i.category === 'Recommended' && i.is_packed).length}/{items.filter(i => i.category === 'Recommended').length})
-            </button>
-            <button
-              onClick={() => setActiveTab('Uniform')}
-              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors ${
-                activeTab === 'Uniform'
-                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
-                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
-              }`}
-            >
-              Uniform ({items.filter(i => i.category === 'Uniform' && i.is_packed).length}/{items.filter(i => i.category === 'Uniform').length})
+              ★ Recommended ({items.filter(i => i.category === 'Recommended' && i.is_packed).length}/{items.filter(i => i.category === 'Recommended').length})
             </button>
           </div>
 
@@ -164,9 +154,8 @@ export default function Dashboard() {
           <div className="bg-blue-50 px-6 py-3 border-b-2 border-blue-200">
             <div className="flex justify-between items-center">
               <p className="text-sm font-semibold text-blue-900">
-                {activeTab === 'Required' && '✓ Essential items you MUST bring to OTS'}
-                {activeTab === 'Recommended' && '★ Highly suggested items for success at OTS'}
-                {activeTab === 'Uniform' && '⚡ Uniform items (most will be issued)'}
+                {activeTab === 'Required' && '✓ REQUIRED - Essential items from official OTS Orientation Guide'}
+                {activeTab === 'Recommended' && '★ RECOMMENDED - Helpful items to enhance your OTS experience'}
               </p>
               <p className="text-sm font-bold text-blue-700">
                 {packedInCategory}/{totalInCategory} packed
@@ -238,13 +227,30 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Important Notice */}
+        <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-md">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <h3 className="font-bold text-yellow-900 text-sm uppercase">Important Reminders</h3>
+              <ul className="text-xs text-yellow-800 mt-2 space-y-1">
+                <li>• <strong>Boots & Running Shoes</strong> must be broken in before arrival</li>
+                <li>• Bring <strong>90-day supply</strong> of all prescription medications</li>
+                <li>• Have <strong>$2,000+ accessible</strong> - pay delays are common</li>
+                <li>• Purchase uniforms from <strong>AAFES only</strong> to ensure compliance</li>
+                <li>• Complete all <strong>pre-course assignments</strong> 10 days before arrival</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         {/* Footer with Air Force motto */}
         <div className="mt-8 text-center">
           <p className="text-blue-200 text-sm font-semibold italic">
             "Aim High... Fly-Fight-Win"
           </p>
           <p className="text-blue-300 text-xs mt-1">
-            Maxwell AFB, Alabama • Prepare for Excellence
+            Maxwell AFB, Alabama • Class Start: 06-10-2025
           </p>
         </div>
       </main>
