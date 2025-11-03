@@ -79,17 +79,30 @@ export default function Dashboard() {
                     OTS PACKING LIST
                   </h1>
                   <p className="text-sm text-blue-200 font-semibold uppercase tracking-wider">
-                    Official Orientation Guide • Class 06-10-2025
+                    Official Orientation Guide
                   </p>
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => router.push('/faqs')}
-              className="px-6 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
-            >
-              FAQs
-            </button>
+            <div className="flex gap-2">
+              <a
+                href="/Orientation_Guide_06102025.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors font-bold flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Orientation Guide
+              </a>
+              <button
+                onClick={() => router.push('/faqs')}
+                className="px-4 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
+              >
+                FAQs
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -233,7 +246,7 @@ export default function Dashboard() {
             "Aim High... Fly-Fight-Win"
           </p>
           <p className="text-blue-300 text-xs mt-1">
-            Maxwell AFB, Alabama • Class Start: 06-10-2025
+            Maxwell AFB, Alabama
           </p>
         </div>
       </main>
