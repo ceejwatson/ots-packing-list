@@ -41,21 +41,6 @@ export default function Dashboard() {
     localStorage.setItem('ots-packing-list', JSON.stringify(updatedItems))
   }
 
-  const resetList = () => {
-    if (confirm('Are you sure you want to reset your packing list? This will uncheck all items.')) {
-      const resetItems = items.map(item => ({ ...item, is_packed: false }))
-      setItems(resetItems)
-      localStorage.setItem('ots-packing-list', JSON.stringify(resetItems))
-    }
-  }
-
-  const clearData = () => {
-    if (confirm('Are you sure you want to clear all data? This will reset everything to default.')) {
-      localStorage.removeItem('ots-packing-list')
-      loadItems()
-    }
-  }
-
   const filteredItems = items.filter(item => item.category === activeTab)
   const packedInCategory = filteredItems.filter(item => item.is_packed).length
   const totalInCategory = filteredItems.length
@@ -99,26 +84,12 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => router.push('/faqs')}
-                className="px-4 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
-              >
-                FAQs
-              </button>
-              <button
-                onClick={resetList}
-                className="px-4 py-2 text-sm bg-blue-700 hover:bg-blue-600 text-white rounded-md transition-colors border border-blue-500 font-semibold"
-              >
-                Reset
-              </button>
-              <button
-                onClick={clearData}
-                className="px-4 py-2 text-sm bg-red-700 hover:bg-red-600 text-white rounded-md transition-colors border border-red-500 font-semibold"
-              >
-                Clear
-              </button>
-            </div>
+            <button
+              onClick={() => router.push('/faqs')}
+              className="px-6 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
+            >
+              FAQs
+            </button>
           </div>
         </div>
       </header>
