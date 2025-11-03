@@ -109,3 +109,31 @@ Feel free to submit issues or pull requests to improve the packing list or add f
 ## License
 
 MIT
+
+## Amazon Integration
+
+The app includes "Buy on Amazon" buttons for purchasable items. 
+
+### Setting up Amazon Associates (Optional)
+
+If you want to earn affiliate commissions:
+
+1. Sign up for [Amazon Associates](https://affiliate-program.amazon.com)
+2. Get your Associate ID (e.g., `yourname-20`)
+3. Add it to your environment variables:
+   ```
+   NEXT_PUBLIC_AMAZON_ASSOCIATE_ID=yourname-20
+   ```
+4. Add the same variable to your Vercel deployment
+
+If you don't set up an Associate ID, the links will still work but without affiliate tracking.
+
+### Updating the Database
+
+If you already created your database before this update, you need to add the `amazon_search` column:
+
+```sql
+ALTER TABLE packing_items ADD COLUMN IF NOT EXISTS amazon_search TEXT;
+```
+
+Then delete your existing items in the app and they will be re-initialized with Amazon links.
