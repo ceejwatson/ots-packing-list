@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { PackingItem, defaultOTSPackingList, getAmazonLink } from '@/lib/packing-list-data'
 
-type TabType = 'Required' | 'Recommended'
+type TabType = 'Documents' | 'Required' | 'Recommended'
 
 export default function Dashboard() {
   const [items, setItems] = useState<PackingItem[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<TabType>('Required')
+  const [activeTab, setActiveTab] = useState<TabType>('Documents')
   const router = useRouter()
 
   useEffect(() => {
@@ -129,8 +129,18 @@ export default function Dashboard() {
         <div className="bg-white rounded-t-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
           <div className="flex border-b-2 border-blue-200">
             <button
+              onClick={() => setActiveTab('Documents')}
+              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors text-sm ${
+                activeTab === 'Documents'
+                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
+                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+              }`}
+            >
+              📄 Documents ({items.filter(i => i.category === 'Documents' && i.is_packed).length}/{items.filter(i => i.category === 'Documents').length})
+            </button>
+            <button
               onClick={() => setActiveTab('Required')}
-              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors ${
+              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors text-sm ${
                 activeTab === 'Required'
                   ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
                   : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
@@ -140,7 +150,7 @@ export default function Dashboard() {
             </button>
             <button
               onClick={() => setActiveTab('Recommended')}
-              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors ${
+              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors text-sm ${
                 activeTab === 'Recommended'
                   ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
                   : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
@@ -154,11 +164,12 @@ export default function Dashboard() {
           <div className="bg-blue-50 px-6 py-3 border-b-2 border-blue-200">
             <div className="flex justify-between items-center">
               <p className="text-sm font-semibold text-blue-900">
+                {activeTab === 'Documents' && '📄 DOCUMENTS - Required paperwork and medical records for in-processing'}
                 {activeTab === 'Required' && '✓ REQUIRED - Essential items from official OTS Orientation Guide'}
                 {activeTab === 'Recommended' && '★ RECOMMENDED - Helpful items to enhance your OTS experience'}
               </p>
               <p className="text-sm font-bold text-blue-700">
-                {packedInCategory}/{totalInCategory} packed
+                {packedInCategory}/{totalInCategory} complete
               </p>
             </div>
           </div>
@@ -234,6 +245,7 @@ export default function Dashboard() {
             <div>
               <h3 className="font-bold text-yellow-900 text-sm uppercase">Important Reminders</h3>
               <ul className="text-xs text-yellow-800 mt-2 space-y-1">
+                <li>• <strong>Documents:</strong> Upload medical records to intakeQ 14 days before arrival - DO NOT hand carry</li>
                 <li>• <strong>Boots & Running Shoes</strong> must be broken in before arrival</li>
                 <li>• Bring <strong>90-day supply</strong> of all prescription medications</li>
                 <li>• Have <strong>$2,000+ accessible</strong> - pay delays are common</li>

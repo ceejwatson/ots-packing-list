@@ -1,6 +1,6 @@
 export interface PackingItem {
   id?: string
-  category: 'Required' | 'Recommended'
+  category: 'Documents' | 'Required' | 'Recommended'
   item_name: string
   quantity: number
   is_packed: boolean
@@ -10,12 +10,20 @@ export interface PackingItem {
 
 export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   // REQUIRED DOCUMENTS & IDENTIFICATION
-  { category: 'Required', item_name: 'Two forms of government ID', quantity: 1, notes: 'Include Social Security card if no CAC' },
-  { category: 'Required', item_name: 'Five copies of orders', quantity: 5, notes: 'Plus amendments if applicable' },
-  { category: 'Required', item_name: 'Record of Emergency Data (vRED)', quantity: 1, notes: 'Certified within 12 months or DD Form 93' },
-  { category: 'Required', item_name: 'DD Form 2983', quantity: 1, notes: 'Prohibited Activities Acknowledgment' },
-  { category: 'Required', item_name: 'OTS Form 1', quantity: 1, notes: 'Questionnaire and Acknowledgment' },
-  { category: 'Required', item_name: 'SGLI Documentation', quantity: 1, notes: 'From MilConnect or SGLV 8286' },
+  { category: 'Documents', item_name: 'Two forms of government ID', quantity: 1, notes: 'Include Social Security card if no CAC' },
+  { category: 'Documents', item_name: 'Five copies of orders', quantity: 5, notes: 'Plus amendments if applicable' },
+  { category: 'Documents', item_name: 'Record of Emergency Data (vRED)', quantity: 1, notes: 'Certified within 12 months or DD Form 93' },
+  { category: 'Documents', item_name: 'DD Form 2983', quantity: 1, notes: 'Prohibited Activities Acknowledgment' },
+  { category: 'Documents', item_name: 'OTS Form 1', quantity: 1, notes: 'Questionnaire and Acknowledgment' },
+  { category: 'Documents', item_name: 'SGLI Documentation', quantity: 1, notes: 'From MilConnect or SGLV 8286' },
+  { category: 'Documents', item_name: 'AF Form 56', quantity: 1, notes: 'Application & Evaluation for Training (if applicable)' },
+  { category: 'Documents', item_name: 'DEERS Documents', quantity: 1, notes: 'Only if updates needed - marriage cert, birth cert, etc.' },
+  { category: 'Documents', item_name: 'Sister-Service Documents', quantity: 1, notes: 'DD Form 4 and DD Form 214 if prior Army/Navy/Marines' },
+  { category: 'Documents', item_name: 'Medical records uploaded to intakeQ', quantity: 1, notes: 'DO NOT hand carry - upload only' },
+  { category: 'Documents', item_name: 'Immunization records', quantity: 1, notes: 'Upload to intakeQ' },
+  { category: 'Documents', item_name: 'AF Form 422', quantity: 1, notes: 'Completed within last 12 months, upload to intakeQ' },
+  { category: 'Documents', item_name: 'Sickle Cell Trait (SCT) test results', quantity: 1, notes: 'Upload to intakeQ to prevent PT restrictions' },
+  { category: 'Documents', item_name: 'G6PD test results', quantity: 1, notes: 'Upload to intakeQ to prevent PT restrictions' },
   
   // REQUIRED UNIFORMS - UTILITY (OCP)
   { category: 'Required', item_name: 'Coyote brown boots', quantity: 1, notes: 'Must be broken in', amazon_search: 'coyote+brown+military+boots' },
