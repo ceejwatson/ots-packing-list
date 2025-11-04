@@ -408,14 +408,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Coyote brown crew neck t-shirts",
     quantity: 5,
     notes: "7 recommended",
-    aafes_only: true,
+    amazon_asin: "B014SECRHC",
   },
   {
     category: "Required",
     item_name: "Coyote brown or DLA green OCP socks",
     quantity: 5,
-    notes: "7 recommended",
-    aafes_only: true,
+    notes: "Best socks to have, life changer. Worth the money. 7 recommended",
+    amazon_asin: "B078SMZ7FQ",
   },
   {
     category: "Required",
