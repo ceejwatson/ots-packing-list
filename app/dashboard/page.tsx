@@ -210,7 +210,7 @@ export default function Dashboard() {
                               <img 
                                 src={item.image_url} 
                                 alt={item.item_name}
-                                className="w-12 h-12 object-contain rounded border border-gray-200 bg-white"
+                                className="w-20 h-20 object-contain rounded border border-gray-300 bg-white p-2 shadow-sm" onError={(e) => { e.currentTarget.style.display = 'none' }}
                               />
                             )}
                             <a
