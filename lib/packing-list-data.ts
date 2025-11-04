@@ -50,7 +50,7 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_asin: 'B0DCXN23RY', image_url: '/images/backpack.jpg' },
   { category: 'Required', item_name: 'Hydration pack (1.5L minimum)', quantity: 1, notes: 'Max 18"x12"x5", must have document pouch', amazon_asin: 'B0DZ6GB89C', image_url: '/images/hydration-pack.jpg' },
   { category: 'Required', item_name: 'Black ball point pens', quantity: 5, amazon_asin: 'B00006IE7K', image_url: '/images/black-pens.jpg' },
-  { category: 'Required', item_name: 'Notepaper/pocket notebook', quantity: 2, amazon_asin: 'B0010E6LAY' },
+  { category: 'Required', item_name: 'Notepaper/pocket notebook', quantity: 2, amazon_asin: 'B00BQM0UEM', image_url: '/images/notebook.jpg' },
   { category: 'Required', item_name: 'Duffel bag', quantity: 1, notes: 'For field deployment', amazon_asin: 'B0CGJWKDPP' },
   { category: 'Required', item_name: 'Towels and washcloths', quantity: 1, notes: 'No wider than 24" x 44", includes washcloths', amazon_asin: 'B0B2X5KRDM', image_url: '/images/washcloth.jpg' },
   { category: 'Required', item_name: 'Wristwatch', quantity: 1, notes: 'Smart watches authorized with restrictions', amazon_asin: 'B007RWZHXO', image_url: '/images/watch.jpg' },
