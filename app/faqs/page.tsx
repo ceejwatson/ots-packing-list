@@ -1,103 +1,122 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface FAQ {
-  question: string
-  answer: string
+  question: string;
+  answer: string;
 }
 
 const faqs: FAQ[] = [
   {
     question: "How long is OTS?",
-    answer: "Officer Training School is currently an 8-week program (as of 2024). However, this can change, so verify with your recruiter for the most current information."
+    answer:
+      "Officer Training School is currently an 8-week program (as of 2024). However, this can change, so verify with your recruiter for the most current information.",
   },
   {
     question: "Where is OTS located?",
-    answer: "OTS is located at Maxwell Air Force Base in Montgomery, Alabama."
+    answer: "OTS is located at Maxwell Air Force Base in Montgomery, Alabama.",
   },
   {
     question: "What should I bring on Day 1?",
-    answer: "Wear a conservative business suit and dress shoes. Bring all required documents (ID, birth certificate, Social Security card, orders), your medications, and basic toiletries. Everything else can be brought in your luggage."
+    answer:
+      "Wear a conservative business suit and dress shoes. Bring all required documents (ID, birth certificate, Social Security card, orders), your medications, and basic toiletries. Everything else can be brought in your luggage.",
   },
   {
     question: "Will I get uniforms at OTS?",
-    answer: "Yes, you will be issued OCPs (Operational Camouflage Pattern uniforms), PT gear, and other necessary uniforms. However, if you already have properly fitted military uniforms, you may bring them."
+    answer:
+      "Yes, you will be issued OCPs (Operational Camouflage Pattern uniforms), PT gear, and other necessary uniforms. However, if you already have properly fitted military uniforms, you may bring them.",
   },
   {
     question: "Can I bring my cell phone?",
-    answer: "Yes, but usage is extremely limited. You'll have restricted access, typically only during designated times and on weekends. Don't expect regular use during training."
+    answer:
+      "Yes, but usage is extremely limited. You'll have restricted access, typically only during designated times and on weekends. Don't expect regular use during training.",
   },
   {
     question: "How much money should I bring?",
-    answer: "$200-$300 in cash is recommended, plus a debit/credit card. You'll need money for haircuts, toiletries, and other personal items from the BX (Base Exchange)."
+    answer:
+      "$200-$300 in cash is recommended, plus a debit/credit card. You'll need money for haircuts, toiletries, and other personal items from the BX (Base Exchange).",
   },
   {
     question: "What about running shoes?",
-    answer: "Bring 2 pairs of running shoes that are already broken in. Do NOT show up with brand new shoes - this will lead to injuries. Start breaking them in weeks before you arrive."
+    answer:
+      "Bring 2 pairs of running shoes that are already broken in. Do NOT show up with brand new shoes - this will lead to injuries. Start breaking them in weeks before you arrive.",
   },
   {
     question: "Can I bring my laptop?",
-    answer: "Yes, laptops are MANDATORY. Mac computers are allowed. You will use your laptop for coursework, studying, and completing assignments throughout OTS."
+    answer:
+      "Yes, laptops are MANDATORY. Mac computers are allowed. You will use your laptop for coursework, studying, and completing assignments throughout OTS.",
   },
   {
     question: "What about prescription medications?",
-    answer: "You MUST bring all prescription medications in their original containers with documentation from your doctor. Bring enough to last the entire course plus extra."
+    answer:
+      "You MUST bring all prescription medications in their original containers with documentation from your doctor. Bring enough to last the entire course plus extra.",
   },
   {
     question: "Do I need military-specific glasses?",
-    answer: "If you wear glasses, bring military-approved frames (conservative, solid color). You'll need both prescription glasses and the capability to do PT in them or with contacts."
+    answer:
+      "If you wear glasses, bring military-approved frames (conservative, solid color). You'll need both prescription glasses and the capability to do PT in them or with contacts.",
   },
   {
     question: "How should I prepare physically?",
-    answer: "Focus on running, push-ups, and sit-ups. The PT test includes a 1.5-mile run, push-ups, and sit-ups. Aim to exceed minimums for your age group. Start training at least 2-3 months before."
+    answer:
+      "Focus on running, push-ups, and sit-ups. The PT test includes a 1.5-mile run, push-ups, and sit-ups. Aim to exceed minimums for your age group. Start training at least 2-3 months before.",
   },
   {
     question: "What's the daily schedule like?",
-    answer: "Wake up is at 4:30 AM. Days are packed with PT, academics, drill, inspections, and military training. Expect 14-16 hour days with minimal free time."
+    answer:
+      "Wake up is at 4:30 AM. Days are packed with PT, academics, drill, inspections, and military training. Expect 14-16 hour days with minimal free time.",
   },
   {
     question: "Can I receive mail/packages?",
-    answer: "Yes! Mail is a huge morale booster. You'll receive an address after arrival. Care packages are appreciated but keep them reasonable - space is limited."
+    answer:
+      "Yes! Mail is a huge morale booster. You'll receive an address after arrival. Care packages are appreciated but keep them reasonable - space is limited.",
   },
   {
     question: "What about haircuts?",
-    answer: "Males must maintain military hair standards (short). Females must ensure hair is within regulations (can't touch collar when in uniform). Barbershop is available on base."
+    answer:
+      "Males must maintain military hair standards (short). Females must ensure hair is within regulations (can't touch collar when in uniform). Barbershop is available on base.",
   },
   {
     question: "Will I have roommates?",
-    answer: "Yes, you can have up to 3 other roommates (4 people total per room). Privacy is limited, and you'll need to work together to maintain room standards."
+    answer:
+      "Yes, you can have up to 3 other roommates (4 people total per room). Privacy is limited, and you'll need to work together to maintain room standards.",
   },
   {
     question: "What happens if I get injured?",
-    answer: "Seek medical attention immediately. Depending on the injury, you may be set back to a later class to recover. Don't try to tough out injuries - this will make them worse."
+    answer:
+      "Seek medical attention immediately. Depending on the injury, you may be set back to a later class to recover. Don't try to tough out injuries - this will make them worse.",
   },
   {
     question: "Can I visit on weekends?",
-    answer: "Weekend liberty is earned about halfway through OTS after prop and wings. When granted, you may have off-base privileges. Family visits are possible but must be coordinated carefully."
+    answer:
+      "Weekend liberty is earned about halfway through OTS after prop and wings. When granted, you may have off-base privileges. Family visits are possible but must be coordinated carefully.",
   },
   {
     question: "What's the pass/fail rate?",
-    answer: "Most candidates who arrive prepared and motivated will graduate. The biggest reasons for elimination are honor violations, safety issues, medical problems, or failure to meet standards."
+    answer:
+      "Most candidates who arrive prepared and motivated will graduate. The biggest reasons for elimination are honor violations, safety issues, medical problems, or failure to meet standards.",
   },
   {
     question: "How can I best prepare mentally?",
-    answer: "Study Air Force knowledge (ranks, chain of command, core values). Practice stress management. Understand you'll be challenged physically, mentally, and emotionally. Maintain a positive attitude and help your classmates."
+    answer:
+      "Study Air Force knowledge (ranks, chain of command, core values). Practice stress management. Understand you'll be challenged physically, mentally, and emotionally. Maintain a positive attitude and help your classmates.",
   },
   {
     question: "What should I do in the weeks before OTS?",
-    answer: "Train physically, study AF knowledge, break in your running shoes, get your documents in order, inform your family of limited contact, and mentally prepare for a challenging but rewarding experience."
-  }
-]
+    answer:
+      "Train physically, study AF knowledge, break in your running shoes, get your documents in order, inform your family of limited contact, and mentally prepare for a challenging but rewarding experience.",
+  },
+];
 
 export default function FAQsPage() {
-  const router = useRouter()
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const router = useRouter();
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
@@ -107,9 +126,9 @@ export default function FAQsPage() {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="text-center sm:text-left">
               <div className="flex items-center gap-4 justify-center sm:justify-start">
-                <img 
-                  src="/ots-shield.png" 
-                  alt="OTS Shield" 
+                <img
+                  src="/ots-shield.png"
+                  alt="OTS Shield"
                   className="w-20 h-20 object-contain"
                 />
                 <div>
@@ -123,7 +142,7 @@ export default function FAQsPage() {
               </div>
             </div>
             <button
-              onClick={() => router.push('/dashboard')}
+              onClick={() => router.push("/dashboard")}
               className="px-6 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
             >
               Back to Packing List
@@ -156,7 +175,7 @@ export default function FAQsPage() {
                   </h3>
                   <svg
                     className={`w-5 h-5 text-blue-600 flex-shrink-0 transition-transform ${
-                      openIndex === index ? 'rotate-180' : ''
+                      openIndex === index ? "rotate-180" : ""
                     }`}
                     fill="none"
                     stroke="currentColor"
@@ -218,7 +237,8 @@ export default function FAQsPage() {
             </li>
           </ul>
           <p className="text-xs text-blue-600 mt-4 italic">
-            Always verify information with your recruiter and official sources. Requirements and policies can change.
+            Always verify information with your recruiter and official sources.
+            Requirements and policies can change.
           </p>
         </div>
 
@@ -227,11 +247,14 @@ export default function FAQsPage() {
           <p className="text-blue-200 text-sm font-semibold italic">
             "Aim High... Fly-Fight-Win"
           </p>
+          <p className="text-blue-200 text-sm font-semibold italic mt-2">
+            "ALWAYS WITH HONOR"
+          </p>
           <p className="text-blue-300 text-xs mt-1">
             Good luck at OTS, Future Officer!
           </p>
         </div>
       </main>
     </div>
-  )
+  );
 }
