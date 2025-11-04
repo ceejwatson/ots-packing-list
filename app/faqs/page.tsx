@@ -39,7 +39,7 @@ const faqs: FAQ[] = [
   },
   {
     question: "Can I bring my laptop?",
-    answer: "Check current policy with your recruiter. Policies can change, and some classes allow laptops while others don't. When in doubt, don't bring it initially."
+    answer: "Yes, laptops are MANDATORY. Mac computers are allowed. You will use your laptop for coursework, studying, and completing assignments throughout OTS."
   },
   {
     question: "What about prescription medications?",
@@ -55,7 +55,7 @@ const faqs: FAQ[] = [
   },
   {
     question: "What's the daily schedule like?",
-    answer: "Days start very early (often 5:00 AM) and are packed with PT, academics, drill, inspections, and military training. Expect 14-16 hour days with minimal free time."
+    answer: "Wake up is at 4:30 AM. Days are packed with PT, academics, drill, inspections, and military training. Expect 14-16 hour days with minimal free time."
   },
   {
     question: "Can I receive mail/packages?",
@@ -67,7 +67,7 @@ const faqs: FAQ[] = [
   },
   {
     question: "Will I have roommates?",
-    answer: "Yes, you'll typically share a room with 1-2 other officer trainees. Privacy is limited, and you'll need to work together to maintain room standards."
+    answer: "Yes, you can have up to 3 other roommates (4 people total per room). Privacy is limited, and you'll need to work together to maintain room standards."
   },
   {
     question: "What happens if I get injured?",
@@ -75,7 +75,7 @@ const faqs: FAQ[] = [
   },
   {
     question: "Can I visit on weekends?",
-    answer: "Weekend liberty is earned and depends on your flight's performance. When granted, you may have limited off-base privileges. Family visits are possible but coordinated carefully."
+    answer: "Weekend liberty is earned about halfway through OTS after prop and wings. When granted, you may have off-base privileges. Family visits are possible but must be coordinated carefully."
   },
   {
     question: "What's the pass/fail rate?",

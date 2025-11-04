@@ -201,11 +201,8 @@ export default function Dashboard() {
                           )}
                         </div>
                         {item.aafes_only ? (
-                          <div className="flex-shrink-0 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-md shadow-md flex items-center gap-1.5 border border-blue-800">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                            AAFES
+                          <div className="flex-shrink-0 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-md shadow-md border border-blue-800">
+                            Available at AAFES
                           </div>
                         ) : item.amazon_search ? (
                           <a
@@ -236,11 +233,12 @@ export default function Dashboard() {
             <div>
               <h3 className="font-bold text-yellow-900 text-sm uppercase">Important Reminders</h3>
               <ul className="text-xs text-yellow-800 mt-2 space-y-1">
+                <li>• <strong>Day 1 Arrival:</strong> Wear khakis, belt, solid color polo shirt, and shoes with laces tucked in</li>
                 <li>• <strong>Documents:</strong> Upload medical records to intakeQ 14 days before arrival - DO NOT hand carry</li>
                 <li>• <strong>Boots & Running Shoes</strong> must be broken in before arrival</li>
                 <li>• Bring <strong>90-day supply</strong> of all prescription medications</li>
                 <li>• Have <strong>$2,000+ accessible</strong> - pay delays are common</li>
-                <li>• Purchase uniforms from <strong>AAFES only</strong> to ensure compliance</li>
+                <li>• Purchase uniforms from <strong>AAFES only</strong> to ensure compliance (you can bring uniform items if you already have them)</li>
                 <li>• Complete all <strong>pre-course assignments</strong> 10 days before arrival</li>
               </ul>
             </div>
