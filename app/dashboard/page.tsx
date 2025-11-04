@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   const loadItems = () => {
     console.log('Loading items...');
-    const stored = localStorage.getItem('ots-packing-list-v2')
+    const stored = localStorage.getItem('ots-packing-list-v3')
     if (stored) {
       setItems(JSON.parse(stored))
     } else {
@@ -30,7 +30,7 @@ export default function Dashboard() {
       }))
       console.log('Initial items with images:', initialItems.filter(i => i.image_url).length);
       setItems(initialItems)
-      localStorage.setItem('ots-packing-list-v2', JSON.stringify(initialItems))
+      localStorage.setItem('ots-packing-list-v3', JSON.stringify(initialItems))
     }
     setLoading(false)
   }
@@ -40,7 +40,7 @@ export default function Dashboard() {
       item.id === id ? { ...item, is_packed: !currentStatus } : item
     )
     setItems(updatedItems)
-    localStorage.setItem('ots-packing-list-v2', JSON.stringify(updatedItems))
+    localStorage.setItem('ots-packing-list-v3', JSON.stringify(updatedItems))
   }
 
   const filteredItems = items.filter(item => item.category === activeTab)
@@ -116,30 +116,30 @@ export default function Dashboard() {
           <div className="flex border-b-2 border-blue-200">
             <button
               onClick={() => setActiveTab('Documents')}
-              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors text-sm ${
+              className={`flex-1 px-6 py-4 font-semibold tracking-tight transition-all duration-200 text-sm ${
                 activeTab === 'Documents'
-                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
-                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+                  ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
+                  : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
               }`}
             >
               📄 Documents ({items.filter(i => i.category === 'Documents' && i.is_packed).length}/{items.filter(i => i.category === 'Documents').length})
             </button>
             <button
               onClick={() => setActiveTab('Required')}
-              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors text-sm ${
+              className={`flex-1 px-6 py-4 font-semibold tracking-tight transition-all duration-200 text-sm ${
                 activeTab === 'Required'
-                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
-                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+                  ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
+                  : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
               }`}
             >
               ✓ Required ({items.filter(i => i.category === 'Required' && i.is_packed).length}/{items.filter(i => i.category === 'Required').length})
             </button>
             <button
               onClick={() => setActiveTab('Recommended')}
-              className={`flex-1 px-6 py-4 font-bold uppercase tracking-wide transition-colors text-sm ${
+              className={`flex-1 px-6 py-4 font-semibold tracking-tight transition-all duration-200 text-sm ${
                 activeTab === 'Recommended'
-                  ? 'bg-blue-700 text-white border-b-4 border-yellow-400'
-                  : 'bg-blue-100 text-blue-900 hover:bg-blue-200'
+                  ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
+                  : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
               }`}
             >
               ★ Recommended ({items.filter(i => i.category === 'Recommended' && i.is_packed).length}/{items.filter(i => i.category === 'Recommended').length})
@@ -203,7 +203,7 @@ export default function Dashboard() {
                           )}
                         </div>
                         {item.aafes_only ? (
-                          <div className="flex-shrink-0 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-md shadow-md border border-blue-800">
+                          <div className="flex-shrink-0 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-blue-600 to-blue-700 rounded-full shadow-lg ring-1 ring-blue-500/50">
                             Available at AAFES
                           </div>
                         ) : (item.amazon_search || item.amazon_asin) ? (
@@ -212,14 +212,14 @@ export default function Dashboard() {
                               <img 
                                 src={item.image_url} 
                                 alt={item.item_name}
-                                className="w-20 h-20 object-contain rounded border border-gray-300 bg-white p-2 shadow-sm" onError={(e) => { e.currentTarget.style.display = 'none' }}
+                                className="w-24 h-24 object-contain rounded-xl bg-gradient-to-br from-gray-50 to-white p-3 shadow-lg ring-1 ring-black/5 hover:shadow-xl transition-all duration-200" onError={(e) => { e.currentTarget.style.display = 'none' }}
                               />
                             )}
                             <a
                               href={getAmazonLink(item.amazon_search, item.amazon_asin)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex-shrink-0 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-md transition-all shadow-md hover:shadow-lg flex items-center gap-1.5 border border-orange-700"
+                              className="flex-shrink-0 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 active:scale-95"
                             >
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726-1.544.41-3.146.615-4.806.615-2.162 0-4.254-.353-6.27-1.057-2.014-.703-3.777-1.703-5.29-2.996-.214-.177-.293-.344-.24-.494zm23.11-3.45c-.28-.386-.85-.577-1.707-.577-.524 0-1.124.08-1.8.24-.677.162-1.18.327-1.512.495-.333.168-.5.41-.5.726 0 .224.08.407.24.548.16.14.362.21.606.21.177 0 .384-.046.618-.14.234-.095.47-.21.71-.348.506-.292 1.022-.438 1.546-.438.6 0 1.05.14 1.35.42.3.28.45.676.45 1.19 0 .262-.044.527-.13.79-.088.265-.223.57-.405.918-.16.302-.314.615-.46.94-.146.323-.22.62-.22.89 0 .364.13.648.39.854.26.205.596.308 1.008.308.266 0 .508-.036.725-.11.217-.073.422-.195.615-.365.193-.17.368-.39.525-.66.157-.27.288-.593.394-.97l.12-.42c.05-.178.106-.405.167-.68.06-.274.113-.555.16-.843.045-.288.068-.543.068-.766 0-.636-.18-1.14-.54-1.513z"/>
