@@ -185,19 +185,42 @@ export default function Dashboard() {
                   }`}
                 >
                   <div className="flex items-center gap-6">
-                    {/* Product Image - More Prominent */}
-                    {item.image_url && (
-                      <div className="flex-shrink-0">
-                        <img
-                          src={item.image_url}
-                          alt={item.item_name}
-                          className="w-32 h-32 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 hover:shadow-md hover:scale-105 transition-all duration-300"
-                          onError={(e) => {
-                            e.currentTarget.style.display = "none";
-                          }}
-                        />
-                      </div>
-                    )}
+                    {/* Product Image - More Prominent & Clickable */}
+                    {item.image_url &&
+                      (item.amazon_search || item.amazon_asin) && (
+                        <a
+                          href={getAmazonLink(
+                            item.amazon_search,
+                            item.amazon_asin,
+                          )}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 group cursor-pointer"
+                        >
+                          <img
+                            src={item.image_url}
+                            alt={item.item_name}
+                            className="w-32 h-32 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 group-hover:shadow-md group-hover:scale-105 group-hover:ring-orange-200 transition-all duration-300"
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        </a>
+                      )}
+                    {item.image_url &&
+                      !item.amazon_search &&
+                      !item.amazon_asin && (
+                        <div className="flex-shrink-0">
+                          <img
+                            src={item.image_url}
+                            alt={item.item_name}
+                            className="w-32 h-32 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5"
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        </div>
+                      )}
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
