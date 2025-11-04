@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { PackingItem, defaultOTSPackingList, getAmazonLink } from '@/lib/packing-list-data'
 
 type TabType = 'Documents' | 'Required' | 'Recommended'
@@ -51,8 +52,7 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
         <div className="text-center">
-          <img
-            src="/ots-shield.png"
+          <img src="/ots-shield.png" 
             alt="OTS Shield"
             className="w-24 h-24 mx-auto mb-4 animate-pulse"
           />
@@ -71,8 +71,7 @@ export default function Dashboard() {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="text-center sm:text-left">
               <div className="flex items-center gap-4 justify-center sm:justify-start">
-                <img
-                  src="/ots-shield.png"
+                <img src="/ots-shield.png" 
                   alt="OTS Shield"
                   className="w-20 h-20 object-contain"
                 />
