@@ -134,7 +134,7 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs */}
-        <div className="bg-white rounded-t-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
+        <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/30 overflow-hidden">
           <div className="flex border-b-2 border-blue-200">
             <button
               onClick={() => setActiveTab("Required")}
@@ -178,50 +178,58 @@ export default function Dashboard() {
               filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  className={`p-4 transition-colors ${
+                  className={`p-6 transition-all duration-300 border-b border-gray-100/50 last:border-0 ${
                     item.is_packed
-                      ? "bg-gradient-to-r from-green-50 to-emerald-50"
-                      : "hover:bg-blue-50"
+                      ? "bg-gradient-to-r from-green-50/50 to-emerald-50/50"
+                      : "hover:bg-gray-50/30"
                   }`}
                 >
-                  <div className="flex items-start">
+                  <div className="flex items-center gap-6">
+                    {/* Product Image - More Prominent */}
+                    {item.image_url && (
+                      <div className="flex-shrink-0">
+                        <img
+                          src={item.image_url}
+                          alt={item.item_name}
+                          className="w-32 h-32 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 hover:shadow-md hover:scale-105 transition-all duration-300"
+                          onError={(e) => {
+                            e.currentTarget.style.display = "none";
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1">
-                          <p
-                            className={`text-sm font-semibold ${
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 space-y-2">
+                          <h3
+                            className={`text-base font-semibold leading-tight ${
                               item.is_packed
-                                ? "line-through text-gray-500"
-                                : "text-blue-900"
+                                ? "line-through text-gray-400"
+                                : "text-gray-900"
                             }`}
                           >
                             {item.item_name}
-                          </p>
-                          <p className="text-xs text-blue-600 mt-1 font-medium">
-                            Qty: {item.quantity}
+                          </h3>
+                          <p className="text-sm text-gray-600 font-medium">
+                            Quantity: {item.quantity}
                           </p>
                           {item.notes && (
-                            <p className="text-xs text-blue-700 mt-1 italic bg-blue-50 inline-block px-2 py-1 rounded">
+                            <p className="text-sm text-blue-700 bg-blue-50/80 inline-block px-3 py-1.5 rounded-lg">
                               {item.notes}
                             </p>
                           )}
                         </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex-shrink-0">
                         {item.aafes_only ? (
-                          <div className="flex-shrink-0 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-blue-600 to-blue-700 rounded-full shadow-lg ring-1 ring-blue-500/50">
+                          <div className="px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-blue-600 to-blue-700 rounded-xl shadow-md ring-1 ring-blue-500/50">
                             Available at AAFES
                           </div>
                         ) : item.amazon_search || item.amazon_asin ? (
-                          <div className="flex items-center gap-2">
-                            {item.image_url && (
-                              <img
-                                src={item.image_url}
-                                alt={item.item_name}
-                                className="w-24 h-24 object-contain rounded-xl bg-gradient-to-br from-gray-50 to-white p-3 shadow-lg ring-1 ring-black/5 hover:shadow-xl transition-all duration-200"
-                                onError={(e) => {
-                                  e.currentTarget.style.display = "none";
-                                }}
-                              />
-                            )}
+                          <div className="flex items-center gap-3">
                             <a
                               href={getAmazonLink(
                                 item.amazon_search,
@@ -229,7 +237,7 @@ export default function Dashboard() {
                               )}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex-shrink-0 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2 active:scale-95"
+                              className="px-5 py-3 text-sm font-semibold text-white bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 active:scale-95"
                             >
                               <svg
                                 className="w-4 h-4"
