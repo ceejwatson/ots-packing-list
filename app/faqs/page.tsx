@@ -120,22 +120,22 @@ export default function FAQsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-      {/* Header */}
+      {/* Header - Mobile Optimized */}
       <header className="bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
             <div className="text-center sm:text-left">
-              <div className="flex items-center gap-4 justify-center sm:justify-start">
+              <div className="flex items-center gap-2 sm:gap-4 justify-center sm:justify-start">
                 <img
                   src="/ots-shield.png"
                   alt="OTS Shield"
-                  className="w-20 h-20 object-contain"
+                  className="w-12 h-12 sm:w-20 sm:h-20 object-contain"
                 />
                 <div>
-                  <h1 className="text-3xl font-bold text-white tracking-wide">
+                  <h1 className="text-xl sm:text-3xl font-bold text-white tracking-wide">
                     OTS FAQs
                   </h1>
-                  <p className="text-sm text-blue-200 font-semibold uppercase tracking-wider">
+                  <p className="text-xs sm:text-sm text-blue-200 font-semibold uppercase tracking-wider">
                     Frequently Asked Questions
                   </p>
                 </div>
@@ -143,7 +143,7 @@ export default function FAQsPage() {
             </div>
             <button
               onClick={() => router.push("/")}
-              className="px-6 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
+              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-blue-900 rounded-lg transition-colors font-bold touch-manipulation"
             >
               Back to Packing List
             </button>
@@ -151,30 +151,33 @@ export default function FAQsPage() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
-          <div className="p-6 bg-blue-50 border-b-2 border-blue-200">
-            <h2 className="text-xl font-bold text-blue-900 uppercase tracking-wide">
+      {/* Main Content - Mobile Optimized */}
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
+        <div className="bg-white rounded-xl sm:rounded-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
+          <div className="p-4 sm:p-6 bg-blue-50 border-b-2 border-blue-200">
+            <h2 className="text-base sm:text-xl font-bold text-blue-900 uppercase tracking-wide">
               Everything You Need to Know About OTS
             </h2>
-            <p className="text-sm text-blue-700 mt-2">
+            <p className="text-xs sm:text-sm text-blue-700 mt-1.5 sm:mt-2">
               Common questions answered by OTS graduates and official guidance
             </p>
           </div>
 
           <div className="divide-y divide-blue-100">
             {faqs.map((faq, index) => (
-              <div key={index} className="transition-colors hover:bg-blue-50">
+              <div
+                key={index}
+                className="transition-colors hover:bg-blue-50 active:bg-blue-100"
+              >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full text-left p-4 flex justify-between items-center gap-4"
+                  className="w-full text-left p-3 sm:p-4 flex justify-between items-center gap-3 sm:gap-4 touch-manipulation"
                 >
-                  <h3 className="text-sm font-bold text-blue-900 flex-1">
+                  <h3 className="text-xs sm:text-sm font-bold text-blue-900 flex-1">
                     {faq.question}
                   </h3>
                   <svg
-                    className={`w-5 h-5 text-blue-600 flex-shrink-0 transition-transform ${
+                    className={`w-4 h-4 sm:w-5 sm:h-5 text-blue-600 flex-shrink-0 transition-transform ${
                       openIndex === index ? "rotate-180" : ""
                     }`}
                     fill="none"
@@ -190,7 +193,7 @@ export default function FAQsPage() {
                   </svg>
                 </button>
                 {openIndex === index && (
-                  <div className="px-4 pb-4 text-sm text-blue-800 bg-blue-50">
+                  <div className="px-3 sm:px-4 pb-3 sm:pb-4 text-xs sm:text-sm text-blue-800 bg-blue-50 leading-relaxed">
                     {faq.answer}
                   </div>
                 )}
@@ -199,18 +202,18 @@ export default function FAQsPage() {
           </div>
         </div>
 
-        {/* Additional Resources */}
-        <div className="mt-8 bg-white rounded-lg shadow-xl border-l-4 border-yellow-400 p-6">
-          <h3 className="text-lg font-bold text-blue-900 uppercase tracking-wide mb-4">
+        {/* Additional Resources - Mobile Optimized */}
+        <div className="mt-4 sm:mt-8 bg-white rounded-xl sm:rounded-lg shadow-xl border-l-4 border-yellow-400 p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-bold text-blue-900 uppercase tracking-wide mb-3 sm:mb-4">
             Official Resources
           </h3>
-          <ul className="space-y-2">
+          <ul className="space-y-2 sm:space-y-2">
             <li>
               <a
                 href="https://www.airuniversity.af.edu/Holm-Center/OTS/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 font-semibold hover:underline"
+                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
               >
                 → Air University OTS Official Site
               </a>
@@ -220,7 +223,7 @@ export default function FAQsPage() {
                 href="https://www.airforce.com/training/military-training/ots/overview"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 font-semibold hover:underline"
+                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
               >
                 → AirForce.com OTS Overview
               </a>
@@ -230,24 +233,24 @@ export default function FAQsPage() {
                 href="https://www.afpc.af.mil/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 font-semibold hover:underline"
+                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
               >
                 → Air Force Personnel Center
               </a>
             </li>
           </ul>
-          <p className="text-xs text-blue-600 mt-4 italic">
+          <p className="text-xs text-blue-600 mt-3 sm:mt-4 italic leading-relaxed">
             Always verify information with your recruiter and official sources.
             Requirements and policies can change.
           </p>
         </div>
 
-        {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-blue-200 text-sm font-semibold italic">
+        {/* Footer - Mobile Optimized */}
+        <div className="mt-6 sm:mt-8 text-center pb-4">
+          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic">
             "Aim High... Fly-Fight-Win"
           </p>
-          <p className="text-blue-200 text-sm font-semibold italic mt-2">
+          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic mt-1.5 sm:mt-2">
             "ALWAYS WITH HONOR"
           </p>
           <p className="text-blue-300 text-xs mt-1">

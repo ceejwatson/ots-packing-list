@@ -77,36 +77,36 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-      {/* Header with OTS Shield - Sticky */}
+      {/* Header with OTS Shield - Sticky - Mobile Optimized */}
       <header className="sticky top-0 z-50 bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
             <div className="text-center sm:text-left">
-              <div className="flex items-center gap-4 justify-center sm:justify-start">
+              <div className="flex items-center gap-2 sm:gap-4 justify-center sm:justify-start">
                 <img
                   src="/ots-shield.png"
                   alt="OTS Shield"
-                  className="w-20 h-20 object-contain"
+                  className="w-12 h-12 sm:w-20 sm:h-20 object-contain"
                 />
                 <div>
-                  <h1 className="text-3xl font-bold text-white tracking-wide">
+                  <h1 className="text-xl sm:text-3xl font-bold text-white tracking-wide">
                     OTS PACKING LIST
                   </h1>
-                  <p className="text-sm text-blue-200 font-semibold uppercase tracking-wider">
+                  <p className="text-xs sm:text-sm text-blue-200 font-semibold uppercase tracking-wider">
                     Official Orientation Guide
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 w-full sm:w-auto">
               <a
                 href="/Orientation_Guide_06102025.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-md transition-colors font-bold flex items-center gap-2"
+                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-lg transition-colors font-bold flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
               >
                 <svg
-                  className="w-4 h-4"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -118,11 +118,12 @@ export default function Dashboard() {
                     d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-                Orientation Guide
+                <span className="hidden sm:inline">Orientation Guide</span>
+                <span className="sm:hidden">Guide</span>
               </a>
               <button
                 onClick={() => router.push("/faqs")}
-                className="px-4 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
+                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-blue-900 rounded-lg transition-colors font-bold touch-manipulation"
               >
                 FAQs
               </button>
@@ -132,60 +133,60 @@ export default function Dashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Tabs */}
-        <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/30 overflow-hidden">
+      <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
+        {/* Tabs - Mobile Optimized */}
+        <div className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200/30 overflow-hidden">
           <div className="flex border-b-2 border-blue-200">
             <button
               onClick={() => setActiveTab("Required")}
-              className={`flex-1 px-6 py-5 font-medium tracking-tight transition-all duration-200 text-base ${
+              className={`flex-1 px-2 sm:px-6 py-3 sm:py-5 font-medium tracking-tight transition-all duration-200 text-xs sm:text-base touch-manipulation ${
                 activeTab === "Required"
                   ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg"
-                  : "bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm"
+                  : "bg-white/50 text-blue-900 hover:bg-white/80 active:bg-white backdrop-blur-sm"
               }`}
             >
               Required
             </button>
             <button
               onClick={() => setActiveTab("Recommended")}
-              className={`flex-1 px-6 py-5 font-medium tracking-tight transition-all duration-200 text-base ${
+              className={`flex-1 px-2 sm:px-6 py-3 sm:py-5 font-medium tracking-tight transition-all duration-200 text-xs sm:text-base touch-manipulation ${
                 activeTab === "Recommended"
                   ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg"
-                  : "bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm"
+                  : "bg-white/50 text-blue-900 hover:bg-white/80 active:bg-white backdrop-blur-sm"
               }`}
             >
               Recommended
             </button>
             <button
               onClick={() => setActiveTab("Documents")}
-              className={`flex-1 px-6 py-5 font-medium tracking-tight transition-all duration-200 text-base ${
+              className={`flex-1 px-2 sm:px-6 py-3 sm:py-5 font-medium tracking-tight transition-all duration-200 text-xs sm:text-base touch-manipulation ${
                 activeTab === "Documents"
                   ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg"
-                  : "bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm"
+                  : "bg-white/50 text-blue-900 hover:bg-white/80 active:bg-white backdrop-blur-sm"
               }`}
             >
               Documents
             </button>
           </div>
 
-          {/* Packing List */}
+          {/* Packing List - Mobile Optimized */}
           <div className="divide-y divide-blue-100">
             {filteredItems.length === 0 ? (
-              <div className="p-8 text-center text-blue-600 font-semibold">
+              <div className="p-6 sm:p-8 text-center text-blue-600 font-semibold text-sm sm:text-base">
                 No items in this category
               </div>
             ) : (
               filteredItems.map((item) => (
                 <div
                   key={item.id}
-                  className={`p-6 transition-all duration-300 border-b border-gray-100/50 last:border-0 ${
+                  className={`p-3 sm:p-6 transition-all duration-300 border-b border-gray-100/50 last:border-0 ${
                     item.is_packed
                       ? "bg-gradient-to-r from-green-50/50 to-emerald-50/50"
-                      : "hover:bg-gray-50/30"
+                      : "hover:bg-gray-50/30 active:bg-gray-100/30"
                   }`}
                 >
-                  <div className="flex items-center gap-6">
-                    {/* Product Image - More Prominent & Clickable */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+                    {/* Product Image - Mobile & Desktop Optimized */}
                     {item.image_url &&
                       (item.amazon_search || item.amazon_asin) && (
                         <a
@@ -195,12 +196,12 @@ export default function Dashboard() {
                           )}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-shrink-0 group cursor-pointer"
+                          className="flex-shrink-0 group cursor-pointer mx-auto sm:mx-0"
                         >
                           <img
                             src={item.image_url}
                             alt={item.item_name}
-                            className="w-40 h-40 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 group-hover:shadow-md group-hover:scale-105 group-hover:ring-orange-200 transition-all duration-300"
+                            className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain rounded-xl sm:rounded-2xl bg-white p-3 sm:p-4 shadow-sm ring-1 ring-black/5 group-hover:shadow-md group-active:scale-95 sm:group-hover:scale-105 group-hover:ring-orange-200 transition-all duration-300"
                             onError={(e) => {
                               e.currentTarget.style.display = "none";
                             }}
@@ -210,11 +211,11 @@ export default function Dashboard() {
                     {item.image_url &&
                       !item.amazon_search &&
                       !item.amazon_asin && (
-                        <div className="flex-shrink-0">
+                        <div className="flex-shrink-0 mx-auto sm:mx-0">
                           <img
                             src={item.image_url}
                             alt={item.item_name}
-                            className="w-40 h-40 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5"
+                            className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain rounded-xl sm:rounded-2xl bg-white p-3 sm:p-4 shadow-sm ring-1 ring-black/5"
                             onError={(e) => {
                               e.currentTarget.style.display = "none";
                             }}
@@ -222,12 +223,12 @@ export default function Dashboard() {
                         </div>
                       )}
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 space-y-2">
+                    {/* Content - Mobile Optimized */}
+                    <div className="flex-1 min-w-0 w-full">
+                      <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
+                        <div className="flex-1 space-y-2 w-full">
                           <h3
-                            className={`text-base font-semibold leading-tight ${
+                            className={`text-sm sm:text-base font-semibold leading-tight ${
                               item.is_packed
                                 ? "line-through text-gray-400"
                                 : "text-gray-900"
@@ -235,24 +236,24 @@ export default function Dashboard() {
                           >
                             {item.item_name}
                           </h3>
-                          <p className="text-sm text-gray-600 font-medium">
+                          <p className="text-xs sm:text-sm text-gray-600 font-medium">
                             Quantity: {item.quantity}
                           </p>
                           {item.notes && (
-                            <p className="text-sm text-blue-700 bg-blue-50/80 inline-block px-3 py-1.5 rounded-lg">
+                            <p className="text-xs sm:text-sm text-blue-700 bg-blue-50/80 inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg">
                               {item.notes}
                             </p>
                           )}
                         </div>
 
-                        {/* Action Buttons */}
-                        <div className="flex-shrink-0">
+                        {/* Action Buttons - Mobile Optimized */}
+                        <div className="flex-shrink-0 w-full sm:w-auto">
                           {item.aafes_only ? (
-                            <div className="px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-blue-600 to-blue-700 rounded-xl shadow-md ring-1 ring-blue-500/50">
+                            <div className="w-full sm:w-auto text-center px-3 sm:px-4 py-2 sm:py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-blue-600 to-blue-700 rounded-lg sm:rounded-xl shadow-md ring-1 ring-blue-500/50">
                               Available at AAFES
                             </div>
                           ) : item.amazon_search || item.amazon_asin ? (
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
                               <a
                                 href={getAmazonLink(
                                   item.amazon_search,
@@ -260,10 +261,10 @@ export default function Dashboard() {
                                 )}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-5 py-3 text-sm font-semibold text-white bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 active:scale-95"
+                                className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 active:from-orange-700 active:to-orange-800 rounded-lg sm:rounded-xl transition-all duration-200 shadow-md hover:shadow-lg active:shadow flex items-center justify-center gap-2 active:scale-95 touch-manipulation"
                               >
                                 <svg
-                                  className="w-4 h-4"
+                                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                                   fill="currentColor"
                                   viewBox="0 0 24 24"
                                 >
@@ -283,15 +284,15 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Important Notice */}
-        <div className="mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-md">
-          <div className="flex items-start gap-3">
-            <span className="text-2xl">⚠️</span>
+        {/* Important Notice - Mobile Optimized */}
+        <div className="mt-4 sm:mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 rounded-r-lg shadow-md">
+          <div className="flex items-start gap-2 sm:gap-3">
+            <span className="text-xl sm:text-2xl">⚠️</span>
             <div>
-              <h3 className="font-bold text-yellow-900 text-sm uppercase">
+              <h3 className="font-bold text-yellow-900 text-xs sm:text-sm uppercase">
                 Important Reminders
               </h3>
-              <ul className="text-xs text-yellow-800 mt-2 space-y-1">
+              <ul className="text-xs text-yellow-800 mt-2 space-y-1.5 sm:space-y-1">
                 <li>
                   • <strong>Day 1 Arrival:</strong> Wear khakis, belt, solid
                   color polo shirt, and shoes with laces tucked in
@@ -330,12 +331,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Footer with Air Force motto */}
-        <div className="mt-8 text-center">
-          <p className="text-blue-200 text-sm font-semibold italic">
+        {/* Footer with Air Force motto - Mobile Optimized */}
+        <div className="mt-6 sm:mt-8 text-center pb-4">
+          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic">
             "Aim High... Fly-Fight-Win"
           </p>
-          <p className="text-blue-200 text-sm font-semibold italic mt-2">
+          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic mt-1.5 sm:mt-2">
             "ALWAYS WITH HONOR"
           </p>
           <p className="text-blue-300 text-xs mt-1">Maxwell AFB, Alabama</p>

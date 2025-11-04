@@ -140,15 +140,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // REQUIRED PERSONAL ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
   {
     category: "Required",
-    item_name: "AirPods Pro (3rd generation)",
-    quantity: 1,
-    notes:
-      "Lifesaver for snoring roommates, studying in classroom, and working out",
-    amazon_asin: "B0FQFB8FMG",
-    image_url: "/images/airpods-pro.jpg",
-  },
-  {
-    category: "Required",
     item_name: "Laptop",
     quantity: 1,
     amazon_asin: "B0FRMLQ9BF",
@@ -587,6 +578,15 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
 
   // RECOMMENDED ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
+  {
+    category: "Recommended",
+    item_name: "AirPods Pro (3rd generation)",
+    quantity: 1,
+    notes:
+      "Lifesaver for snoring roommates, studying in classroom, and working out",
+    amazon_asin: "B0FQFB8FMG",
+    image_url: "/images/airpods-pro.jpg",
+  },
   {
     category: "Recommended",
     item_name: "Rechargeable fan",
