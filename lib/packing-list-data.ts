@@ -48,7 +48,7 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Hard soap with case or shower gel', quantity: 1, amazon_search: 'Dove+Men+Care+Body+Wash' },
   { category: 'Required', item_name: 'Shampoo and conditioner', quantity: 1, amazon_search: 'Travel+Size+Shampoo+Conditioner+Set' },
   { category: 'Required', item_name: 'Personal hygiene items', quantity: 1, notes: 'Shaving, hair, feminine supplies for 60 days', amazon_search: 'Gillette+Fusion5+Razor+Shave+Gel' },
-  { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_asin: 'B0DD48HVXH', image_url: 'https://m.media-amazon.com/images/I/81yB6xeQQZL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_asin: 'B0DCXN23RY' },
   { category: 'Required', item_name: 'Hydration pack (1.5L minimum)', quantity: 1, notes: 'Max 18"x12"x5", must have document pouch', amazon_asin: 'B0DZ6GB89C', image_url: 'https://m.media-amazon.com/images/I/81v7fqMHQgL._AC_SL1500_.jpg' },
   { category: 'Required', item_name: 'Black ball point pens', quantity: 5, amazon_search: 'BIC+Round+Stic+Ball+Pen+Black' },
   { category: 'Required', item_name: 'Notepaper/pocket notebook', quantity: 2, amazon_search: 'Rite+in+the+Rain+Tactical+Pocket+Notebook' },
