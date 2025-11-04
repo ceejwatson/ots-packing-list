@@ -115,7 +115,6 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Recommended', item_name: 'Bug spray', quantity: 1, amazon_asin: 'B001ANQVYU' },
   { category: 'Recommended', item_name: 'Sunscreen', quantity: 1, notes: 'SPF 30+', amazon_asin: 'B00FRYUOM8' },
   { category: 'Recommended', item_name: 'Blister prevention', quantity: 1, notes: 'Moleskin or similar', amazon_asin: 'B002ZGIXL8' },
-  { category: 'Recommended', item_name: 'Pain relief medication', quantity: 1, notes: 'Over-the-counter (Motrin, Tylenol)', amazon_asin: 'B07YPG6DMB' },
   { category: 'Recommended', item_name: 'Gloves', quantity: 2, notes: '1 warm pair, 1 work pair (not June-Sept)', amazon_asin: 'B0BXVRW9XF' },
   { category: 'Recommended', item_name: 'Religious items', quantity: 1, notes: 'Faith books, prayer mats, rosary, etc.' },
 
