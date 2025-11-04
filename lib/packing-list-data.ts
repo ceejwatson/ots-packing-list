@@ -42,7 +42,7 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Black dress socks', quantity: 2, notes: '4 recommended', amazon_asin: 'B0D2P33BFC', image_url: '/images/dress-socks.jpg' },
   { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_asin: 'B07GXHQLX1', image_url: '/images/pt-socks.jpg' },
   { category: 'Required', item_name: 'Prescription medications', quantity: 1, notes: '90-day supply in original containers' },
-  { category: 'Required', item_name: 'Washcloth', quantity: 2, amazon_asin: 'B07B6GC5GY' },
+  { category: 'Required', item_name: 'Washcloth', quantity: 2, amazon_asin: 'B0B2X5KRDM' },
   { category: 'Required', item_name: 'Shower shoes/flip flops', quantity: 1, amazon_asin: 'B07FDB7GMZ' },
   { category: 'Required', item_name: 'Toiletry bag', quantity: 1, amazon_asin: 'B0747N45S5' },
   { category: 'Required', item_name: 'Hard soap with case or shower gel', quantity: 1, amazon_asin: 'B08PFGL5R4' },
