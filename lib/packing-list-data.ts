@@ -171,6 +171,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    item_name: "Coyote brown crew neck t-shirts",
+    quantity: 5,
+    notes: "Best to have, life changer. Worth the money. 7 recommended",
+    amazon_asin: "B014SECRHC",
+    image_url: "/images/ocp-tshirts.jpg",
+  },
+  {
+    category: "Required",
     item_name: "Black dress socks",
     quantity: 2,
     notes: "4 recommended",
@@ -184,6 +192,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     notes: "Per DAFI 36-2903, 7 recommended",
     amazon_asin: "B07GXHQLX1",
     image_url: "/images/pt-socks.jpg",
+  },
+  {
+    category: "Required",
+    item_name: "Coyote brown or DLA green OCP socks",
+    quantity: 5,
+    notes: "Best socks to have, life changer. Worth the money. 7 recommended",
+    amazon_asin: "B078SMZ7FQ",
+    image_url: "/images/ocp-socks.jpg",
   },
   {
     category: "Required",
@@ -402,20 +418,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 2,
     notes: "4 recommended",
     aafes_only: true,
-  },
-  {
-    category: "Required",
-    item_name: "Coyote brown crew neck t-shirts",
-    quantity: 5,
-    notes: "7 recommended",
-    amazon_asin: "B014SECRHC",
-  },
-  {
-    category: "Required",
-    item_name: "Coyote brown or DLA green OCP socks",
-    quantity: 5,
-    notes: "Best socks to have, life changer. Worth the money. 7 recommended",
-    amazon_asin: "B078SMZ7FQ",
   },
   {
     category: "Required",
