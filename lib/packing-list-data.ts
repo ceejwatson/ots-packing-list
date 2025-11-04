@@ -6,6 +6,7 @@ export interface PackingItem {
   is_packed: boolean
   notes?: string
   amazon_search?: string
+  amazon_asin?: string
   aafes_only?: boolean
 }
 
@@ -34,8 +35,8 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Documents', item_name: 'G6PD test results', quantity: 1, notes: 'Upload to intakeQ to prevent PT restrictions' },
   { category: 'Documents', item_name: 'Questionnaires from intakeQ', quantity: 1, notes: 'Complete all required questionnaires' },
 
-  // REQUIRED PERSONAL ITEMS (Non-AAFES items first)
-  { category: 'Required', item_name: 'Running shoes', quantity: 1, amazon_search: 'Brooks+Ghost+Running+Shoes' },
+  // REQUIRED PERSONAL ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
+  { category: 'Required', item_name: 'Running shoes', quantity: 1, amazon_asin: 'B0D43J3N8B' },
   { category: 'Required', item_name: 'White V-neck undershirts', quantity: 2, notes: '3 recommended', amazon_search: 'Hanes+Men+V-Neck+Undershirt+White' },
   { category: 'Required', item_name: 'Black dress socks', quantity: 2, notes: '4 recommended', amazon_search: 'Gold+Toe+Men+Dress+Socks+Black' },
   { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_search: 'Nike+Everyday+Cushion+Crew+Socks+White' },
@@ -46,15 +47,15 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Hard soap with case or shower gel', quantity: 1, amazon_search: 'Dove+Men+Care+Body+Wash' },
   { category: 'Required', item_name: 'Shampoo and conditioner', quantity: 1, amazon_search: 'Travel+Size+Shampoo+Conditioner+Set' },
   { category: 'Required', item_name: 'Personal hygiene items', quantity: 1, notes: 'Shaving, hair, feminine supplies for 60 days', amazon_search: 'Gillette+Fusion5+Razor+Shave+Gel' },
-  { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_search: '5.11+Rush+12+Tactical+Backpack+Black' },
-  { category: 'Required', item_name: 'Hydration pack (1.5L minimum)', quantity: 1, notes: 'Max 18"x12"x5", must have document pouch', amazon_search: 'CamelBak+M.U.L.E+Hydration+Pack' },
+  { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_asin: 'B0DD48HVXH' },
+  { category: 'Required', item_name: 'Hydration pack (1.5L minimum)', quantity: 1, notes: 'Max 18"x12"x5", must have document pouch', amazon_asin: 'B01N1UY2YM' },
   { category: 'Required', item_name: 'Black ball point pens', quantity: 5, amazon_search: 'BIC+Round+Stic+Ball+Pen+Black' },
   { category: 'Required', item_name: 'Notepaper/pocket notebook', quantity: 2, amazon_search: 'Rite+in+the+Rain+Tactical+Pocket+Notebook' },
   { category: 'Required', item_name: 'Duffel bag', quantity: 1, notes: 'For field deployment', amazon_search: 'Military+Tactical+Duffel+Bag+90L' },
   { category: 'Required', item_name: 'Towels', quantity: 2, notes: 'No wider than 24" x 44"', amazon_search: 'Cotton+Bath+Towel+24x48' },
-  { category: 'Required', item_name: 'Wristwatch', quantity: 1, notes: 'Smart watches authorized with restrictions', amazon_search: 'Casio+G-Shock+Military+Watch' },
+  { category: 'Required', item_name: 'Wristwatch', quantity: 1, notes: 'Smart watches authorized with restrictions', amazon_asin: 'B007RWZHXO' },
   { category: 'Required', item_name: 'Flashlight', quantity: 1, notes: 'Less than 5 inches long, extra batteries', amazon_search: 'Streamlight+MicroStream+USB+Flashlight' },
-  { category: 'Required', item_name: 'Eye protection (wrap-around)', quantity: 1, notes: 'Must have fully enclosed sides', amazon_search: 'Oakley+SI+Ballistic+M+Frame+3.0' },
+  { category: 'Required', item_name: 'Eye protection (wrap-around)', quantity: 1, notes: 'Must have fully enclosed sides', amazon_asin: 'B0DH4LH7YK' },
   { category: 'Required', item_name: 'Eyeglass strap', quantity: 1, notes: 'Required to secure glasses during field events', amazon_search: 'Chums+Classic+Eyewear+Retainer+Black' },
   { category: 'Required', item_name: 'Prescription eyeglasses', quantity: 2, notes: 'If needed, military-approved frames' },
   { category: 'Required', item_name: 'Combination lock', quantity: 1, amazon_search: 'Master+Lock+Combination+Padlock' },
@@ -97,10 +98,10 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Epaulet rank', quantity: 1, notes: 'Set of 2, sex specific', aafes_only: true },
   { category: 'Required', item_name: 'Ribbon rack', quantity: 1, aafes_only: true },
 
-  // RECOMMENDED ITEMS (Non-AAFES items first)
+  // RECOMMENDED ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
   { category: 'Recommended', item_name: 'Rechargeable fan', quantity: 1, notes: 'USB or battery powered for dorm', amazon_search: 'JISULIFE+Handheld+Fan+Rechargeable' },
-  { category: 'Recommended', item_name: 'Electrolytes', quantity: 1, notes: 'For hydration pack', amazon_search: 'Liquid+IV+Hydration+Multiplier+Packets' },
-  { category: 'Recommended', item_name: 'Laptop with accessories', quantity: 1, notes: 'Surge protector, CAC reader, headphones, waterproof case', amazon_search: 'Apple+MacBook+Air+M2' },
+  { category: 'Recommended', item_name: 'Electrolytes', quantity: 1, notes: 'For hydration pack', amazon_asin: 'B078XMP8KJ' },
+  { category: 'Recommended', item_name: 'Laptop with accessories', quantity: 1, notes: 'Surge protector, CAC reader, headphones, waterproof case', amazon_search: 'laptop+macbook+windows' },
   { category: 'Recommended', item_name: 'Printer (optional)', quantity: 1, notes: 'Check current policy', amazon_search: 'HP+DeskJet+Portable+Printer' },
   { category: 'Recommended', item_name: 'Printer paper', quantity: 1, amazon_search: 'HP+Printer+Paper+500+Sheets' },
   { category: 'Recommended', item_name: 'Laundry bag', quantity: 1, amazon_search: 'Heavy+Duty+Laundry+Bag+with+Strap' },
@@ -124,8 +125,19 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Recommended', item_name: 'OCP rain gear', quantity: 1, notes: 'All-Purpose Environmental Clothing System', aafes_only: true },
 ]
 
-// Helper function to generate Amazon link
-export function getAmazonLink(searchQuery: string): string {
+// Helper function to generate Amazon link - handles both ASIN and search
+export function getAmazonLink(searchQuery?: string, asin?: string): string {
   const associateId = process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_ID || 'your-associate-20'
-  return `https://www.amazon.com/s?k=${searchQuery}&tag=${associateId}`
+  
+  // If ASIN is provided, use direct product link (higher conversion)
+  if (asin) {
+    return `https://www.amazon.com/dp/${asin}?tag=${associateId}`
+  }
+  
+  // Otherwise use search link (more flexible)
+  if (searchQuery) {
+    return `https://www.amazon.com/s?k=${searchQuery}&tag=${associateId}`
+  }
+  
+  return ''
 }

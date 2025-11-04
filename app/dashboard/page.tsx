@@ -204,9 +204,9 @@ export default function Dashboard() {
                           <div className="flex-shrink-0 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-md shadow-md border border-blue-800">
                             Available at AAFES
                           </div>
-                        ) : item.amazon_search ? (
+                        ) : (item.amazon_search || item.amazon_asin) ? (
                           <a
-                            href={getAmazonLink(item.amazon_search)}
+                            href={getAmazonLink(item.amazon_search, item.amazon_asin)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-shrink-0 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-md transition-all shadow-md hover:shadow-lg flex items-center gap-1.5 border border-orange-700"
