@@ -140,6 +140,13 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // REQUIRED PERSONAL ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
   {
     category: "Required",
+    item_name: "Laptop",
+    quantity: 1,
+    amazon_asin: "B0FRMLQ9BF",
+    image_url: "/images/laptop.jpg",
+  },
+  {
+    category: "Required",
     item_name: "Running shoes",
     quantity: 1,
     amazon_asin: "B0D43J3N8B",
@@ -310,9 +317,17 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
-    item_name: "Laptop",
+    item_name: "Mesh laundry bag",
+    quantity: 2,
+    amazon_asin: "B07K6D3TY2",
+    image_url: "/images/laundry-bag.jpg",
+  },
+  {
+    category: "Required",
+    item_name: "Laundry detergent",
     quantity: 1,
-    amazon_search: "laptop+macbook+windows",
+    amazon_asin: "B0BJMV9BXJ",
+    image_url: "/images/tide-pods.jpg",
   },
   {
     category: "Required",
@@ -582,6 +597,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Recommended",
     item_name: "Surge protector power strip",
     quantity: 1,
+    notes: "In the field, limited outlets are available",
     amazon_asin: "B092J8LPWR",
     image_url: "/images/power-strip.jpg",
   },
@@ -589,7 +605,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Recommended",
     item_name: "Inkless portable printer",
     quantity: 1,
-    notes: "Check current policy",
     amazon_asin: "B0CYP944DP",
     image_url: "/images/portable-printer.jpg",
   },
@@ -599,13 +614,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     amazon_asin: "B01FV0F8H8",
     image_url: "/images/printer-paper.jpg",
-  },
-  {
-    category: "Recommended",
-    item_name: "Mesh laundry bag",
-    quantity: 2,
-    amazon_asin: "B07K6D3TY2",
-    image_url: "/images/laundry-bag.jpg",
   },
   {
     category: "Recommended",
@@ -620,13 +628,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 10,
     amazon_asin: "B07FP199PF",
     image_url: "/images/hangers.jpg",
-  },
-  {
-    category: "Recommended",
-    item_name: "Laundry detergent",
-    quantity: 1,
-    amazon_asin: "B0BJMV9BXJ",
-    image_url: "/images/tide-pods.jpg",
   },
   {
     category: "Recommended",
