@@ -142,7 +142,7 @@ export default function FAQsPage() {
               </div>
             </div>
             <button
-              onClick={() => router.push("/dashboard")}
+              onClick={() => router.push("/")}
               className="px-6 py-2 text-sm bg-yellow-500 hover:bg-yellow-400 text-blue-900 rounded-md transition-colors font-bold"
             >
               Back to Packing List
