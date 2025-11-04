@@ -316,11 +316,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
-    item_name: "Cell phone and charger",
-    quantity: 1,
-  },
-  {
-    category: "Required",
     item_name: "Mesh laundry bag",
     quantity: 2,
     amazon_asin: "B07K6D3TY2",
@@ -332,6 +327,11 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     amazon_asin: "B0BJMV9BXJ",
     image_url: "/images/tide-pods.jpg",
+  },
+  {
+    category: "Required",
+    item_name: "Cell phone and charger",
+    quantity: 1,
   },
   {
     category: "Required",

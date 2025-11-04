@@ -77,8 +77,8 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-      {/* Header with OTS Shield */}
-      <header className="bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400">
+      {/* Header with OTS Shield - Sticky */}
+      <header className="sticky top-0 z-50 bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400 backdrop-blur-md bg-opacity-95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="text-center sm:text-left">
@@ -169,7 +169,7 @@ export default function Dashboard() {
           </div>
 
           {/* Packing List */}
-          <div className="divide-y divide-blue-100 max-h-[600px] overflow-y-auto">
+          <div className="divide-y divide-blue-100">
             {filteredItems.length === 0 ? (
               <div className="p-8 text-center text-blue-600 font-semibold">
                 No items in this category
