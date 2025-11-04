@@ -7,6 +7,7 @@ export interface PackingItem {
   notes?: string
   amazon_search?: string
   amazon_asin?: string
+  image_url?: string
   aafes_only?: boolean
 }
 
@@ -36,10 +37,10 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Documents', item_name: 'Questionnaires from intakeQ', quantity: 1, notes: 'Complete all required questionnaires' },
 
   // REQUIRED PERSONAL ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
-  { category: 'Required', item_name: 'Running shoes', quantity: 1, amazon_asin: 'B0D43J3N8B' },
-  { category: 'Required', item_name: 'White V-neck undershirts', quantity: 2, notes: '3 recommended', amazon_search: 'Hanes+Men+V-Neck+Undershirt+White' },
-  { category: 'Required', item_name: 'Black dress socks', quantity: 2, notes: '4 recommended', amazon_search: 'Gold+Toe+Men+Dress+Socks+Black' },
-  { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_search: 'Nike+Everyday+Cushion+Crew+Socks+White' },
+  { category: 'Required', item_name: 'Running shoes', quantity: 1, amazon_asin: 'B0D43J3N8B', image_url: 'https://m.media-amazon.com/images/I/71HqxYt8EYL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'White V-neck undershirts', quantity: 2, notes: '3 recommended', amazon_asin: 'B004H4PUYQ', image_url: 'https://m.media-amazon.com/images/I/71cR7PoL8BL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'Black dress socks', quantity: 2, notes: '4 recommended', amazon_asin: 'B0D2P33BFC', image_url: 'https://m.media-amazon.com/images/I/71HCe7GZmEL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_asin: 'B07GXFTXRQ', image_url: 'https://m.media-amazon.com/images/I/61pqVE9NJWL._AC_SL1000_.jpg' },
   { category: 'Required', item_name: 'Prescription medications', quantity: 1, notes: '90-day supply in original containers' },
   { category: 'Required', item_name: 'Washcloth', quantity: 2, amazon_search: 'Amazon+Basics+Cotton+Washcloths' },
   { category: 'Required', item_name: 'Shower shoes/flip flops', quantity: 1, amazon_search: 'Adidas+Adilette+Shower+Slides' },
@@ -47,15 +48,15 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Hard soap with case or shower gel', quantity: 1, amazon_search: 'Dove+Men+Care+Body+Wash' },
   { category: 'Required', item_name: 'Shampoo and conditioner', quantity: 1, amazon_search: 'Travel+Size+Shampoo+Conditioner+Set' },
   { category: 'Required', item_name: 'Personal hygiene items', quantity: 1, notes: 'Shaving, hair, feminine supplies for 60 days', amazon_search: 'Gillette+Fusion5+Razor+Shave+Gel' },
-  { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_asin: 'B0DD48HVXH' },
-  { category: 'Required', item_name: 'Hydration pack (1.5L minimum)', quantity: 1, notes: 'Max 18"x12"x5", must have document pouch', amazon_asin: 'B0DZ6GB89C' },
+  { category: 'Required', item_name: 'Black backpack', quantity: 1, notes: 'IAW DAFI 36-2903, for 72-hour bag', amazon_asin: 'B0DD48HVXH', image_url: 'https://m.media-amazon.com/images/I/81yB6xeQQZL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'Hydration pack (1.5L minimum)', quantity: 1, notes: 'Max 18"x12"x5", must have document pouch', amazon_asin: 'B0DZ6GB89C', image_url: 'https://m.media-amazon.com/images/I/81v7fqMHQgL._AC_SL1500_.jpg' },
   { category: 'Required', item_name: 'Black ball point pens', quantity: 5, amazon_search: 'BIC+Round+Stic+Ball+Pen+Black' },
   { category: 'Required', item_name: 'Notepaper/pocket notebook', quantity: 2, amazon_search: 'Rite+in+the+Rain+Tactical+Pocket+Notebook' },
   { category: 'Required', item_name: 'Duffel bag', quantity: 1, notes: 'For field deployment', amazon_search: 'Military+Tactical+Duffel+Bag+90L' },
   { category: 'Required', item_name: 'Towels', quantity: 2, notes: 'No wider than 24" x 44"', amazon_search: 'Cotton+Bath+Towel+24x48' },
-  { category: 'Required', item_name: 'Wristwatch', quantity: 1, notes: 'Smart watches authorized with restrictions', amazon_asin: 'B007RWZHXO' },
-  { category: 'Required', item_name: 'Flashlight', quantity: 1, notes: 'Less than 5 inches long, extra batteries', amazon_search: 'Streamlight+MicroStream+USB+Flashlight' },
-  { category: 'Required', item_name: 'Eye protection (wrap-around)', quantity: 1, notes: 'Must have fully enclosed sides', amazon_asin: 'B0DH4LH7YK' },
+  { category: 'Required', item_name: 'Wristwatch', quantity: 1, notes: 'Smart watches authorized with restrictions', amazon_asin: 'B007RWZHXO', image_url: 'https://m.media-amazon.com/images/I/91WvnZ1g7WL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'Flashlight', quantity: 1, notes: 'Less than 5 inches long, extra batteries', amazon_asin: 'B077BHV22W', image_url: 'https://m.media-amazon.com/images/I/61m3rqHzjNL._AC_SL1500_.jpg' },
+  { category: 'Required', item_name: 'Eye protection (wrap-around)', quantity: 1, notes: 'Must have fully enclosed sides', amazon_asin: 'B0DH4LH7YK', image_url: 'https://m.media-amazon.com/images/I/51rfKDr90IL._AC_SL1000_.jpg' },
   { category: 'Required', item_name: 'Eyeglass strap', quantity: 1, notes: 'Required to secure glasses during field events', amazon_search: 'Chums+Classic+Eyewear+Retainer+Black' },
   { category: 'Required', item_name: 'Prescription eyeglasses', quantity: 2, notes: 'If needed, military-approved frames' },
   { category: 'Required', item_name: 'Combination lock', quantity: 1, amazon_search: 'Master+Lock+Combination+Padlock' },
@@ -100,7 +101,7 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
 
   // RECOMMENDED ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
   { category: 'Recommended', item_name: 'Rechargeable fan', quantity: 1, notes: 'USB or battery powered for dorm', amazon_search: 'JISULIFE+Handheld+Fan+Rechargeable' },
-  { category: 'Recommended', item_name: 'Electrolytes', quantity: 1, notes: 'For hydration pack', amazon_asin: 'B078XMP8KJ' },
+  { category: 'Recommended', item_name: 'Electrolytes', quantity: 1, notes: 'For hydration pack', amazon_asin: 'B078XMP8KJ', image_url: 'https://m.media-amazon.com/images/I/71dtcsybJFL._SL1500_.jpg' },
   { category: 'Recommended', item_name: 'Laptop with accessories', quantity: 1, notes: 'Surge protector, CAC reader, headphones, waterproof case', amazon_search: 'laptop+macbook+windows' },
   { category: 'Recommended', item_name: 'Printer (optional)', quantity: 1, notes: 'Check current policy', amazon_search: 'HP+DeskJet+Portable+Printer' },
   { category: 'Recommended', item_name: 'Printer paper', quantity: 1, amazon_search: 'HP+Printer+Paper+500+Sheets' },
