@@ -203,6 +203,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    item_name: "Blousing straps",
+    quantity: 2,
+    notes: "4 recommended",
+    amazon_asin: "B087B99F1G",
+    image_url: "/images/blousing-straps.jpg",
+  },
+  {
+    category: "Required",
     item_name: "Shower shoes/flip flops",
     quantity: 1,
     amazon_asin: "B07FDB7GMZ",
@@ -410,13 +418,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Required",
     item_name: "Rigger belt (Tan 499)",
     quantity: 1,
-    aafes_only: true,
-  },
-  {
-    category: "Required",
-    item_name: "Blousing straps",
-    quantity: 2,
-    notes: "4 recommended",
     aafes_only: true,
   },
   {

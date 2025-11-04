@@ -200,7 +200,7 @@ export default function Dashboard() {
                           <img
                             src={item.image_url}
                             alt={item.item_name}
-                            className="w-32 h-32 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 group-hover:shadow-md group-hover:scale-105 group-hover:ring-orange-200 transition-all duration-300"
+                            className="w-40 h-40 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5 group-hover:shadow-md group-hover:scale-105 group-hover:ring-orange-200 transition-all duration-300"
                             onError={(e) => {
                               e.currentTarget.style.display = "none";
                             }}
@@ -214,7 +214,7 @@ export default function Dashboard() {
                           <img
                             src={item.image_url}
                             alt={item.item_name}
-                            className="w-32 h-32 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5"
+                            className="w-40 h-40 object-contain rounded-2xl bg-white p-4 shadow-sm ring-1 ring-black/5"
                             onError={(e) => {
                               e.currentTarget.style.display = "none";
                             }}
