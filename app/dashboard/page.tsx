@@ -17,7 +17,8 @@ export default function Dashboard() {
   }, [])
 
   const loadItems = () => {
-    const stored = localStorage.getItem('ots-packing-list')
+    console.log('Loading items...');
+    const stored = localStorage.getItem('ots-packing-list-v2')
     if (stored) {
       setItems(JSON.parse(stored))
     } else {
@@ -27,8 +28,9 @@ export default function Dashboard() {
         id: `item-${index}`,
         is_packed: false
       }))
+      console.log('Initial items with images:', initialItems.filter(i => i.image_url).length);
       setItems(initialItems)
-      localStorage.setItem('ots-packing-list', JSON.stringify(initialItems))
+      localStorage.setItem('ots-packing-list-v2', JSON.stringify(initialItems))
     }
     setLoading(false)
   }
@@ -38,7 +40,7 @@ export default function Dashboard() {
       item.id === id ? { ...item, is_packed: !currentStatus } : item
     )
     setItems(updatedItems)
-    localStorage.setItem('ots-packing-list', JSON.stringify(updatedItems))
+    localStorage.setItem('ots-packing-list-v2', JSON.stringify(updatedItems))
   }
 
   const filteredItems = items.filter(item => item.category === activeTab)
