@@ -310,6 +310,12 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    item_name: "Laptop",
+    quantity: 1,
+    amazon_search: "laptop+macbook+windows",
+  },
+  {
+    category: "Required",
     item_name: "Cash",
     quantity: 1,
     notes: "At least $2,000 accessible, $65-75 exact for field meals",
@@ -566,14 +572,9 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
-    item_name: "Laptop with accessories",
-    quantity: 1,
-    amazon_search: "laptop+macbook+windows",
-  },
-  {
-    category: "Recommended",
     item_name: "CAC reader",
     quantity: 1,
+    notes: "For laptop access to military systems",
     amazon_asin: "B0040671WU",
     image_url: "/images/cac-reader.jpg",
   },
