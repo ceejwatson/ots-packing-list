@@ -9,7 +9,7 @@ type TabType = 'Documents' | 'Required' | 'Recommended'
 export default function Dashboard() {
   const [items, setItems] = useState<PackingItem[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<TabType>('Documents')
+  const [activeTab, setActiveTab] = useState<TabType>('Required')
   const router = useRouter()
 
   useEffect(() => {
@@ -115,51 +115,38 @@ export default function Dashboard() {
         <div className="bg-white rounded-t-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
           <div className="flex border-b-2 border-blue-200">
             <button
-              onClick={() => setActiveTab('Documents')}
-              className={`flex-1 px-6 py-4 font-semibold tracking-tight transition-all duration-200 text-sm ${
-                activeTab === 'Documents'
-                  ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
-                  : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
-              }`}
-            >
-              📄 Documents ({items.filter(i => i.category === 'Documents' && i.is_packed).length}/{items.filter(i => i.category === 'Documents').length})
-            </button>
-            <button
               onClick={() => setActiveTab('Required')}
-              className={`flex-1 px-6 py-4 font-semibold tracking-tight transition-all duration-200 text-sm ${
+              className={`flex-1 px-6 py-5 font-medium tracking-tight transition-all duration-200 text-base ${
                 activeTab === 'Required'
                   ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
                   : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
               }`}
             >
-              ✓ Required ({items.filter(i => i.category === 'Required' && i.is_packed).length}/{items.filter(i => i.category === 'Required').length})
+              Required
             </button>
             <button
               onClick={() => setActiveTab('Recommended')}
-              className={`flex-1 px-6 py-4 font-semibold tracking-tight transition-all duration-200 text-sm ${
+              className={`flex-1 px-6 py-5 font-medium tracking-tight transition-all duration-200 text-base ${
                 activeTab === 'Recommended'
                   ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
                   : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
               }`}
             >
-              ★ Recommended ({items.filter(i => i.category === 'Recommended' && i.is_packed).length}/{items.filter(i => i.category === 'Recommended').length})
+              Recommended
+            </button>
+            <button
+              onClick={() => setActiveTab('Documents')}
+              className={`flex-1 px-6 py-5 font-medium tracking-tight transition-all duration-200 text-base ${
+                activeTab === 'Documents'
+                  ? 'bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg'
+                  : 'bg-white/50 text-blue-900 hover:bg-white/80 backdrop-blur-sm'
+              }`}
+            >
+              Documents
             </button>
           </div>
 
-          {/* Category Info */}
-          <div className="bg-blue-50 px-6 py-3 border-b-2 border-blue-200">
-            <div className="flex justify-between items-center">
-              <p className="text-sm font-semibold text-blue-900">
-                {activeTab === 'Documents' && '📄 DOCUMENTS - Required paperwork and medical records for in-processing'}
-                {activeTab === 'Required' && '✓ REQUIRED - Essential items from official OTS Orientation Guide'}
-                {activeTab === 'Recommended' && '★ RECOMMENDED - Helpful items to enhance your OTS experience'}
-              </p>
-              <p className="text-sm font-bold text-blue-700">
-                {packedInCategory}/{totalInCategory} complete
-              </p>
-            </div>
-          </div>
-
+          
           {/* Packing List */}
           <div className="divide-y divide-blue-100 max-h-[600px] overflow-y-auto">
             {filteredItems.length === 0 ? (
@@ -176,13 +163,8 @@ export default function Dashboard() {
                       : 'hover:bg-blue-50'
                   }`}
                 >
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      checked={item.is_packed}
-                      onChange={() => togglePacked(item.id!, item.is_packed)}
-                      className="mt-1 h-5 w-5 text-blue-700 focus:ring-blue-600 border-blue-300 rounded cursor-pointer flex-shrink-0"
-                    />
+                  <div className="flex items-start">
+                    
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
