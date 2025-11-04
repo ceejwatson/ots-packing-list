@@ -40,7 +40,7 @@ export const defaultOTSPackingList: Omit<PackingItem, 'id' | 'is_packed'>[] = [
   { category: 'Required', item_name: 'Running shoes', quantity: 1, amazon_asin: 'B0D43J3N8B', image_url: 'https://m.media-amazon.com/images/I/71HqxYt8EYL._AC_SL1500_.jpg' },
   { category: 'Required', item_name: 'White V-neck undershirts', quantity: 2, notes: '3 recommended', amazon_asin: 'B004H4PUYQ', image_url: 'https://m.media-amazon.com/images/I/71cR7PoL8BL._AC_SL1500_.jpg' },
   { category: 'Required', item_name: 'Black dress socks', quantity: 2, notes: '4 recommended', amazon_asin: 'B0D2P33BFC', image_url: 'https://m.media-amazon.com/images/I/71HCe7GZmEL._AC_SL1500_.jpg' },
-  { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_asin: 'B07GXFTXRQ', image_url: 'https://m.media-amazon.com/images/I/61pqVE9NJWL._AC_SL1000_.jpg' },
+  { category: 'Required', item_name: 'PT socks', quantity: 5, notes: 'Per DAFI 36-2903, 7 recommended', amazon_asin: 'B07GXHQLX1' },
   { category: 'Required', item_name: 'Prescription medications', quantity: 1, notes: '90-day supply in original containers' },
   { category: 'Required', item_name: 'Washcloth', quantity: 2, amazon_search: 'Amazon+Basics+Cotton+Washcloths' },
   { category: 'Required', item_name: 'Shower shoes/flip flops', quantity: 1, amazon_search: 'Adidas+Adilette+Shower+Slides' },
