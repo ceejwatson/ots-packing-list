@@ -165,6 +165,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Underwear",
     quantity: 7,
     amazon_asin: "B086L4BXZC",
+    image_url: "/images/underwear.jpg",
   },
   {
     category: "Required",
@@ -697,6 +698,13 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     notes: "Your feet will get blistered",
     amazon_asin: "B097YXFWL4",
     image_url: "/images/blister-prevention.jpg",
+  },
+  {
+    category: "Recommended",
+    item_name: "Ibuprofen",
+    quantity: 1,
+    amazon_asin: "B07R1DMNK4",
+    image_url: "/images/ibuprofen.jpg",
   },
   {
     category: "Recommended",
