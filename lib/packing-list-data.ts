@@ -658,6 +658,13 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    item_name: "Garment bag",
+    quantity: 1,
+    amazon_asin: "B00VR74W8Q",
+    image_url: "/images/garment-bag.jpg",
+  },
+  {
+    category: "Recommended",
     item_name: "Sewing kit",
     quantity: 1,
     amazon_asin: "B09CLR4SJ3",
