@@ -163,7 +163,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Required",
     item_name: "Underwear",
-    quantity: 7,
+    quantity: 6,
     amazon_asin: "B086L4BXZC",
     image_url: "/images/underwear.jpg",
   },
