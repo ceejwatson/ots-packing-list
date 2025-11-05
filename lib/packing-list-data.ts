@@ -627,23 +627,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
-    item_name: "Inkless portable printer",
-    quantity: 1,
-    notes: "Some flight commanders prefer assignments in paper as well",
-    amazon_asin: "B0CYP944DP",
-    image_url: "/images/portable-printer.jpg",
-  },
-  {
-    category: "Recommended",
-    item_name: "Printer paper",
-    quantity: 1,
-    notes:
-      "Some flight commanders prefer assignments in paper as well. Print OTS SPINS prior in booklet format",
-    amazon_asin: "B01FV0F8H8",
-    image_url: "/images/printer-paper.jpg",
-  },
-  {
-    category: "Recommended",
     item_name: "Starch",
     quantity: 1,
     amazon_asin: "B06XJBGJFF",
