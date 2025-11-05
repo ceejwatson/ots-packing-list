@@ -24,11 +24,6 @@ const faqs: FAQ[] = [
       "Wear a conservative business suit and dress shoes. Bring all required documents (ID, birth certificate, Social Security card, orders), your medications, and basic toiletries. Everything else can be brought in your luggage.",
   },
   {
-    question: "Will I get uniforms at OTS?",
-    answer:
-      "Yes, you will be issued OCPs (Operational Camouflage Pattern uniforms), PT gear, and other necessary uniforms. However, if you already have properly fitted military uniforms, you may bring them.",
-  },
-  {
     question: "Can I bring my cell phone?",
     answer:
       "Yes, but usage is extremely limited. You'll have restricted access, typically only during designated times and on weekends. Don't expect regular use during training.",
