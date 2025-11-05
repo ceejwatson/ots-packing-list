@@ -162,6 +162,12 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    item_name: "Underwear",
+    quantity: 7,
+    amazon_asin: "B086L4BXZC",
+  },
+  {
+    category: "Required",
     item_name: "Coyote brown crew neck t-shirts",
     quantity: 5,
     notes: "Best to have, life changer. Worth the money. 7 recommended",
