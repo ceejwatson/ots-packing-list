@@ -111,7 +111,7 @@ const faqs: FAQ[] = [
   {
     question: "What should I know about bedding?",
     answer:
-      "Bring an extra blanket (pillow optional). You are NO LONGER ALLOWED to sleep in a sleeping bag on top of your bed. Use the blanket on top of your made bed to save time in the morning. This eliminates making your bed daily.",
+      "Bring an extra blanket (extra pillow is optional). Important: You are NO LONGER ALLOWED to sleep in a sleeping bag on top of your bed. Instead, make your bed once, then sleep on top with just the blanket covering you. This saves you from having to make your bed every morning.",
   },
   {
     question: "What should I do with my dress blues?",
@@ -126,7 +126,7 @@ const faqs: FAQ[] = [
   {
     question: "What's the daily schedule like?",
     answer:
-      "Wake up call is at 0430. Set an alarm for 0415 and be walking out your door by the last note of reveille. Days are packed with PT, academics, drill, and inspections. You'll have time at the end of each day to text/call loved ones, but prioritize sleep during the first few days.",
+      "Wake up call is at 0430 (4:30 AM). Set a personal alarm for 0415 and plan to be walking out your door by the last note of reveille. Days are packed with PT, academics, drill, and inspections. You'll have time at the end of each day to text/call loved ones, but prioritize sleep during the first few days - your roommates will appreciate the quiet too.",
   },
   {
     question: "Can I wear contacts?",
@@ -141,17 +141,17 @@ const faqs: FAQ[] = [
   {
     question: "What items are must-haves?",
     answer:
-      "Bring good running shoes (already broken in), headphones, two towels, two pairs of boots, hangers (only what you need), and ziplock bags for trash and organization. Laundry sheets work great. Girls with long hair should learn how to do a regulation low bun.",
+      "Bring good running shoes that are already broken in (these will save you on Day 1 and during PT). Also bring headphones, two towels, two pairs of boots, hangers (only as many as you need - there are extras in the dorms), and ziplock bags for trash and desk organization. Laundry sheets work great. Girls with long hair should learn how to do a regulation low bun before arriving.",
   },
   {
     question: "What should I avoid doing?",
     answer:
-      "Don't let priors in the groupchat/Facebook page intimidate you. Don't overpack. Don't push yourself to the point of injury. Don't keep unauthorized items in your security drawer (they inspect Week 2). The only ways to get recycled are failing the PFA, academic test in Mod 3, or getting injured.",
+      "Don't let prior service members in the groupchat or Facebook page intimidate you - blend in and stay confident. Don't overpack. Don't push yourself to injury during PT. Don't keep unauthorized items in your security drawer (they inspect it during Week 2). Remember: the only ways to get recycled (set back to another class) are failing the PFA, failing the academic test in Mod 3, or getting injured.",
   },
   {
     question: "Any tips for success?",
     answer:
-      "Blend in and stay low-key. Pass the PFA before arriving. Prioritize sleep. Help your roommates. Use ziplock bags for desk organization. Put a mesh bag inside your green laundry bag for easy washing. If you have high teens years of service, expect to be flight leader Mod 1. Most importantly: don't stress - you'll have time to handle everything.",
+      "Blend in and stay low-key. Pass the PFA before you arrive (one less thing to stress about). Prioritize sleep over socializing. Help your roommates - teamwork matters. Use ziplock bags for desk organization to keep everything neat. Pro tip: Put a mesh bag inside your green laundry bag, then throw the whole mesh bag in the washer and dryer for easy laundry. If you have high-teens years of service, expect to be selected as flight leader in Module 1. Most importantly: don't stress - you'll have time to handle everything.",
   },
 ];
 
