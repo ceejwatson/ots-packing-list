@@ -59,11 +59,6 @@ const faqs: FAQ[] = [
       "Focus on running, push-ups, and sit-ups. The PT test includes a 1.5-mile run, push-ups, and sit-ups. Aim to exceed minimums for your age group. Start training at least 2-3 months before.",
   },
   {
-    question: "What's the daily schedule like?",
-    answer:
-      "Wake up is at 4:30 AM. Days are packed with PT, academics, drill, inspections, and military training. Expect 14-16 hour days with minimal free time.",
-  },
-  {
     question: "Can I receive mail/packages?",
     answer:
       "Yes! Mail is a huge morale booster. You'll receive an address after arrival. Care packages are appreciated but keep them reasonable - space is limited.",
