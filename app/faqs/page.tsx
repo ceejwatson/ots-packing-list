@@ -21,7 +21,7 @@ const faqs: FAQ[] = [
   {
     question: "What should I bring on Day 1?",
     answer:
-      "Wear a conservative business suit and dress shoes. Bring all required documents (ID, birth certificate, Social Security card, orders), your medications, and basic toiletries. Everything else can be brought in your luggage.",
+      "Wear khakis, a belt, athletic shoes, and a solid polo. Bring all required documents (ID, birth certificate, Social Security card, orders), your medications, and basic toiletries. Everything else can be brought in your luggage.",
   },
   {
     question: "Can I bring my cell phone?",
