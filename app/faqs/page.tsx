@@ -103,6 +103,56 @@ const faqs: FAQ[] = [
     answer:
       "Train physically, study AF knowledge, break in your running shoes, get your documents in order, inform your family of limited contact, and mentally prepare for a challenging but rewarding experience.",
   },
+  {
+    question: "How much should I pack?",
+    answer:
+      "PACK LIGHTLY! Bring one large duffel and a backpack. Roll everything to save space. You can get OCPs and other items at the shoppette on Day 1, but it's recommended to bring them if you already have them. Remove all tags and trash from gear before arriving.",
+  },
+  {
+    question: "What should I know about bedding?",
+    answer:
+      "Bring an extra blanket (pillow optional). You are NO LONGER ALLOWED to sleep in a sleeping bag on top of your bed. Use the blanket on top of your made bed to save time in the morning. This eliminates making your bed daily.",
+  },
+  {
+    question: "What should I do with my dress blues?",
+    answer:
+      "Get your blues before arrival if possible. If you can access base early, drop them at dry cleaners before OTS starts. Otherwise, pack them in a garment bag in your civilian luggage to keep them protected until Week 1-2 when you can drop them off for dry cleaning.",
+  },
+  {
+    question: "What are the 7 Basic Responses?",
+    answer:
+      "KNOW YOUR 7 BASIC RESPONSES before arriving. These are standard replies you'll use constantly at OTS. Also know DFAC procedures, the Air Force Creed, Space Force song, and Air Force song.",
+  },
+  {
+    question: "What's the daily schedule like?",
+    answer:
+      "Wake up call is at 0430. Set an alarm for 0415 and be walking out your door by the last note of reveille. Days are packed with PT, academics, drill, and inspections. You'll have time at the end of each day to text/call loved ones, but prioritize sleep during the first few days.",
+  },
+  {
+    question: "Can I wear contacts?",
+    answer:
+      "Regulations say you can't wear contacts to PT and field events, but many trainees wear them without issues. Bring both glasses and contacts. Make sure glasses have military-approved frames.",
+  },
+  {
+    question: "What medicine should I bring?",
+    answer:
+      "Don't overpack medicine. Prioritize decongestants - you will likely get sick around Week 2. Bring ibuprofen, Tylenol, and behind-the-counter Sudafed. A small stash is sufficient.",
+  },
+  {
+    question: "What items are must-haves?",
+    answer:
+      "Bring good running shoes (already broken in), headphones, two towels, two pairs of boots, hangers (only what you need), and ziplock bags for trash and organization. Laundry sheets work great. Girls with long hair should learn how to do a regulation low bun.",
+  },
+  {
+    question: "What should I avoid doing?",
+    answer:
+      "Don't let priors in the groupchat/Facebook page intimidate you. Don't overpack. Don't push yourself to the point of injury. Don't keep unauthorized items in your security drawer (they inspect Week 2). The only ways to get recycled are failing the PFA, academic test in Mod 3, or getting injured.",
+  },
+  {
+    question: "Any tips for success?",
+    answer:
+      "Blend in and stay low-key. Pass the PFA before arriving. Prioritize sleep. Help your roommates. Use ziplock bags for desk organization. Put a mesh bag inside your green laundry bag for easy washing. If you have high teens years of service, expect to be flight leader Mod 1. Most importantly: don't stress - you'll have time to handle everything.",
+  },
 ];
 
 export default function FAQsPage() {
