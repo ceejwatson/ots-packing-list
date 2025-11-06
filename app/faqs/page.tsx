@@ -106,7 +106,7 @@ const faqs: FAQ[] = [
   {
     question: "What should I know about bedding?",
     answer:
-      "Bring an extra blanket (extra pillow is optional). Important: You are NO LONGER ALLOWED to sleep in a sleeping bag on top of your bed. Instead, make your bed once, then sleep on top with just the blanket covering you. This saves you from having to make your bed every morning.",
+      "Sheets and blankets are provided by OTS. Bring an extra blanket (extra pillow is optional). Important: You are NO LONGER ALLOWED to sleep in a sleeping bag on top of your bed. Instead, make your bed once, then sleep on top with just the blanket covering you. This saves you from having to make your bed every morning.",
   },
   {
     question: "What should I do with my dress blues?",
