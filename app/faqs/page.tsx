@@ -250,32 +250,32 @@ export default function FAQsPage() {
           <ul className="space-y-2 sm:space-y-2">
             <li>
               <a
+                href="https://www.afaccessionscenter.af.mil/Holm-Center/OTS/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
+              >
+                → Air Force Accessions Center - OTS Official Site
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.airforce.com/training/military-training/ots"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
+              >
+                → AirForce.com OTS Information
+              </a>
+            </li>
+            <li>
+              <a
                 href="https://www.airuniversity.af.edu/Holm-Center/OTS/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
               >
-                → Air University OTS Official Site
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.airforce.com/training/military-training/ots/overview"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
-              >
-                → AirForce.com OTS Overview
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.afpc.af.mil/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
-              >
-                → Air Force Personnel Center
+                → Air University Holm Center OTS
               </a>
             </li>
           </ul>
