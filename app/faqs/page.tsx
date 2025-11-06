@@ -136,7 +136,7 @@ const faqs: FAQ[] = [
   {
     question: "What items are must-haves?",
     answer:
-      "Bring good running shoes that are already broken in (these will save you on Day 1 and during PT). Also bring headphones, two towels, two pairs of boots, hangers (only as many as you need - there are extras in the dorms), and ziplock bags for trash and desk organization. Laundry sheets work great. Girls with long hair should learn how to do a regulation low bun before arriving.",
+      "Bring good running shoes that are already broken in (these will save you on Day 1 and during PT). Also bring headphones, two towels, two pairs of boots, hangers (only as many as you need - there are extras in the dorms), and ziplock bags for trash and desk organization. Laundry sheets work great.",
   },
   {
     question: "What should I avoid doing?",
