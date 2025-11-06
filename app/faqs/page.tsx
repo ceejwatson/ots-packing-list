@@ -268,16 +268,6 @@ export default function FAQsPage() {
                 → AirForce.com OTS Information
               </a>
             </li>
-            <li>
-              <a
-                href="https://www.airuniversity.af.edu/Holm-Center/OTS/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
-              >
-                → Air University Holm Center OTS
-              </a>
-            </li>
           </ul>
           <p className="text-xs text-blue-600 mt-3 sm:mt-4 italic leading-relaxed">
             Always verify information with your recruiter and official sources.
