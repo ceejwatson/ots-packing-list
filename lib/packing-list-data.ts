@@ -17,7 +17,8 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Documents",
     item_name: "Two forms of valid government ID",
     quantity: 2,
-    notes: "Include Social Security card if you do not have CAC",
+    notes:
+      "Must be REAL ID compliant. Keep ID on your person at all times - DO NOT put in folder",
   },
   {
     category: "Documents",
@@ -29,7 +30,8 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Documents",
     item_name: "Copy of amendments (if applicable)",
     quantity: 5,
-    notes: "Only if orders have been modified",
+    notes:
+      "Only if orders have been modified. Amendment is a document stating official modification to orders",
   },
   {
     category: "Documents",
@@ -41,13 +43,15 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Documents",
     item_name: "DD Form 2983",
     quantity: 1,
-    notes: "Recruit/Trainee Prohibited Activities Acknowledgment",
+    notes:
+      "Recruit/Trainee Prohibited Activities Acknowledgment - place in envelope",
   },
   {
     category: "Documents",
     item_name: "OTS Form 1",
     quantity: 1,
-    notes: "Officer Trainee Questionnaire and Acknowledgment",
+    notes:
+      "Officer Trainee Questionnaire and Acknowledgment - place in envelope",
   },
   {
     category: "Documents",
@@ -60,31 +64,34 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Documents",
     item_name: "DEERS Information Worksheet",
     quantity: 1,
-    notes: "Only if you need DEERS updates/enrollment",
+    notes:
+      "Only if you need DEERS updates/enrollment - place in envelope with supporting docs",
   },
   {
     category: "Documents",
     item_name: "Marriage certificate, spouse ID & SSN card",
     quantity: 1,
-    notes: "Only if DEERS updates needed for spouse",
+    notes: "Only if DEERS updates needed - place copies in envelope",
   },
   {
     category: "Documents",
     item_name: "Children birth certificates & SSN cards",
     quantity: 1,
-    notes: "Only if DEERS updates needed for children",
+    notes: "Only if DEERS updates needed - place copies in envelope",
   },
   {
     category: "Documents",
     item_name: "DD Form 4 and DD Form 214",
     quantity: 1,
-    notes: "Only if prior Army, Marines, or Navy service",
+    notes:
+      "Only if prior Army, Navy, or Marine Corps service - place copies in envelope for each period of service",
   },
   {
     category: "Documents",
     item_name: "AF Form 56",
     quantity: 1,
-    notes: "Application & Evaluation for Training (includes SLECP)",
+    notes:
+      "Application & Evaluation for Training (includes SLECP) - place in envelope",
   },
 
   // MEDICAL DOCUMENTS (to upload to intakeQ - DO NOT hand carry)

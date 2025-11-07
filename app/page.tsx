@@ -326,6 +326,11 @@ export default function Dashboard() {
                   • <strong>Print OTS SPINS prior</strong> in booklet format to
                   bring with you
                 </li>
+                <li>
+                  • All OTs will bring a{" "}
+                  <strong>printed copy of the packing requirements</strong> with
+                  them on in-processing day
+                </li>
               </ul>
             </div>
           </div>
