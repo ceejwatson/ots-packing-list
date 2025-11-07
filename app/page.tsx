@@ -100,7 +100,7 @@ export default function Dashboard() {
             </div>
             <div className="flex gap-2 w-full sm:w-auto">
               <a
-                href="/Orientation_Guide_06102025.pdf"
+                href="https://www.afaccessionscenter.af.mil/Portals/78/OTS/Student-Guides/Orientation%20Guide_CAO_20250825.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-lg transition-colors font-bold flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
