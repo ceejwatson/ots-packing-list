@@ -331,6 +331,19 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Affiliate Disclosure */}
+        <div className="mt-6 sm:mt-8 text-center px-4">
+          <p className="text-blue-300 text-xs opacity-70 italic leading-relaxed">
+            Disclosure: This site participates in the Amazon Services LLC
+            Associates Program, an affiliate advertising program. When you
+            purchase through our links, we may earn a small commission at no
+            additional cost to you. These earnings help maintain this free
+            resource for future officers. All product recommendations are based
+            on utility for OTS and are not influenced by affiliate
+            relationships.
+          </p>
+        </div>
+
         {/* Footer with Air Force motto - Mobile Optimized */}
         <div className="mt-6 sm:mt-8 text-center pb-4">
           <p className="text-blue-200 text-xs sm:text-sm font-semibold italic">
