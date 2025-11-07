@@ -242,13 +242,21 @@ export default function Dashboard() {
                           >
                             {item.item_name}
                           </h3>
-                          <p className="text-xs sm:text-sm text-gray-600 font-medium">
-                            Quantity: {item.quantity}
-                          </p>
-                          {item.notes && (
-                            <p className="text-xs sm:text-sm text-blue-700 bg-blue-50/80 inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg">
+                          {item.notes && item.notes.includes("Min:") ? (
+                            <p className="text-xs sm:text-sm text-blue-700 bg-blue-50/80 inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-semibold">
                               {item.notes}
                             </p>
+                          ) : (
+                            <>
+                              <p className="text-xs sm:text-sm text-gray-600 font-medium">
+                                Quantity: {item.quantity}
+                              </p>
+                              {item.notes && (
+                                <p className="text-xs sm:text-sm text-blue-700 bg-blue-50/80 inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg">
+                                  {item.notes}
+                                </p>
+                              )}
+                            </>
                           )}
                         </div>
 
