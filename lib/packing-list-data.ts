@@ -179,8 +179,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Required",
     item_name: "Coyote brown crew neck t-shirts",
     quantity: 5,
-    notes:
-      "Min: 5, Recommended: 7 - Best to have, life changer. Worth the money",
+    notes: "Min: 5, Recommended: 7",
     amazon_asin: "B014SECRHC",
     image_url: "/images/ocp-tshirts.jpg",
   },
@@ -204,8 +203,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Required",
     item_name: "Coyote brown or DLA green OCP socks",
     quantity: 5,
-    notes:
-      "Min: 5, Recommended: 7 - Best socks to have, life changer. Worth the money",
+    notes: "Min: 5, Recommended: 7",
     amazon_asin: "B078SMZ7FQ",
     image_url: "/images/ocp-socks.jpg",
   },
