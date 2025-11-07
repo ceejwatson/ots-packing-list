@@ -29,6 +29,11 @@ const faqs: FAQ[] = [
       "Yes, but usage is extremely limited. You'll have restricted access, typically only during designated times and on weekends. Don't expect regular use during training.",
   },
   {
+    question: "Are smart watches allowed?",
+    answer:
+      "Yes! Smart watches are allowed at OTS. However, at some points they may require you to take them off, such as during testing, field events, and other specific training activities.",
+  },
+  {
     question: "How much money should I bring?",
     answer:
       "$200-$300 in cash is recommended, plus a debit/credit card. You'll need money for haircuts, toiletries, and other personal items from the BX (Base Exchange).",

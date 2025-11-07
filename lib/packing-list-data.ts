@@ -260,9 +260,9 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
-    item_name: "CamelBak (Alternative to hydration pack)",
+    item_name: "CamelBak",
     quantity: 1,
-    notes: "Popular alternative hydration option",
+    notes: "Popular hydration option",
     amazon_asin: "B0CZR11YCK",
     image_url: "/images/camelbak.jpg",
   },
