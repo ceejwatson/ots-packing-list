@@ -122,6 +122,12 @@ export default function Dashboard() {
                 <span className="sm:hidden">Guide</span>
               </a>
               <button
+                onClick={() => router.push("/reporting")}
+                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-green-600 hover:bg-green-500 active:bg-green-700 text-white rounded-lg transition-colors font-bold touch-manipulation"
+              >
+                Reporting
+              </button>
+              <button
                 onClick={() => router.push("/faqs")}
                 className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-blue-900 rounded-lg transition-colors font-bold touch-manipulation"
               >

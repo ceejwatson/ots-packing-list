@@ -186,12 +186,20 @@ export default function FAQsPage() {
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => router.push("/")}
-              className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-2 text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-blue-900 rounded-lg transition-colors font-bold touch-manipulation"
-            >
-              Back to Packing List
-            </button>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <button
+                onClick={() => router.push("/")}
+                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-lg transition-colors font-bold touch-manipulation"
+              >
+                Packing List
+              </button>
+              <button
+                onClick={() => router.push("/reporting")}
+                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-green-600 hover:bg-green-500 active:bg-green-700 text-white rounded-lg transition-colors font-bold touch-manipulation"
+              >
+                Reporting
+              </button>
+            </div>
           </div>
         </div>
       </header>
