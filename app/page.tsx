@@ -93,7 +93,7 @@ export default function Dashboard() {
                     OTS PACKING LIST
                   </h1>
                   <p className="text-xs sm:text-sm text-blue-200 font-semibold uppercase tracking-wider">
-                    Official Orientation Guide
+                    Preparation Guide
                   </p>
                 </div>
               </div>
