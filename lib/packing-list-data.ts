@@ -772,8 +772,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
 
 // Helper function to generate Amazon link - handles both ASIN and search
 export function getAmazonLink(searchQuery?: string, asin?: string): string {
-  const associateId =
-    process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_ID || "otspackinglis-20";
+  const associateId = "otspackinglis-20";
 
   // If ASIN is provided, use direct product link (higher conversion)
   if (asin) {
