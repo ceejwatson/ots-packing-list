@@ -12,8 +12,13 @@ import {
 type TabType = "Documents" | "Required" | "Recommended";
 
 export default function Dashboard() {
-  const [items, setItems] = useState<PackingItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState<PackingItem[]>(() =>
+    defaultOTSPackingList.map((item, index) => ({
+      ...item,
+      id: `item-${index}`,
+      is_packed: false,
+    })),
+  );
   const [activeTab, setActiveTab] = useState<TabType>("Required");
   const router = useRouter();
 
@@ -22,25 +27,14 @@ export default function Dashboard() {
   }, []);
 
   const loadItems = () => {
-    console.log("Loading items...");
-    const stored = localStorage.getItem("ots-packing-list-v3");
-    if (stored) {
-      setItems(JSON.parse(stored));
-    } else {
-      // Initialize with default items
-      const initialItems = defaultOTSPackingList.map((item, index) => ({
-        ...item,
-        id: `item-${index}`,
-        is_packed: false,
-      }));
-      console.log(
-        "Initial items with images:",
-        initialItems.filter((i) => i.image_url).length,
-      );
-      setItems(initialItems);
-      localStorage.setItem("ots-packing-list-v3", JSON.stringify(initialItems));
+    try {
+      const stored = localStorage.getItem("ots-packing-list-v3");
+      if (stored) {
+        setItems(JSON.parse(stored));
+      }
+    } catch {
+      // ignore corrupt localStorage
     }
-    setLoading(false);
   };
 
   const togglePacked = (id: string, currentStatus: boolean) => {
@@ -51,32 +45,58 @@ export default function Dashboard() {
     localStorage.setItem("ots-packing-list-v3", JSON.stringify(updatedItems));
   };
 
+  const packedTotal = items.filter((i) => i.is_packed).length;
+
+  const shareText = `I'm ${items.length ? Math.round((packedTotal / items.length) * 100) : 0}% packed for Air Force OTS. Free interactive packing list:`;
+  const siteUrl = "https://otspackinglist.com";
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "OTS Packing List",
+          text: shareText,
+          url: siteUrl,
+        });
+        return;
+      } catch {
+        // fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(siteUrl);
+      alert("Link copied!");
+    } catch {
+      // ignore
+    }
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Air Force OTS Packing List",
+    description:
+      "Complete packing list for Air Force Officer Training School at Maxwell AFB",
+    numberOfItems: defaultOTSPackingList.length,
+    itemListElement: defaultOTSPackingList.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.item_name,
+    })),
+  };
+
   const filteredItems = items.filter((item) => item.category === activeTab);
   const packedInCategory = filteredItems.filter(
     (item) => item.is_packed,
   ).length;
   const totalInCategory = filteredItems.length;
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-        <div className="text-center">
-          <img
-            src="/ots-shield.png"
-            alt="OTS Shield"
-            className="w-24 h-24 mx-auto mb-4 animate-pulse"
-          />
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className="mt-4 text-blue-100 font-semibold">
-            Loading your packing list...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Header with OTS Shield - Sticky - Mobile Optimized */}
       <header className="sticky top-0 z-50 bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400 backdrop-blur-md bg-opacity-95">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
@@ -353,6 +373,39 @@ export default function Dashboard() {
                   them on in-processing day
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Share bar */}
+        <div className="mt-4 sm:mt-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/30 p-4 sm:p-5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-sm sm:text-base font-bold text-blue-900 text-center sm:text-left">
+              Know someone heading to OTS? Share this list.
+            </p>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <button
+                onClick={handleShare}
+                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold touch-manipulation"
+              >
+                Share / Copy Link
+              </button>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(siteUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm bg-black hover:bg-gray-800 text-white rounded-lg font-bold text-center touch-manipulation"
+              >
+                Post on X
+              </a>
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm bg-blue-800 hover:bg-blue-700 text-white rounded-lg font-bold text-center touch-manipulation"
+              >
+                Facebook
+              </a>
             </div>
           </div>
         </div>
