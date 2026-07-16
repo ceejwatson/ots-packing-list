@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 import {
   PackingItem,
   defaultOTSPackingList,
@@ -10,430 +8,274 @@ import {
 } from "@/lib/packing-list-data";
 
 type TabType = "Documents" | "Required" | "Recommended";
+const tabs: TabType[] = ["Required", "Recommended", "Documents"];
 
-export default function Dashboard() {
-  const [items, setItems] = useState<PackingItem[]>(() =>
-    defaultOTSPackingList.map((item, index) => ({
-      ...item,
-      id: `item-${index}`,
-      is_packed: false,
-    })),
-  );
+export default function ChecklistPage() {
+  const [items, setItems] = useState<PackingItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("Required");
-  const router = useRouter();
 
   useEffect(() => {
-    loadItems();
+    const stored = localStorage.getItem("ots-packing-list-v3");
+    if (stored) {
+      setItems(JSON.parse(stored));
+    } else {
+      const initialItems = defaultOTSPackingList.map((item, index) => ({
+        ...item,
+        id: `item-${index}`,
+        is_packed: false,
+      }));
+      setItems(initialItems);
+      localStorage.setItem("ots-packing-list-v3", JSON.stringify(initialItems));
+    }
+    setLoading(false);
   }, []);
 
-  const loadItems = () => {
-    try {
-      const stored = localStorage.getItem("ots-packing-list-v3");
-      if (stored) {
-        setItems(JSON.parse(stored));
-      }
-    } catch {
-      // ignore corrupt localStorage
-    }
-  };
-
-  const togglePacked = (id: string, currentStatus: boolean) => {
-    const updatedItems = items.map((item) =>
-      item.id === id ? { ...item, is_packed: !currentStatus } : item,
+  const togglePacked = (id: string) => {
+    const updated = items.map((item) =>
+      item.id === id ? { ...item, is_packed: !item.is_packed } : item,
     );
-    setItems(updatedItems);
-    localStorage.setItem("ots-packing-list-v3", JSON.stringify(updatedItems));
+    setItems(updated);
+    localStorage.setItem("ots-packing-list-v3", JSON.stringify(updated));
+    window.dispatchEvent(new Event("ots-progress"));
   };
 
-  const packedTotal = items.filter((i) => i.is_packed).length;
-
-  const shareText = `I'm ${items.length ? Math.round((packedTotal / items.length) * 100) : 0}% packed for Air Force OTS. Free interactive packing list:`;
-  const siteUrl = "https://otspackinglist.com";
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "OTS Packing List",
-          text: shareText,
-          url: siteUrl,
-        });
-        return;
-      } catch {
-        // fall through to clipboard
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(siteUrl);
-      alert("Link copied!");
-    } catch {
-      // ignore
-    }
-  };
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Air Force OTS Packing List",
-    description:
-      "Complete packing list for Air Force Officer Training School at Maxwell AFB",
-    numberOfItems: defaultOTSPackingList.length,
-    itemListElement: defaultOTSPackingList.map((item, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: item.item_name,
-    })),
-  };
+  const counts = tabs.map((t) => {
+    const inTab = items.filter((i) => i.category === t);
+    return {
+      tab: t,
+      packed: inTab.filter((i) => i.is_packed).length,
+      total: inTab.length,
+    };
+  });
 
   const filteredItems = items.filter((item) => item.category === activeTab);
-  const packedInCategory = filteredItems.filter(
-    (item) => item.is_packed,
-  ).length;
-  const totalInCategory = filteredItems.length;
+  const totalPacked = items.filter((i) => i.is_packed).length;
+
+  if (loading) {
+    return (
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center text-stone-400 text-sm">
+        Loading your checklist&hellip;
+      </main>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      {/* Header with OTS Shield - Sticky - Mobile Optimized */}
-      <header className="sticky top-0 z-50 bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-            <div className="text-center sm:text-left">
-              <div className="flex items-center gap-2 sm:gap-4 justify-center sm:justify-start">
-                <img
-                  src="/ots-shield.png"
-                  alt="OTS Shield"
-                  className="w-12 h-12 sm:w-20 sm:h-20 object-contain"
-                />
-                <div>
-                  <h1 className="text-xl sm:text-3xl font-bold text-white tracking-wide">
-                    OTS PACKING LIST
-                  </h1>
-                  <p className="text-xs sm:text-sm text-blue-200 font-semibold uppercase tracking-wider">
-                    Preparation Guide
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <a
-                href="https://www.afaccessionscenter.af.mil/Portals/78/OTS/Student-Guides/Orientation%20Guide_CAO_20250825.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-lg transition-colors font-bold flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
-              >
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                <span className="hidden sm:inline">Orientation Guide</span>
-                <span className="sm:hidden">Guide</span>
-              </a>
-              <button
-                onClick={() => router.push("/reporting")}
-                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-green-600 hover:bg-green-500 active:bg-green-700 text-white rounded-lg transition-colors font-bold touch-manipulation"
-              >
-                Reporting
-              </button>
-              <button
-                onClick={() => router.push("/faqs")}
-                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-blue-900 rounded-lg transition-colors font-bold touch-manipulation"
-              >
-                FAQs
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+      {/* Page header */}
+      <div className="mb-6">
+        <h1 className="font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
+          Packing checklist
+        </h1>
+        <p className="mt-1 text-sm text-stone-500">
+          Current to the CAO 27 March 2026 Orientation Guide &middot;{" "}
+          {totalPacked} of {items.length} items packed
+        </p>
+      </div>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
-        {/* Tabs - Mobile Optimized */}
-        <div className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-200/30 overflow-hidden">
-          <div className="flex border-b-2 border-blue-200">
-            <button
-              onClick={() => setActiveTab("Required")}
-              className={`flex-1 px-2 sm:px-6 py-3 sm:py-5 font-medium tracking-tight transition-all duration-200 text-xs sm:text-base touch-manipulation ${
-                activeTab === "Required"
-                  ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg"
-                  : "bg-white/50 text-blue-900 hover:bg-white/80 active:bg-white backdrop-blur-sm"
+      {/* Segmented control */}
+      <div
+        className="grid grid-cols-3 gap-1 p-1 rounded-lg bg-stone-200/70 mb-6"
+        role="tablist"
+      >
+        {counts.map(({ tab, packed, total }) => (
+          <button
+            key={tab}
+            role="tab"
+            aria-selected={activeTab === tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-2 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
+              activeTab === tab
+                ? "bg-white text-stone-900 shadow-sm"
+                : "text-stone-600 hover:text-stone-900"
+            }`}
+          >
+            {tab}
+            <span
+              className={`ml-1.5 tabular-nums ${
+                activeTab === tab ? "text-blue-700" : "text-stone-400"
               }`}
             >
-              Required
-            </button>
-            <button
-              onClick={() => setActiveTab("Recommended")}
-              className={`flex-1 px-2 sm:px-6 py-3 sm:py-5 font-medium tracking-tight transition-all duration-200 text-xs sm:text-base touch-manipulation ${
-                activeTab === "Recommended"
-                  ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg"
-                  : "bg-white/50 text-blue-900 hover:bg-white/80 active:bg-white backdrop-blur-sm"
-              }`}
-            >
-              Recommended
-            </button>
-            <button
-              onClick={() => setActiveTab("Documents")}
-              className={`flex-1 px-2 sm:px-6 py-3 sm:py-5 font-medium tracking-tight transition-all duration-200 text-xs sm:text-base touch-manipulation ${
-                activeTab === "Documents"
-                  ? "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-lg"
-                  : "bg-white/50 text-blue-900 hover:bg-white/80 active:bg-white backdrop-blur-sm"
-              }`}
-            >
-              Documents
-            </button>
-          </div>
+              {packed}/{total}
+            </span>
+          </button>
+        ))}
+      </div>
 
-          {/* Packing List - Mobile Optimized */}
-          <div className="divide-y divide-blue-100">
-            {filteredItems.length === 0 ? (
-              <div className="p-6 sm:p-8 text-center text-blue-600 font-semibold text-sm sm:text-base">
-                No items in this category
-              </div>
-            ) : (
-              filteredItems.map((item) => (
-                <div
-                  key={item.id}
-                  className={`p-3 sm:p-6 transition-all duration-300 border-b border-gray-100/50 last:border-0 ${
+      {/* Items */}
+      <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100">
+        {filteredItems.length === 0 ? (
+          <p className="p-8 text-center text-sm text-stone-400">
+            No items in this category.
+          </p>
+        ) : (
+          filteredItems.map((item) => {
+            const buyLink =
+              !item.aafes_only && (item.amazon_search || item.amazon_asin)
+                ? getAmazonLink(item.amazon_search, item.amazon_asin)
+                : null;
+            return (
+              <div
+                key={item.id}
+                className={`flex items-start gap-3 sm:gap-4 p-3 sm:p-4 transition-colors ${
+                  item.is_packed ? "bg-stone-50/60" : ""
+                }`}
+              >
+                {/* Checkbox */}
+                <button
+                  onClick={() => togglePacked(item.id!)}
+                  role="checkbox"
+                  aria-checked={item.is_packed}
+                  aria-label={`Mark ${item.item_name} as ${
+                    item.is_packed ? "not packed" : "packed"
+                  }`}
+                  className={`mt-0.5 w-5 h-5 shrink-0 rounded border flex items-center justify-center transition-colors ${
                     item.is_packed
-                      ? "bg-gradient-to-r from-green-50/50 to-emerald-50/50"
-                      : "hover:bg-gray-50/30 active:bg-gray-100/30"
+                      ? "bg-blue-700 border-blue-700"
+                      : "border-stone-300 hover:border-blue-600 bg-white"
                   }`}
                 >
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
-                    {/* Product Image - Mobile & Desktop Optimized */}
-                    {item.image_url &&
-                      (item.amazon_search || item.amazon_asin) && (
-                        <a
-                          href={getAmazonLink(
-                            item.amazon_search,
-                            item.amazon_asin,
-                          )}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0 group cursor-pointer mx-auto sm:mx-0"
-                        >
-                          <img
-                            src={item.image_url}
-                            alt={item.item_name}
-                            className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain rounded-xl sm:rounded-2xl bg-white p-3 sm:p-4 shadow-sm ring-1 ring-black/5 group-hover:shadow-md group-active:scale-95 sm:group-hover:scale-105 group-hover:ring-orange-200 transition-all duration-300"
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                            }}
-                          />
-                        </a>
-                      )}
-                    {item.image_url &&
-                      !item.amazon_search &&
-                      !item.amazon_asin && (
-                        <div className="flex-shrink-0 mx-auto sm:mx-0">
-                          <img
-                            src={item.image_url}
-                            alt={item.item_name}
-                            className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain rounded-xl sm:rounded-2xl bg-white p-3 sm:p-4 shadow-sm ring-1 ring-black/5"
-                            onError={(e) => {
-                              e.currentTarget.style.display = "none";
-                            }}
-                          />
-                        </div>
-                      )}
+                  {item.is_packed && (
+                    <svg
+                      className="w-3.5 h-3.5 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  )}
+                </button>
 
-                    {/* Content - Mobile Optimized */}
-                    <div className="flex-1 min-w-0 w-full">
-                      <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
-                        <div className="flex-1 space-y-2 w-full">
-                          <h3
-                            className={`text-sm sm:text-base font-semibold leading-tight ${
-                              item.is_packed
-                                ? "line-through text-gray-400"
-                                : "text-gray-900"
-                            }`}
-                          >
-                            {item.item_name}
-                          </h3>
-                          {item.notes && item.notes.includes("Min:") ? (
-                            <>
-                              <p className="text-xs sm:text-sm text-gray-600 font-medium">
-                                {item.notes.split(" - ")[0]}
-                              </p>
-                              {item.notes.includes(" - ") && (
-                                <p className="text-xs sm:text-sm text-blue-700 bg-blue-50/80 inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg">
-                                  {item.notes.split(" - ").slice(1).join(" - ")}
-                                </p>
-                              )}
-                            </>
-                          ) : (
-                            <>
-                              <p className="text-xs sm:text-sm text-gray-600 font-medium">
-                                Quantity: {item.quantity}
-                              </p>
-                              {item.notes && (
-                                <p className="text-xs sm:text-sm text-blue-700 bg-blue-50/80 inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg">
-                                  {item.notes}
-                                </p>
-                              )}
-                            </>
-                          )}
-                        </div>
-
-                        {/* Action Buttons - Mobile Optimized */}
-                        <div className="flex-shrink-0 w-full sm:w-auto">
-                          {item.aafes_only ? (
-                            <div className="w-full sm:w-auto text-center px-3 sm:px-4 py-2 sm:py-2.5 text-xs font-semibold text-white bg-gradient-to-b from-blue-600 to-blue-700 rounded-lg sm:rounded-xl shadow-md ring-1 ring-blue-500/50">
-                              Available at AAFES
-                            </div>
-                          ) : item.amazon_search || item.amazon_asin ? (
-                            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-                              <a
-                                href={getAmazonLink(
-                                  item.amazon_search,
-                                  item.amazon_asin,
-                                )}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 active:from-orange-700 active:to-orange-800 rounded-lg sm:rounded-xl transition-all duration-200 shadow-md hover:shadow-lg active:shadow flex items-center justify-center gap-2 active:scale-95 touch-manipulation"
-                              >
-                                <svg
-                                  className="w-3.5 h-3.5 sm:w-4 sm:h-4"
-                                  fill="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726-1.544.41-3.146.615-4.806.615-2.162 0-4.254-.353-6.27-1.057-2.014-.703-3.777-1.703-5.29-2.996-.214-.177-.293-.344-.24-.494zm23.11-3.45c-.28-.386-.85-.577-1.707-.577-.524 0-1.124.08-1.8.24-.677.162-1.18.327-1.512.495-.333.168-.5.41-.5.726 0 .224.08.407.24.548.16.14.362.21.606.21.177 0 .384-.046.618-.14.234-.095.47-.21.71-.348.506-.292 1.022-.438 1.546-.438.6 0 1.05.14 1.35.42.3.28.45.676.45 1.19 0 .262-.044.527-.13.79-.088.265-.223.57-.405.918-.16.302-.314.615-.46.94-.146.323-.22.62-.22.89 0 .364.13.648.39.854.26.205.596.308 1.008.308.266 0 .508-.036.725-.11.217-.073.422-.195.615-.365.193-.17.368-.39.525-.66.157-.27.288-.593.394-.97l.12-.42c.05-.178.106-.405.167-.68.06-.274.113-.555.16-.843.045-.288.068-.543.068-.766 0-.636-.18-1.14-.54-1.513z" />
-                                </svg>
-                                BUY
-                              </a>
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
+                {/* Text */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span
+                      className={`text-sm font-medium ${
+                        item.is_packed
+                          ? "text-stone-400 line-through"
+                          : "text-stone-900"
+                      }`}
+                    >
+                      {item.item_name}
+                    </span>
+                    {!item.notes?.includes("Min:") && item.quantity > 1 && (
+                      <span className="text-xs text-stone-400 tabular-nums">
+                        &times;{item.quantity}
+                      </span>
+                    )}
+                    {item.aafes_only && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">
+                        AAFES
+                      </span>
+                    )}
                   </div>
+                  {item.notes && (
+                    <p
+                      className={`mt-0.5 text-xs leading-relaxed ${
+                        item.is_packed ? "text-stone-300" : "text-stone-500"
+                      }`}
+                    >
+                      {item.notes}
+                    </p>
+                  )}
+                  {buyLink && (
+                    <a
+                      href={buyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-1.5 text-xs font-medium text-blue-700 hover:text-blue-900"
+                    >
+                      View on Amazon
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M7 17L17 7M9 7h8v8"
+                        />
+                      </svg>
+                    </a>
+                  )}
                 </div>
-              ))
-            )}
-          </div>
-        </div>
 
-        {/* Important Notice - Mobile Optimized */}
-        <div className="mt-4 sm:mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-3 sm:p-4 rounded-r-lg shadow-md">
-          <div className="flex items-start gap-2 sm:gap-3">
-            <span className="text-xl sm:text-2xl">⚠️</span>
-            <div>
-              <h3 className="font-bold text-yellow-900 text-xs sm:text-sm uppercase">
-                Important Reminders
-              </h3>
-              <ul className="text-xs text-yellow-800 mt-2 space-y-1.5 sm:space-y-1">
-                <li>
-                  • <strong>Day 1 Arrival:</strong> Wear khakis, belt, solid
-                  color polo shirt, and shoes with laces tucked in
-                </li>
-                <li>
-                  • <strong>Documents:</strong> Upload medical records to
-                  intakeQ 14 days before arrival - DO NOT hand carry
-                </li>
-                <li>
-                  • <strong>Boots & Running Shoes</strong> must be broken in
-                  before arrival
-                </li>
-                <li>
-                  • Bring <strong>90-day supply</strong> of all prescription
-                  medications
-                </li>
-                <li>
-                  • Have <strong>$2,000+ accessible</strong> - pay delays are
-                  common
-                </li>
-                <li>
-                  • Purchase uniforms from <strong>AAFES only</strong> to ensure
-                  compliance (you can bring uniform items if you already have
-                  them)
-                </li>
-                <li>
-                  • Complete all <strong>pre-course assignments</strong> 10 days
-                  before arrival
-                </li>
-                <li>
-                  • <strong>Print OTS SPINS prior</strong> in booklet format to
-                  bring with you
-                </li>
-                <li>
-                  • All OTs will bring a{" "}
-                  <strong>printed copy of the packing requirements</strong> with
-                  them on in-processing day
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+                {/* Thumbnail */}
+                {item.image_url &&
+                  (buyLink ? (
+                    <a
+                      href={buyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0"
+                    >
+                      <img
+                        src={item.image_url}
+                        alt=""
+                        loading="lazy"
+                        className={`w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-lg border border-stone-200 bg-white p-1.5 transition-opacity ${
+                          item.is_packed ? "opacity-40" : "hover:opacity-80"
+                        }`}
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      src={item.image_url}
+                      alt=""
+                      loading="lazy"
+                      className={`shrink-0 w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-lg border border-stone-200 bg-white p-1.5 ${
+                        item.is_packed ? "opacity-40" : ""
+                      }`}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  ))}
+              </div>
+            );
+          })
+        )}
+      </div>
 
-        {/* Share bar */}
-        <div className="mt-4 sm:mt-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl border border-gray-200/30 p-4 sm:p-5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-sm sm:text-base font-bold text-blue-900 text-center sm:text-left">
-              Know someone heading to OTS? Share this list.
-            </p>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <button
-                onClick={handleShare}
-                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold touch-manipulation"
-              >
-                Share / Copy Link
-              </button>
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(siteUrl)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm bg-black hover:bg-gray-800 text-white rounded-lg font-bold text-center touch-manipulation"
-              >
-                Post on X
-              </a>
-              <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm bg-blue-800 hover:bg-blue-700 text-white rounded-lg font-bold text-center touch-manipulation"
-              >
-                Facebook
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Affiliate Disclosure */}
-        <div className="mt-6 sm:mt-8 text-center px-4">
-          <p className="text-blue-300 text-xs opacity-70 italic leading-relaxed">
-            Disclosure: This site participates in the Amazon Services LLC
-            Associates Program, an affiliate advertising program. When you
-            purchase through our links, we may earn a small commission at no
-            additional cost to you. These earnings help maintain this free
-            resource for future officers. All product recommendations are based
-            on utility for OTS and are not influenced by affiliate
-            relationships.
-          </p>
-        </div>
-
-        {/* Footer with Air Force motto - Mobile Optimized */}
-        <div className="mt-6 sm:mt-8 text-center pb-4">
-          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic">
-            "Aim High... Fly-Fight-Win"
-          </p>
-          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic mt-1.5 sm:mt-2">
-            "ALWAYS WITH HONOR"
-          </p>
-          <p className="text-blue-300 text-xs mt-1">Maxwell AFB, Alabama</p>
-        </div>
-      </main>
-    </div>
+      {/* Before you report */}
+      <section className="mt-8 rounded-xl border border-stone-200 bg-white p-4 sm:p-6">
+        <h2 className="font-display text-lg font-semibold uppercase tracking-wide mb-3">
+          Before you report
+        </h2>
+        <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-stone-600">
+          <li>
+            Day 1 attire: solid-color collared shirt, khaki pants with belt,
+            athletic shoes, laces tucked in
+          </li>
+          <li>
+            Upload medical records to WINGS 14 days before arrival &mdash; do
+            not hand carry
+          </li>
+          <li>Break in boots and running shoes before arrival</li>
+          <li>Bring a 90-day supply of all prescription medications</li>
+          <li>Have $2,000+ accessible &mdash; pay delays are common</li>
+          <li>Purchase uniform items from AAFES only to ensure compliance</li>
+          <li>Complete all pre-course assignments 10 days before arrival</li>
+          <li>Print the OTS SPINS in booklet format and bring it</li>
+          <li>
+            Bring a printed copy of the packing requirements on in-processing
+            day
+          </li>
+          <li>Arrive wearing your hydration pack, assembled and filled</li>
+        </ul>
+      </section>
+    </main>
   );
 }

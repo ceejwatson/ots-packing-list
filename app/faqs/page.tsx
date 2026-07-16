@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface FAQ {
@@ -12,31 +11,41 @@ const faqs: FAQ[] = [
   {
     question: "How long is OTS?",
     answer:
-      "Officer Training School is currently an 8-week program (as of 2024). However, this can change, so verify with your recruiter for the most current information.",
+      "The core OTS course is 60 training days (about 9.5 weeks) at Maxwell AFB, plus 22 hours of pre-requisite distance learning before you arrive. Course length can change, so verify with your recruiter.",
   },
   {
     question: "Where is OTS located?",
     answer: "OTS is located at Maxwell Air Force Base in Montgomery, Alabama.",
   },
   {
+    question: "When and how do I report on Day 1?",
+    answer:
+      "Be in the Montgomery local area no later than 11:59 pm the day before class start. Report to the dorms between 0700-0730 - there is no delayed reporting. Arrive clean-shaven, wearing a solid-color collared shirt (tucked in), khaki pants with a belt, athletic shoes with laces tucked in, and your hydration pack assembled and filled with water. See the Reporting page for full details.",
+  },
+  {
     question: "What should I bring on Day 1?",
     answer:
-      "Wear khakis, a belt, athletic shoes, and a solid polo. Bring all required documents (ID, birth certificate, Social Security card, orders), your medications, and basic toiletries. Everything else can be brought in your luggage.",
+      "All required documents in an envelope (orders, DD Form 2983, OTS Form 1, and anything else on the Documents tab), your REAL ID-compliant identification on your person, medications, and basic toiletries. Bring a printed copy of the packing requirements. Everything else comes in your luggage.",
+  },
+  {
+    question: "How should I prepare physically?",
+    answer:
+      "You must be ready to pass the PFA within your first week - there is no time to get in shape after arrival. The OTS PFA is push-ups, sit-ups, and a run. For classes starting after 1 May 2026, the run is 2 miles (up from 1.5) and a waist-to-height measurement counts toward your score. OTS will not administer the HAMR shuttle run, hand-release push-ups, cross-leg reverse crunches, or forearm plank. Expect multiple 4+ mile runs, ruck marches under weight, and obstacle courses during the program. The Warfighter's Fitness Playbook (on afpc.af.mil) is the recommended starting point.",
+  },
+  {
+    question: "How much money should I bring?",
+    answer:
+      "The official guide recommends having at least $2,000 accessible on arrival - pay setup delays of weeks to months are common, especially for component transfers, and you'll need to cover uniforms and incidentals. On top of that, $200-$300 in cash in varied bills is smart for haircuts, the BX, and any card-reader outages.",
   },
   {
     question: "Can I bring my cell phone?",
     answer:
-      "Yes, but usage is extremely limited. You'll have restricted access, typically only during designated times and on weekends. Don't expect regular use during training.",
+      "Yes - a personal cell phone is actually required to log into the Microsoft account issued during in-processing. Usage during scheduled training is restricted, so set expectations with your family before you arrive.",
   },
   {
     question: "Are smart watches allowed?",
     answer:
       "Yes! Smart watches are allowed at OTS. However, at some points they may require you to take them off, such as during testing, field events, and other specific training activities.",
-  },
-  {
-    question: "How much money should I bring?",
-    answer:
-      "$200-$300 in cash is recommended, plus a debit/credit card. You'll need money for haircuts, toiletries, and other personal items from the BX (Base Exchange).",
   },
   {
     question: "What about running shoes?",
@@ -46,22 +55,17 @@ const faqs: FAQ[] = [
   {
     question: "Can I bring my laptop?",
     answer:
-      "Yes, laptops are MANDATORY. Mac computers are allowed. You will use your laptop for coursework, studying, and completing assignments throughout OTS.",
+      "Yes, laptops are MANDATORY. Mac computers are allowed. You will use your laptop for coursework, studying, and completing assignments throughout OTS. CAC-enabled computers and NIPR access are not available to trainees, so bring a CAC reader.",
   },
   {
     question: "What about prescription medications?",
     answer:
-      "You MUST bring all prescription medications in their original containers with documentation from your doctor. Bring enough to last the entire course plus extra.",
+      "Bring a 90-day supply of all prescribed medications in their original containers. Over-the-counter meds like Motrin and Tylenol are authorized and encouraged, and the guide specifically recommends bringing electrolyte mix to cut the risk of heat issues.",
   },
   {
     question: "Do I need military-specific glasses?",
     answer:
-      "If you wear glasses, bring military-approved frames (conservative, solid color). You'll need both prescription glasses and the capability to do PT in them or with contacts.",
-  },
-  {
-    question: "How should I prepare physically?",
-    answer:
-      "Focus on running, push-ups, and sit-ups. The PT test includes a 1.5-mile run, push-ups, and sit-ups. Aim to exceed minimums for your age group. Start training at least 2-3 months before.",
+      "If you wear glasses, bring two pairs with conservative frames per DAFI 36-2903, plus a black eyeglass strap - glasses are secured during field events. Contact lenses are not authorized during field events for safety reasons, so glasses are a must even if you normally wear contacts.",
   },
   {
     question: "Can I receive mail/packages?",
@@ -71,27 +75,27 @@ const faqs: FAQ[] = [
   {
     question: "What about haircuts?",
     answer:
-      "Males must maintain military hair standards (short). Females must ensure hair is within regulations (can't touch collar when in uniform). Barbershop is available on base.",
+      "Males must maintain military hair standards (short). Females must ensure hair is within regulations (can't touch collar when in uniform). Barbershop is available on base. Arrive clean-shaven - moustaches and beards are not authorized except for approved religious accommodations or medical profiles.",
   },
   {
     question: "Will I have roommates?",
     answer:
-      "Yes, you can have up to 3 other roommates (4 people total per room). Privacy is limited, and you'll need to work together to maintain room standards.",
+      "Yes, you can have up to 3 other roommates (4 people total per room). Privacy is limited, and you'll need to work together to maintain room standards. Typical class size is over 200 trainees.",
   },
   {
     question: "What happens if I get injured?",
     answer:
-      "Seek medical attention immediately. Depending on the injury, you may be set back to a later class to recover. Don't try to tough out injuries - this will make them worse.",
+      "Seek medical attention immediately. OTS has an IDMT on campus who runs sick call, and the Tricare Nurse Advice Line is (334) 953-3368. Depending on the injury, you may be set back to a later class to recover. Don't try to tough out injuries - this will make them worse.",
   },
   {
     question: "Can I visit on weekends?",
     answer:
-      "Weekend liberty is earned about halfway through OTS after prop and wings. When granted, you may have off-base privileges. Family visits are possible but must be coordinated carefully.",
+      "Weekend liberty is earned about halfway through OTS after prop and wings. When granted, you may have off-base privileges. Family visits are possible but must be coordinated carefully. Graduation guests without base access will need REAL ID-compliant identification.",
   },
   {
     question: "What's the pass/fail rate?",
     answer:
-      "Most candidates who arrive prepared and motivated will graduate. The biggest reasons for elimination are honor violations, safety issues, medical problems, or failure to meet standards.",
+      "Most candidates who arrive prepared and motivated will graduate. The biggest reasons for elimination are honor violations, safety issues, medical problems, or failure to meet standards. Failing a PFA during training results in disenrollment, so arrive fit.",
   },
   {
     question: "How can I best prepare mentally?",
@@ -101,7 +105,7 @@ const faqs: FAQ[] = [
   {
     question: "What should I do in the weeks before OTS?",
     answer:
-      "Train physically, study AF knowledge, break in your running shoes, get your documents in order, inform your family of limited contact, and mentally prepare for a challenging but rewarding experience.",
+      "Complete your WINGS medical checklist (hard cutoff 14 days out - miss it and you're disenrolled), finish pre-course assignments 10 days out, train physically, study AF knowledge, break in your running shoes, get your documents in order, and inform your family of limited contact.",
   },
   {
     question: "How much should I pack?",
@@ -121,7 +125,7 @@ const faqs: FAQ[] = [
   {
     question: "What are the 7 Basic Responses?",
     answer:
-      "KNOW YOUR 7 BASIC RESPONSES before arriving. These are standard replies you'll use constantly at OTS. Also know DFAC procedures, the Air Force Creed, Space Force song, and Air Force song.",
+      "KNOW YOUR 7 BASIC RESPONSES before arriving. These are standard replies you'll use constantly at OTS. Also know DFAC procedures, the Air Force Creed, Space Force song, and Air Force song. The OTS SPINS on the official website covers expectations in detail - memorizing it is considered part of your pre-course work.",
   },
   {
     question: "What's the daily schedule like?",
@@ -129,14 +133,9 @@ const faqs: FAQ[] = [
       "Wake up call is at 0430 (4:30 AM). Set a personal alarm for 0415 and plan to be walking out your door by the last note of reveille. Days are packed with PT, academics, drill, and inspections. You'll have time at the end of each day to text/call loved ones, but prioritize sleep during the first few days - your roommates will appreciate the quiet too.",
   },
   {
-    question: "Can I wear contacts?",
-    answer:
-      "Regulations say you can't wear contacts to PT and field events, but many trainees wear them without issues. Bring both glasses and contacts. Make sure glasses have military-approved frames.",
-  },
-  {
     question: "What medicine should I bring?",
     answer:
-      "Don't overpack medicine. Prioritize decongestants - you will likely get sick around Week 2. Bring ibuprofen, Tylenol, and behind-the-counter Sudafed. A small stash is sufficient.",
+      "Beyond your 90-day prescription supply, prioritize decongestants - you will likely get sick around Week 2. Bring ibuprofen, Tylenol, behind-the-counter Sudafed, and electrolyte mix. A small stash is sufficient.",
   },
   {
     question: "What items are must-haves?",
@@ -156,178 +155,60 @@ const faqs: FAQ[] = [
 ];
 
 export default function FAQsPage() {
-  const router = useRouter();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      {/* Header - Mobile Optimized */}
-      <header className="bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg border-b-4 border-yellow-400">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-            <div className="text-center sm:text-left">
-              <div className="flex items-center gap-2 sm:gap-4 justify-center sm:justify-start">
-                <img
-                  src="/ots-shield.png"
-                  alt="OTS Shield"
-                  className="w-12 h-12 sm:w-20 sm:h-20 object-contain"
+    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+      <div className="mb-6">
+        <h1 className="font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
+          FAQs
+        </h1>
+        <p className="mt-1 text-sm text-stone-500">
+          Answers from the official guide and trainees who&apos;ve been through
+          it. Updated for the CAO 27 March 2026 Orientation Guide.
+        </p>
+      </div>
+
+      <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100">
+        {faqs.map((faq, index) => (
+          <div key={index}>
+            <button
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              aria-expanded={openIndex === index}
+              className="w-full flex items-center justify-between gap-4 p-4 text-left hover:bg-stone-50 transition-colors"
+            >
+              <span className="text-sm font-medium text-stone-900">
+                {faq.question}
+              </span>
+              <svg
+                className={`w-4 h-4 shrink-0 text-stone-400 transition-transform ${
+                  openIndex === index ? "rotate-180" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
                 />
-                <div>
-                  <h1 className="text-xl sm:text-3xl font-bold text-white tracking-wide">
-                    OTS FAQs
-                  </h1>
-                  <p className="text-xs sm:text-sm text-blue-200 font-semibold uppercase tracking-wider">
-                    Frequently Asked Questions
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex gap-2 w-full sm:w-auto">
-              <button
-                onClick={() => router.push("/")}
-                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white rounded-lg transition-colors font-bold touch-manipulation"
-              >
-                Packing List
-              </button>
-              <button
-                onClick={() => router.push("/reporting")}
-                className="flex-1 sm:flex-initial px-3 sm:px-4 py-2.5 sm:py-2 text-xs sm:text-sm bg-green-600 hover:bg-green-500 active:bg-green-700 text-white rounded-lg transition-colors font-bold touch-manipulation"
-              >
-                Reporting
-              </button>
-            </div>
+              </svg>
+            </button>
+            {openIndex === index && (
+              <p className="px-4 pb-4 text-sm leading-relaxed text-stone-600">
+                {faq.answer}
+              </p>
+            )}
           </div>
-        </div>
-      </header>
+        ))}
+      </div>
 
-      {/* Main Content - Mobile Optimized */}
-      <main className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-8">
-        <div className="bg-white rounded-xl sm:rounded-lg shadow-xl border-t-4 border-yellow-400 overflow-hidden">
-          <div className="p-4 sm:p-6 bg-blue-50 border-b-2 border-blue-200">
-            <h2 className="text-base sm:text-xl font-bold text-blue-900 uppercase tracking-wide">
-              Everything You Need to Know About OTS
-            </h2>
-            <p className="text-xs sm:text-sm text-blue-700 mt-1.5 sm:mt-2">
-              Common questions answered by OTS graduates and official guidance
-            </p>
-          </div>
-
-          <div className="divide-y divide-blue-100">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="transition-colors hover:bg-blue-50 active:bg-blue-100"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full text-left p-3 sm:p-4 flex justify-between items-center gap-3 sm:gap-4 touch-manipulation"
-                >
-                  <h3 className="text-xs sm:text-sm font-bold text-blue-900 flex-1">
-                    {faq.question}
-                  </h3>
-                  <svg
-                    className={`w-4 h-4 sm:w-5 sm:h-5 text-blue-600 flex-shrink-0 transition-transform ${
-                      openIndex === index ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-                {openIndex === index && (
-                  <div className="px-3 sm:px-4 pb-3 sm:pb-4 text-xs sm:text-sm text-blue-800 bg-blue-50 leading-relaxed">
-                    {faq.answer}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Additional Resources - Mobile Optimized */}
-        <div className="mt-4 sm:mt-8 bg-white rounded-xl sm:rounded-lg shadow-xl border-l-4 border-yellow-400 p-4 sm:p-6">
-          <h3 className="text-base sm:text-lg font-bold text-blue-900 uppercase tracking-wide mb-3 sm:mb-4">
-            Official Resources
-          </h3>
-          <ul className="space-y-2 sm:space-y-2">
-            <li>
-              <a
-                href="https://www.afaccessionscenter.af.mil/Holm-Center/OTS/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
-              >
-                → Air Force Accessions Center - OTS Official Site
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.airforce.com/training/military-training/ots"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 active:text-blue-900 font-semibold hover:underline text-xs sm:text-sm block py-1 touch-manipulation"
-              >
-                → AirForce.com OTS Information
-              </a>
-            </li>
-          </ul>
-          <p className="text-xs text-blue-600 mt-3 sm:mt-4 italic leading-relaxed">
-            Always verify information with your recruiter and official sources.
-            Requirements and policies can change.
-          </p>
-        </div>
-
-        {/* Affiliate Disclosure */}
-        <div className="mt-6 sm:mt-8 text-center px-4">
-          <p className="text-blue-300 text-xs opacity-70 italic leading-relaxed">
-            Disclosure: This site participates in the Amazon Services LLC
-            Associates Program, an affiliate advertising program. When you
-            purchase through our links, we may earn a small commission at no
-            additional cost to you. These earnings help maintain this free
-            resource for future officers. All product recommendations are based
-            on utility for OTS and are not influenced by affiliate
-            relationships.
-          </p>
-        </div>
-
-        {/* Footer - Mobile Optimized */}
-        <div className="mt-6 sm:mt-8 text-center pb-4">
-          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic">
-            "Aim High... Fly-Fight-Win"
-          </p>
-          <p className="text-blue-200 text-xs sm:text-sm font-semibold italic mt-1.5 sm:mt-2">
-            "ALWAYS WITH HONOR"
-          </p>
-          <p className="text-blue-300 text-xs mt-1">
-            Good luck at OTS, Future Officer!
-          </p>
-        </div>
-      </main>
-    </div>
+      <p className="mt-6 text-xs text-stone-400 text-center">
+        When in doubt, the official Orientation Guide and your WINGS welcome
+        email outrank everything on this page.
+      </p>
+    </main>
   );
 }
