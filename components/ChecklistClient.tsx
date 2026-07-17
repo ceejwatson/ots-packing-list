@@ -38,12 +38,12 @@ function ItemThumbnail({
     <Image
       src={src}
       alt=""
-      width={64}
-      height={64}
-      sizes="64px"
+      width={112}
+      height={112}
+      sizes="(min-width: 640px) 112px, 56px"
       loading="lazy"
       onError={() => setErrored(true)}
-      className={`w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-lg border border-stone-200 bg-white p-1.5 transition-opacity ${
+      className={`w-14 h-14 sm:w-28 sm:h-28 object-contain rounded-lg border border-stone-200 bg-white p-1.5 sm:p-2 transition-opacity ${
         isPacked ? "opacity-40" : buyLink ? "hover:opacity-80" : ""
       }`}
     />
@@ -96,6 +96,20 @@ export default function ChecklistClient() {
     window.dispatchEvent(new Event("ots-progress"));
   };
 
+  const onTabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    const current = tabs.indexOf(activeTab);
+    let next: number | null = null;
+    if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+    else if (e.key === "ArrowLeft")
+      next = (current - 1 + tabs.length) % tabs.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = tabs.length - 1;
+    if (next === null) return;
+    e.preventDefault();
+    setActiveTab(tabs[next]);
+    document.getElementById(`tab-${tabs[next]}`)?.focus();
+  };
+
   const counts = tabs.map((t) => {
     const inTab = items.filter((i) => i.category === t);
     return {
@@ -134,7 +148,9 @@ export default function ChecklistClient() {
             role="tab"
             aria-selected={activeTab === tab}
             aria-controls="checklist-panel"
+            tabIndex={activeTab === tab ? 0 : -1}
             onClick={() => setActiveTab(tab)}
+            onKeyDown={onTabKeyDown}
             className={`px-2 py-2.5 rounded-md text-xs sm:text-sm font-medium transition-colors min-h-[44px] ${
               activeTab === tab
                 ? "bg-white text-stone-900 shadow-sm"
