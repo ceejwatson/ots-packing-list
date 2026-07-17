@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { faqs } from "@/lib/faqs-data";
 
 export const metadata: Metadata = {
-  title: "OTS FAQs - Common Questions About Officer Training School",
+  title: "FAQs",
   description:
     "Answers to common Air Force OTS questions: length, location, phones, smart watches, laptops, money, medications, and what to bring on Day 1.",
   alternates: { canonical: "/faqs" },
