@@ -1,6 +1,25 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Reporting Instructions",
+  description:
+    "Air Force OTS Day 1 reporting instructions: arrival window, base access, grooming standards, required attire, prohibited items, and the campus map.",
+  alternates: { canonical: "/reporting" },
+  openGraph: {
+    title: "OTS Reporting Instructions — Air Force Officer Training School",
+    description:
+      "Day 1 arrival window, base access, grooming standards, required attire, and the OTS campus map.",
+    url: "/reporting",
+  },
+};
+
 export default function ReportingPage() {
   return (
-    <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+    <main
+      id="main-content"
+      className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10"
+    >
       <div className="mb-6">
         <h1 className="font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
           Reporting instructions
@@ -49,7 +68,14 @@ export default function ReportingPage() {
               >
                 af.dodlodging.nest
               </a>{" "}
-              or (334) 953-3931/7544/1690.
+              or{" "}
+              <a
+                href="tel:+13349533931"
+                className="text-blue-700 underline hover:text-blue-900"
+              >
+                (334) 953-3931
+              </a>
+              /7544/1690.
             </li>
           </ul>
         </section>
@@ -79,7 +105,10 @@ export default function ReportingPage() {
                   missed or delayed flights or other travel issues, contact OTS
                   immediately &mdash;{" "}
                   <strong className="text-stone-900">
-                    call or text (334) 315-2080
+                    call or text{" "}
+                    <a href="tel:+13343152080" className="underline">
+                      (334) 315-2080
+                    </a>
                   </strong>{" "}
                   with your name, travel issue, and updated expected arrival
                   time.
@@ -98,8 +127,12 @@ export default function ReportingPage() {
               <ul className="mt-2 space-y-2 list-[circle] pl-5 marker:text-stone-400">
                 <li>
                   The base taxi is available at{" "}
-                  <strong className="text-stone-900">(334) 953-5038</strong>.
-                  Coordinate ahead of time to ensure on-time arrival.
+                  <strong className="text-stone-900">
+                    <a href="tel:+13349535038" className="underline">
+                      (334) 953-5038
+                    </a>
+                  </strong>
+                  . Coordinate ahead of time to ensure on-time arrival.
                 </li>
               </ul>
             </li>
@@ -205,9 +238,12 @@ export default function ReportingPage() {
             Park only in the designated area and follow the arrows to the dorm
             identified in your welcome email.
           </p>
-          <img
+          <Image
             src="/images/ots-campus-map.png"
             alt="OTS campus map showing officer trainee parking and dorm buildings 1486, 1488, 1489, and 1491"
+            width={1606}
+            height={1240}
+            sizes="(max-width: 768px) 100vw, 768px"
             className="w-full h-auto rounded-lg border border-stone-200"
           />
         </section>
