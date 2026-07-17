@@ -781,7 +781,7 @@ export function getAmazonLink(searchQuery?: string, asin?: string): string {
 
   // Otherwise use search link (more flexible)
   if (searchQuery) {
-    return `https://www.amazon.com/s?k=${searchQuery}&tag=${associateId}`;
+    return `https://www.amazon.com/s?k=${encodeURIComponent(searchQuery)}&tag=${associateId}`;
   }
 
   return "";
