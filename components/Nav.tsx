@@ -58,7 +58,7 @@ export default function Nav() {
 
   return (
     <header
-      className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-stone-200"
+      className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-stone-200 print:hidden"
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6">

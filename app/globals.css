@@ -19,6 +19,16 @@ body {
   outline-offset: 2px;
 }
 
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  body {
+    background: #fff;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

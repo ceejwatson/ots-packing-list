@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   PackingItem,
@@ -125,14 +126,36 @@ export default function ChecklistClient() {
   return (
     <>
       {/* Page header */}
-      <div className="mb-6">
-        <h1 className="font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
-          Packing checklist
-        </h1>
-        <p className="mt-1 text-sm text-stone-500">
-          Current to the CAO 27 March 2026 Orientation Guide &middot;{" "}
-          {totalPacked} of {items.length} items packed
-        </p>
+      <div className="mb-6 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
+        <div>
+          <h1 className="font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
+            Packing checklist
+          </h1>
+          <p className="mt-1 text-sm text-stone-500">
+            Current to the CAO 27 March 2026 Orientation Guide &middot;{" "}
+            {totalPacked} of {items.length} items packed
+          </p>
+        </div>
+        <Link
+          href="/print"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:text-blue-900 py-1"
+        >
+          <svg
+            aria-hidden="true"
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 9V4h12v5M6 18H4a1 1 0 01-1-1v-6a1 1 0 011-1h16a1 1 0 011 1v6a1 1 0 01-1 1h-2M6 14h12v6H6v-6z"
+            />
+          </svg>
+          Print version
+        </Link>
       </div>
 
       {/* Segmented control */}

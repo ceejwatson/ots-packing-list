@@ -84,7 +84,7 @@ export default function RootLayout({
         <Nav />
         {children}
         <footer
-          className="border-t border-stone-200 mt-16"
+          className="border-t border-stone-200 mt-16 print:hidden"
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
           <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 text-center space-y-3">
