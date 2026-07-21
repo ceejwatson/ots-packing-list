@@ -2,40 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PackingItem, defaultOTSPackingList } from "@/lib/packing-list-data";
+import {
+  PackingItem,
+  buildDefaultItems,
+  loadItems,
+  saveItems,
+} from "@/lib/packing-list-data";
 
 const categories = ["Required", "Recommended", "Documents"] as const;
-const STORAGE_KEY = "ots-packing-list-v3";
-
-function buildDefaultItems(): PackingItem[] {
-  return defaultOTSPackingList.map((item, index) => ({
-    ...item,
-    id: `item-${index}`,
-    is_packed: false,
-  }));
-}
 
 export default function DashboardClient() {
   const [items, setItems] = useState<PackingItem[]>(buildDefaultItems);
   const [confirmReset, setConfirmReset] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setItems(JSON.parse(stored));
-    } catch {
-      // localStorage unavailable — keep defaults
-    }
+    setItems(loadItems());
   }, []);
 
   const resetProgress = () => {
     const reset = items.map((i) => ({ ...i, is_packed: false }));
     setItems(reset);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(reset));
-    } catch {
-      // ignore write failures
-    }
+    saveItems(reset);
     window.dispatchEvent(new Event("ots-progress"));
     setConfirmReset(false);
   };

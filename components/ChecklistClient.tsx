@@ -2,24 +2,22 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   PackingItem,
-  defaultOTSPackingList,
+  buildDefaultItems,
   getAmazonLink,
+  loadItems,
+  saveItems,
 } from "@/lib/packing-list-data";
 
 type TabType = "Documents" | "Required" | "Recommended";
 const tabs: TabType[] = ["Required", "Recommended", "Documents"];
-const STORAGE_KEY = "ots-packing-list-v3";
 
-function buildDefaultItems(): PackingItem[] {
-  return defaultOTSPackingList.map((item, index) => ({
-    ...item,
-    id: `item-${index}`,
-    is_packed: false,
-  }));
-}
+const sectionHeadings = {
+  Womens: "Women's items",
+  Mens: "Men's items",
+} as const;
 
 function ItemThumbnail({
   src,
@@ -72,16 +70,9 @@ export default function ChecklistClient() {
   const [activeTab, setActiveTab] = useState<TabType>("Required");
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setItems(JSON.parse(stored));
-      } else {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(buildDefaultItems()));
-      }
-    } catch {
-      // localStorage unavailable (private browsing, etc.) — fall back to defaults
-    }
+    const loaded = loadItems();
+    setItems(loaded);
+    saveItems(loaded);
   }, []);
 
   const togglePacked = (id: string) => {
@@ -89,11 +80,7 @@ export default function ChecklistClient() {
       item.id === id ? { ...item, is_packed: !item.is_packed } : item,
     );
     setItems(updated);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    } catch {
-      // ignore write failures
-    }
+    saveItems(updated);
     window.dispatchEvent(new Event("ots-progress"));
   };
 
@@ -121,6 +108,13 @@ export default function ChecklistClient() {
   });
 
   const filteredItems = items.filter((item) => item.category === activeTab);
+  const itemGroups = [
+    { heading: null as string | null, items: filteredItems.filter((i) => !i.section) },
+    ...(["Womens", "Mens"] as const).map((s) => ({
+      heading: sectionHeadings[s] as string | null,
+      items: filteredItems.filter((i) => i.section === s),
+    })),
+  ].filter((g) => g.items.length > 0);
   const totalPacked = items.filter((i) => i.is_packed).length;
 
   return (
@@ -204,7 +198,14 @@ export default function ChecklistClient() {
             No items in this category.
           </p>
         ) : (
-          filteredItems.map((item) => {
+          itemGroups.map((group) => (
+            <Fragment key={group.heading ?? "general"}>
+              {group.heading && (
+                <div className="px-4 py-2 bg-stone-50 text-xs font-semibold uppercase tracking-wide text-stone-500">
+                  {group.heading}
+                </div>
+              )}
+              {group.items.map((item) => {
             const buyLink =
               !item.aafes_only && (item.amazon_search || item.amazon_asin)
                 ? getAmazonLink(item.amazon_search, item.amazon_asin)
@@ -283,18 +284,32 @@ export default function ChecklistClient() {
                   </span>
                 </button>
 
-                {/* Thumbnail */}
-                {item.image_url && (
+                {/* Thumbnail, or a plain buy link when there's no image */}
+                {item.image_url ? (
                   <ItemThumbnail
                     src={item.image_url}
                     itemName={item.item_name}
                     buyLink={buyLink}
                     isPacked={!!item.is_packed}
                   />
+                ) : (
+                  buyLink && (
+                    <a
+                      href={buyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Shop ${item.item_name} on Amazon`}
+                      className="self-center shrink-0 mr-1.5 sm:mr-2 inline-flex items-center rounded-md border border-stone-200 px-2.5 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-50 transition-colors"
+                    >
+                      Amazon
+                    </a>
+                  )
                 )}
               </div>
             );
-          })
+              })}
+            </Fragment>
+          ))
         )}
       </div>
 

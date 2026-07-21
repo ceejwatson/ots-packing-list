@@ -72,6 +72,11 @@ export default function PrintPage() {
           const items = defaultOTSPackingList.filter(
             (i) => i.category === category,
           );
+          const groups = [
+            { subheading: null as string | null, items: items.filter((i) => !i.section) },
+            { subheading: "Women's items", items: items.filter((i) => i.section === "Womens") },
+            { subheading: "Men's items", items: items.filter((i) => i.section === "Mens") },
+          ].filter((g) => g.items.length > 0);
           return (
             <section
               key={category}
@@ -83,8 +88,15 @@ export default function PrintPage() {
                   ({items.length})
                 </span>
               </h2>
+              {groups.map(({ subheading, items: groupItems }) => (
+                <div key={subheading ?? "general"}>
+                  {subheading && (
+                    <h3 className="mt-4 mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500 print:mt-2 print:mb-1 print:text-[10px] print:text-stone-800">
+                      {subheading}
+                    </h3>
+                  )}
               <ul className="space-y-2 print:space-y-0 print:columns-2 print:gap-8">
-                {items.map((item) => (
+                {groupItems.map((item) => (
                   <li
                     key={item.item_name}
                     className="flex items-start gap-2.5 print:gap-1.5 print:break-inside-avoid print:py-[3px]"
@@ -116,6 +128,8 @@ export default function PrintPage() {
                   </li>
                 ))}
               </ul>
+                </div>
+              ))}
             </section>
           );
         })}

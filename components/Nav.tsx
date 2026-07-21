@@ -14,7 +14,9 @@ const links = [
 
 function readProgress(): number {
   try {
-    const stored = localStorage.getItem("ots-packing-list-v3");
+    const stored =
+      localStorage.getItem("ots-packing-list-v4") ??
+      localStorage.getItem("ots-packing-list-v3");
     if (!stored) return 0;
     const items = JSON.parse(stored) as { is_packed: boolean }[];
     if (!items.length) return 0;

@@ -1,6 +1,8 @@
 export interface PackingItem {
   id?: string;
   category: "Documents" | "Required" | "Recommended";
+  /** Sex-specific items are grouped into Women's / Men's sub-sections */
+  section?: "Womens" | "Mens";
   item_name: string;
   quantity: number;
   is_packed: boolean;
@@ -768,7 +770,150 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     notes: "All-Purpose Environmental Clothing System",
     aafes_only: true,
   },
+
+  // WOMEN'S ITEMS
+  {
+    category: "Required",
+    section: "Womens",
+    item_name: "Sports bras",
+    quantity: 4,
+    notes: "Min: 3, Recommended: 5 - High-impact for daily PT",
+    amazon_search: "womens high impact sports bra",
+  },
+  {
+    category: "Required",
+    section: "Womens",
+    item_name: "Feminine hygiene supplies",
+    quantity: 1,
+    notes: "60-day supply - part of required hygiene items",
+    amazon_search: "feminine hygiene products multipack",
+  },
+  {
+    category: "Required",
+    section: "Womens",
+    item_name: "Hair ties and bobby pins",
+    quantity: 1,
+    notes: "Must match your hair color IAW DAFI 36-2903",
+    amazon_search: "hair ties bobby pins set",
+  },
+  {
+    category: "Recommended",
+    section: "Womens",
+    item_name: "Hair bun maker kit",
+    quantity: 1,
+    notes: "Fast regulation bun on early mornings",
+    amazon_search: "hair bun maker donut kit",
+  },
+  {
+    category: "Recommended",
+    section: "Womens",
+    item_name: "Strong-hold hairspray or gel",
+    quantity: 1,
+    notes: "Keeps the bun within regs through PT and field days",
+    amazon_search: "travel size strong hold hairspray",
+  },
+  {
+    category: "Recommended",
+    section: "Womens",
+    item_name: "Nude hosiery",
+    quantity: 2,
+    notes: "Optional with the blues skirt",
+    amazon_search: "womens nude sheer pantyhose",
+  },
+
+  // MEN'S ITEMS
+  {
+    category: "Required",
+    section: "Mens",
+    item_name: "Razor and spare blades",
+    quantity: 1,
+    notes: "Daily shaving required unless you have a shaving waiver",
+    amazon_search: "mens razor with refill blades",
+  },
+  {
+    category: "Required",
+    section: "Mens",
+    item_name: "Shaving cream or gel",
+    quantity: 1,
+    notes: "60-day supply",
+    amazon_search: "shaving cream sensitive skin",
+  },
+  {
+    category: "Recommended",
+    section: "Mens",
+    item_name: "Aftershave balm",
+    quantity: 1,
+    notes: "Helps with daily-shave irritation",
+    amazon_search: "aftershave balm sensitive skin",
+  },
+  {
+    category: "Recommended",
+    section: "Mens",
+    item_name: "Razor bump treatment",
+    quantity: 1,
+    notes: "If prone to ingrown hairs from daily shaving",
+    amazon_search: "razor bump treatment men",
+  },
+  {
+    category: "Recommended",
+    section: "Mens",
+    item_name: "Travel electric shaver",
+    quantity: 1,
+    notes: "Quick touch-ups before inspections",
+    amazon_search: "mens travel electric shaver",
+  },
+  {
+    category: "Recommended",
+    section: "Mens",
+    item_name: "Hair clippers",
+    quantity: 1,
+    notes: "Stay within regs between barber visits",
+    amazon_search: "mens hair clippers home haircut",
+  },
 ];
+
+export const STORAGE_KEY = "ots-packing-list-v4";
+const LEGACY_STORAGE_KEY = "ots-packing-list-v3";
+
+export function buildDefaultItems(): PackingItem[] {
+  return defaultOTSPackingList.map((item, index) => ({
+    ...item,
+    id: `item-${index}`,
+    is_packed: false,
+  }));
+}
+
+// Load saved progress, carrying checkmarks over from older versions of the
+// list (matched by item name) so new items can be added without wiping state.
+export function loadItems(): PackingItem[] {
+  const defaults = buildDefaultItems();
+  try {
+    const stored =
+      localStorage.getItem(STORAGE_KEY) ??
+      localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (!stored) return defaults;
+    const packedByName = new Map(
+      (JSON.parse(stored) as PackingItem[]).map((i) => [
+        i.item_name,
+        !!i.is_packed,
+      ]),
+    );
+    return defaults.map((item) => ({
+      ...item,
+      is_packed: packedByName.get(item.item_name) ?? false,
+    }));
+  } catch {
+    return defaults;
+  }
+}
+
+export function saveItems(items: PackingItem[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    // localStorage unavailable (private browsing, etc.)
+  }
+}
 
 // Helper function to generate Amazon link - handles both ASIN and search
 export function getAmazonLink(searchQuery?: string, asin?: string): string {
