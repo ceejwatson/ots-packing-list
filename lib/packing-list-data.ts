@@ -385,13 +385,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
-    item_name: "Cash",
-    quantity: 1,
-    notes:
-      "Min $2,000 accessible (pay delays common), $65 exact for field meals (Direct Commission only)",
-  },
-  {
-    category: "Required",
     item_name: "Prescription medications",
     quantity: 1,
     notes: "90-day supply in original containers",

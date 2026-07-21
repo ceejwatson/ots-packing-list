@@ -329,7 +329,10 @@ export default function ChecklistClient() {
           </li>
           <li>Break in boots and running shoes before arrival</li>
           <li>Bring a 90-day supply of all prescription medications</li>
-          <li>Have $2,000+ accessible &mdash; pay delays are common</li>
+          <li>
+            Have $2,000+ accessible &mdash; pay delays are common ($65 exact
+            cash for field meals, Direct Commission only)
+          </li>
           <li>Purchase uniform items from AAFES only to ensure compliance</li>
           <li>Complete all pre-course assignments 10 days before arrival</li>
           <li>Print the OTS SPINS in booklet format and bring it</li>
