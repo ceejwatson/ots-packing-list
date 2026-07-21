@@ -1,34 +1,19 @@
-# Adding the Official OTS Logo
+# Site Logo
 
-To replace the placeholder "OTS" circle with the official logo:
+The site uses an original shield mark (`ots-shield.png`, plus the matching
+`icon-192.png` / `icon-512.png` and `app/icon.png` favicons): a blue two-tone
+shield with a gold rim, a four-pointed gold star, and three ascending chevrons.
 
-1. Download the official OTS logo from:
-   - [Air University OTS page](https://www.airuniversity.af.edu/Holm-Center/OTS/)
-   - [Air Force Accessions Center](https://www.afaccessionscenter.af.mil/Holm-Center/OTS/)
+This is intentionally **not** the official OTS crest or any DoD insignia.
+Official military emblems are subject to usage restrictions, and this site is
+an unofficial, independent resource — do not replace the mark with official
+Air Force or DoD imagery.
 
-2. Save the logo as `ots-logo.png` in this `public` folder
+The source SVG palette:
 
-3. Update `app/dashboard/page.tsx` to use the image:
-   Replace this:
-   ```jsx
-   <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center font-bold text-blue-900 text-xl border-4 border-blue-700">
-     OTS
-   </div>
-   ```
-   
-   With this:
-   ```jsx
-   <img 
-     src="/ots-logo.png" 
-     alt="OTS Logo" 
-     className="w-16 h-16 object-contain"
-   />
-   ```
+- Navy: `#1b3a6b` / `#274f92`
+- Gold: `#f2c22e`
+- Off-white: `#f5f5f4`
 
-4. Commit and push the changes
-
-## Air Force Brand Guidelines
-
-- **Air Force Blue**: #00308F (RGB: 0, 48, 143)
-- **Yellow/Gold**: #FFC72C (RGB: 255, 199, 44)
-- Always maintain proper respect for official Air Force insignia and branding
+To regenerate at other sizes, edit the SVG and export with any SVG-to-PNG
+tool (e.g. `sharp`, `rsvg-convert`).
