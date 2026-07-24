@@ -771,7 +771,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Sports bras",
     quantity: 4,
     notes: "Min: 3, Recommended: 5 - High-impact for daily PT",
-    amazon_search: "womens high impact sports bra",
+    amazon_asin: "B0D18BD5GB",
   },
   {
     category: "Required",
@@ -779,7 +779,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Feminine hygiene supplies",
     quantity: 1,
     notes: "60-day supply - part of required hygiene items",
-    amazon_search: "feminine hygiene products multipack",
+    amazon_asin: "B08L4Q75QP",
   },
   {
     category: "Required",
@@ -787,7 +787,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Hair ties and bobby pins",
     quantity: 1,
     notes: "Must match your hair color IAW DAFI 36-2903",
-    amazon_search: "hair ties bobby pins set",
+    amazon_asin: "B0FX9GJRBZ",
   },
   {
     category: "Recommended",
@@ -795,7 +795,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Hair bun maker kit",
     quantity: 1,
     notes: "Fast regulation bun on early mornings",
-    amazon_search: "hair bun maker donut kit",
+    amazon_asin: "B07CT9615X",
   },
   {
     category: "Recommended",
@@ -803,7 +803,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Strong-hold hairspray or gel",
     quantity: 1,
     notes: "Keeps the bun within regs through PT and field days",
-    amazon_search: "travel size strong hold hairspray",
+    amazon_asin: "B00GMZL6M8",
   },
   {
     category: "Recommended",
@@ -811,7 +811,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Nude hosiery",
     quantity: 2,
     notes: "Optional with the blues skirt",
-    amazon_search: "womens nude sheer pantyhose",
+    amazon_asin: "B08L4N32FG",
   },
 
   // MEN'S ITEMS
@@ -821,7 +821,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Razor and spare blades",
     quantity: 1,
     notes: "Daily shaving required unless you have a shaving waiver",
-    amazon_search: "mens razor with refill blades",
+    amazon_asin: "B06X9V77XY",
   },
   {
     category: "Required",
@@ -829,7 +829,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Shaving cream or gel",
     quantity: 1,
     notes: "60-day supply",
-    amazon_search: "shaving cream sensitive skin",
+    amazon_asin: "B010U29CA6",
   },
   {
     category: "Recommended",
@@ -837,7 +837,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Aftershave balm",
     quantity: 1,
     notes: "Helps with daily-shave irritation",
-    amazon_search: "aftershave balm sensitive skin",
+    amazon_asin: "B00IB0XO04",
   },
   {
     category: "Recommended",
@@ -845,7 +845,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Razor bump treatment",
     quantity: 1,
     notes: "If prone to ingrown hairs from daily shaving",
-    amazon_search: "razor bump treatment men",
+    amazon_asin: "B000NPJHQU",
   },
   {
     category: "Recommended",
@@ -853,7 +853,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Travel electric shaver",
     quantity: 1,
     notes: "Quick touch-ups before inspections",
-    amazon_search: "mens travel electric shaver",
+    amazon_asin: "B0D64HBN5S",
   },
   {
     category: "Recommended",
@@ -861,7 +861,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Hair clippers",
     quantity: 1,
     notes: "Stay within regs between barber visits",
-    amazon_search: "mens hair clippers home haircut",
+    amazon_asin: "B07994GT2W",
   },
 ];
 
