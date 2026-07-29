@@ -1,6 +1,11 @@
 import Analyzer from '@/components/Analyzer'
 import { hasModelAccess } from '@/lib/anthropic'
 
+// Read ANTHROPIC_API_KEY at request time, not build time. On Vercel the key is
+// often added in the dashboard after the first deploy; a statically prerendered
+// page would bake in "no key" and hide the chat until a manual rebuild.
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   return (
     <main className="mx-auto w-full max-w-3xl px-5 pb-24 pt-10 sm:pt-16">
