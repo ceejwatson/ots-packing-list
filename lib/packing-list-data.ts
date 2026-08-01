@@ -773,6 +773,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 4,
     notes: "Min: 3, Recommended: 5 - High-impact for daily PT",
     amazon_asin: "B0D18BD5GB",
+    image_url: "/images/sports-bras.jpg",
   },
   {
     category: "Required",
@@ -781,6 +782,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "60-day supply - part of required hygiene items",
     amazon_asin: "B08L4Q75QP",
+    image_url: "/images/feminine-hygiene.jpg",
   },
   {
     category: "Required",
@@ -789,6 +791,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Must match your hair color IAW DAFI 36-2903",
     amazon_asin: "B0FX9GJRBZ",
+    image_url: "/images/hair-ties-bobby-pins.jpg",
   },
   {
     category: "Recommended",
@@ -797,6 +800,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Fast regulation bun on early mornings",
     amazon_asin: "B07CT9615X",
+    image_url: "/images/hair-bun-maker.jpg",
   },
   {
     category: "Recommended",
@@ -805,6 +809,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Keeps the bun within regs through PT and field days",
     amazon_asin: "B00GMZL6M8",
+    image_url: "/images/hairspray.jpg",
   },
   {
     category: "Recommended",
@@ -813,6 +818,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 2,
     notes: "Optional with the blues skirt",
     amazon_asin: "B08L4N32FG",
+    image_url: "/images/nude-hosiery.jpg",
   },
 
   // MEN'S ITEMS
@@ -823,6 +829,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Daily shaving required unless you have a shaving waiver",
     amazon_asin: "B06X9V77XY",
+    image_url: "/images/razor.jpg",
   },
   {
     category: "Required",
@@ -831,6 +838,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "60-day supply",
     amazon_asin: "B010U29CA6",
+    image_url: "/images/shaving-cream.jpg",
   },
   {
     category: "Recommended",
@@ -839,6 +847,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Helps with daily-shave irritation",
     amazon_asin: "B00IB0XO04",
+    image_url: "/images/aftershave-balm.jpg",
   },
   {
     category: "Recommended",
@@ -847,6 +856,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "If prone to ingrown hairs from daily shaving",
     amazon_asin: "B000NPJHQU",
+    image_url: "/images/razor-bump-treatment.jpg",
   },
   {
     category: "Recommended",
@@ -855,6 +865,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Quick touch-ups before inspections",
     amazon_asin: "B0D64HBN5S",
+    image_url: "/images/electric-shaver.jpg",
   },
   {
     category: "Recommended",
@@ -863,6 +874,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     quantity: 1,
     notes: "Stay within regs between barber visits",
     amazon_asin: "B07994GT2W",
+    image_url: "/images/hair-clippers.jpg",
   },
 ];
 
