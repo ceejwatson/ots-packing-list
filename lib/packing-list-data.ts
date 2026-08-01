@@ -190,7 +190,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Black dress socks",
     quantity: 2,
     notes: "Min: 2, Recommended: 4",
-    amazon_asin: "B0D2P33BFC",
+    amazon_asin: "B0002TORIU",
     image_url: "/images/dress-socks.jpg",
   },
   {
@@ -321,7 +321,8 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Mouthguard",
     quantity: 1,
     notes: "Required for combatives training",
-    amazon_asin: "B07PQSDZGG",
+    amazon_asin: "B00I1BDKPC",
+    image_url: "/images/mouthguard.jpg",
   },
   {
     category: "Required",
