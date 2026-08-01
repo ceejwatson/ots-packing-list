@@ -305,7 +305,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Wristwatch",
     quantity: 1,
     notes: "Smart watches authorized with restrictions",
-    amazon_asin: "B007RWZHXO",
+    amazon_asin: "B004IYZ17Q",
     image_url: "/images/watch.jpg",
   },
   {
