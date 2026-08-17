@@ -259,8 +259,13 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Black backpack",
     quantity: 1,
     notes: "IAW DAFI 36-2903, for 72-hour bag",
-    amazon_asin: "B0DCXN23RY",
-    image_url: "/images/backpack.jpg",
+    amazon_asin: "B0746XD3F1",
+    // Thumbnail intentionally omitted: this ASIN was swapped from the old SOG
+    // Ninja pack (which has a skull patch on the front pocket) to the 5.11
+    // Tactical RUSH24 2.0 in plain Black, style 56563. Retail sites are
+    // network-blocked in this environment, so a matching product photo
+    // couldn't be fetched. The UI falls back to a plain "Amazon" link when
+    // image_url is absent. Swap in a real photo of B0746XD3F1 when available.
   },
   {
     category: "Required",
