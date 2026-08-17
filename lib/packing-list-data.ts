@@ -259,13 +259,15 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Black backpack",
     quantity: 1,
     notes: "IAW DAFI 36-2903, for 72-hour bag",
-    amazon_asin: "B0746XD3F1",
+    amazon_asin: "B01MYV8VZU",
     // Thumbnail intentionally omitted: this ASIN was swapped from the old SOG
-    // Ninja pack (which has a skull patch on the front pocket) to the 5.11
-    // Tactical RUSH24 2.0 in plain Black, style 56563. Retail sites are
+    // Ninja pack (skull patch on the front pocket) to the REEBOW GEAR Tactical
+    // Backpack, 34L Black — same plain MOLLE tactical look at a much lower
+    // price than the 5.11 RUSH24 2.0 this replaced. Amazon's most-reviewed
+    // tactical backpack (24k+ ratings, 4.7 stars). Retail sites are
     // network-blocked in this environment, so a matching product photo
     // couldn't be fetched. The UI falls back to a plain "Amazon" link when
-    // image_url is absent. Swap in a real photo of B0746XD3F1 when available.
+    // image_url is absent. Swap in a real photo of B01MYV8VZU when available.
   },
   {
     category: "Required",
