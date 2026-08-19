@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
   const batches = chunkAsins(asins, 10);
   const dead: Array<{ asin: string; name: string; error?: string }> = [];
   const unavailable: Array<{ asin: string; name: string; message?: string }> = [];
+  const unverified: Array<{ asin: string; name: string }> = [];
   const ok: string[] = [];
   const requestFailures: Array<{ batch: number; status: number; errors: unknown; sample?: unknown }> = [];
 
@@ -45,7 +46,8 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    if (!result.ok || result.requestErrors.length > 0) {
+    const batchFailed = !result.ok || result.requestErrors.length > 0;
+    if (batchFailed) {
       requestFailures.push({
         batch: i,
         status: result.httpStatus,
@@ -56,7 +58,13 @@ export async function GET(req: NextRequest) {
 
     for (const item of result.items) {
       const name = nameByAsin.get(item.asin) ?? item.asin;
-      if (!item.found) {
+      // A whole-batch failure (bad credentials, throttling, ineligible
+      // account) means we genuinely don't know these items' status — do
+      // NOT count them as dead, or a single auth problem misreports every
+      // item in the batch as a broken product link.
+      if (batchFailed) {
+        unverified.push({ asin: item.asin, name });
+      } else if (!item.found) {
         dead.push({ asin: item.asin, name, error: item.errorMessage ?? item.errorCode });
       } else if (!item.hasOffer || item.availabilityType !== "Now") {
         unavailable.push({
@@ -78,10 +86,11 @@ export async function GET(req: NextRequest) {
     okCount: ok.length,
     dead,
     unavailable,
+    unverifiedCount: unverified.length,
     requestFailures,
     note:
       requestFailures.length === batches.length
-        ? "Every batch failed — likely a credentials or account-eligibility problem (PA-API requires 3 qualifying sales in the trailing 180 days), not individual broken links."
+        ? "Every batch failed at the request level — this is a credentials or account-eligibility problem (PA-API requires 3 qualifying sales in the trailing 180 days), not evidence about individual product links. None of the items below could actually be checked."
         : undefined,
   });
 }
