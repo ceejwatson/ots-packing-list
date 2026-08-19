@@ -46,8 +46,11 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const batchFailed = !result.ok || result.requestErrors.length > 0;
-    if (batchFailed) {
+    // Creators API can return HTTP 200 with a mix of successful items and
+    // per-item errors in the same batch — a non-empty requestErrors list
+    // does NOT mean the whole batch is unusable. Log it for visibility,
+    // but classify strictly per item below.
+    if (!result.ok || result.requestErrors.length > 0) {
       requestFailures.push({
         batch: i,
         status: result.httpStatus,
@@ -58,22 +61,27 @@ export async function GET(req: NextRequest) {
 
     for (const item of result.items) {
       const name = nameByAsin.get(item.asin) ?? item.asin;
-      // A whole-batch failure (bad credentials, throttling, ineligible
-      // account) means we genuinely don't know these items' status — do
-      // NOT count them as dead, or a single auth problem misreports every
-      // item in the batch as a broken product link.
-      if (batchFailed) {
-        unverified.push({ asin: item.asin, name });
-      } else if (!item.found) {
+      if (item.found) {
+        // Confirmed via a live response: Creators API's availability.type
+        // for a purchasable listing is "IN_STOCK" (not the old PA-API
+        // "Now"). Anything else, or no listing at all, is unavailable.
+        if (item.hasOffer && item.availabilityType === "IN_STOCK") {
+          ok.push(name);
+        } else {
+          unavailable.push({
+            asin: item.asin,
+            name,
+            message: item.availabilityMessage ?? "no buyable offer",
+          });
+        }
+      } else if (item.errorCode || item.errorMessage) {
+        // Amazon named this specific ASIN in an error (ItemNotAccessible,
+        // InvalidParameterValue, etc.) — a real, item-specific problem.
         dead.push({ asin: item.asin, name, error: item.errorMessage ?? item.errorCode });
-      } else if (!item.hasOffer || item.availabilityType !== "Now") {
-        unavailable.push({
-          asin: item.asin,
-          name,
-          message: item.availabilityMessage ?? "no buyable offer",
-        });
       } else {
-        ok.push(name);
+        // Not returned and not named in any error — the request-level
+        // failure (bad token, throttling) means we don't know its status.
+        unverified.push({ asin: item.asin, name });
       }
     }
 
@@ -89,8 +97,10 @@ export async function GET(req: NextRequest) {
     unverifiedCount: unverified.length,
     requestFailures,
     note:
-      requestFailures.length === batches.length
-        ? "Every batch failed at the request level — this is a credentials or account-eligibility problem (Creators API reportedly requires 10 qualifying sales in the trailing 30 days), not evidence about individual product links. None of the items below could actually be checked."
-        : undefined,
+      unverified.length === asins.length
+        ? "No item could be checked — this is a credentials or account-eligibility problem (Creators API reportedly requires 10 qualifying sales in the trailing 30 days), not evidence about individual product links."
+        : unverified.length > 0
+          ? `${unverified.length} item(s) could not be verified due to a request-level failure in their batch; see requestFailures. dead[] only lists items Amazon specifically flagged as inaccessible.`
+          : undefined,
   });
 }

@@ -158,10 +158,24 @@ export async function getItemsAvailability(
     data?.itemsResult?.items ?? data?.ItemsResult?.Items ?? [];
   const byAsin = new Map(returnedItems.map((it) => [it.asin ?? it.ASIN, it]));
 
+  // Creators API can return a 200 with a MIX of successful items and
+  // per-item errors in the same batch (e.g. 8 items found, 2
+  // ItemNotAccessible). Errors don't carry a structured ASIN field, but
+  // Amazon's error text does name the ASIN verbatim ("The ItemId X is not
+  // accessible..."), so match each error to whichever requested ASIN(s)
+  // appear in its message — this is what distinguishes "this specific
+  // item is genuinely dead" from "the whole request failed" below.
+  const itemErrorsByAsin = new Map<string, { code?: string; message?: string }>();
+  for (const err of requestErrors) {
+    const mentioned = asins.filter((a) => err.message?.includes(a));
+    for (const a of mentioned) itemErrorsByAsin.set(a, err);
+  }
+
   const items: PaapiItemResult[] = asins.map((asin) => {
     const item = byAsin.get(asin);
     if (!item) {
-      return { asin, found: false, hasOffer: false };
+      const err = itemErrorsByAsin.get(asin);
+      return { asin, found: false, hasOffer: false, errorCode: err?.code, errorMessage: err?.message };
     }
     const listing = item?.offersV2?.listings?.[0] ?? item?.Offers?.Listings?.[0];
     const availability = listing?.availability ?? listing?.Availability;
