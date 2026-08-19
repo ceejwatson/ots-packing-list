@@ -1,22 +1,87 @@
 /**
- * Minimal Amazon Product Advertising API 5.0 client (GetItems only).
+ * Amazon Creators API client (GetItems equivalent).
+ *
+ * Amazon retired classic Product Advertising API 5.0 (AWS Signature v4,
+ * AKIA-style keys) in favor of the Creators API: OAuth2 client-credentials
+ * auth against a REST catalog API. https://affiliate-program.amazon.com/creatorsapi
  *
  * Server-side only — never import this from a "use client" component.
- * Reads credentials from AMAZON_PAAPI_ACCESS_KEY / AMAZON_PAAPI_SECRET_KEY,
- * which must be set as Vercel environment variables and are never bundled
- * into client code. Uses AWS Signature Version 4, implemented directly with
- * Node's built-in crypto module (no external SDK / no new dependency).
+ * Reads AMAZON_PAAPI_ACCESS_KEY / AMAZON_PAAPI_SECRET_KEY from the
+ * environment (names predate this rewrite; they now hold the Creators API
+ * client_id / client_secret, not AWS keys).
  *
- * Docs: https://webservices.amazon.com/paapi5/documentation/get-items.html
+ * CAVEAT: the exact endpoint paths and JSON field names below are
+ * reconstructed from third-party documentation of a fairly new API, not
+ * exhaustively verified against Amazon's primary docs. Response parsing
+ * checks both the documented lowerCamelCase field names and the old PA-API
+ * PascalCase ones defensively, in case the source material is imprecise.
+ * `rawSample` in the result always carries the real response for diagnosis.
  */
-import { createHash, createHmac } from "node:crypto";
 
-const HOST = "webservices.amazon.com";
-const REGION = "us-east-1";
-const SERVICE = "ProductAdvertisingAPI";
-const URI_PATH = "/paapi5/getitems";
-const TARGET = "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.GetItems";
+const TOKEN_ENDPOINT = "https://api.amazon.com/auth/o2/token";
+const API_HOST = "https://creatorsapi.amazon";
+const GET_ITEMS_PATH = "/catalog/v1/getItems";
 const PARTNER_TAG = "otspackinglis-20";
+const MARKETPLACE = "www.amazon.com";
+
+interface TokenCache {
+  token: string;
+  expiresAt: number; // epoch ms
+}
+// Best-effort cache across warm serverless invocations. Not required for
+// correctness — a cold start just fetches a fresh token.
+let cachedToken: TokenCache | null = null;
+
+async function getAccessToken(): Promise<string> {
+  const clientId = process.env.AMAZON_PAAPI_ACCESS_KEY;
+  const clientSecret = process.env.AMAZON_PAAPI_SECRET_KEY;
+  if (!clientId || !clientSecret) {
+    throw new Error(
+      "AMAZON_PAAPI_ACCESS_KEY / AMAZON_PAAPI_SECRET_KEY are not set",
+    );
+  }
+
+  const now = Date.now();
+  if (cachedToken && cachedToken.expiresAt - 60_000 > now) {
+    return cachedToken.token;
+  }
+
+  const res = await fetch(TOKEN_ENDPOINT, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      grant_type: "client_credentials",
+      client_id: clientId,
+      client_secret: clientSecret,
+      scope: "creatorsapi::default",
+    }),
+  });
+
+  const text = await res.text();
+  let data: any;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(
+      `Token endpoint returned non-JSON (status ${res.status}): ${text.slice(0, 500)}`,
+    );
+  }
+
+  if (!res.ok || !data.access_token) {
+    const err: any = new Error(
+      `Token request failed (status ${res.status}): ${JSON.stringify(data).slice(0, 500)}`,
+    );
+    err.httpStatus = res.status;
+    err.body = data;
+    throw err;
+  }
+
+  cachedToken = {
+    token: data.access_token,
+    expiresAt: now + (data.expires_in ?? 3600) * 1000,
+  };
+  return cachedToken.token;
+}
 
 export interface PaapiItemResult {
   asin: string;
@@ -37,26 +102,11 @@ export interface PaapiBatchResult {
   rawSample?: unknown;
 }
 
-function hmac(key: Buffer | string, data: string): Buffer {
-  return createHmac("sha256", key).update(data, "utf8").digest();
-}
-
-function sha256Hex(data: string): string {
-  return createHash("sha256").update(data, "utf8").digest("hex");
-}
-
-function getSigningKey(secretKey: string, dateStamp: string): Buffer {
-  const kDate = hmac(`AWS4${secretKey}`, dateStamp);
-  const kRegion = hmac(kDate, REGION);
-  const kService = hmac(kRegion, SERVICE);
-  return hmac(kService, "aws4_request");
-}
-
 /**
- * Fetch availability for up to 10 ASINs in one signed request.
- * Throws only on transport failure or missing credentials; API-level
- * errors (bad ASIN, ineligible account, etc.) are returned in the result
- * so callers can report them instead of crashing.
+ * Fetch availability for up to 10 ASINs in one call.
+ * Throws only on transport/token failure; API-level errors (bad ASIN,
+ * ineligible account, etc.) are returned in the result so callers can
+ * report them instead of crashing.
  */
 export async function getItemsAvailability(
   asins: string[],
@@ -65,76 +115,37 @@ export async function getItemsAvailability(
     throw new Error("getItemsAvailability accepts 1 to 10 ASINs per call");
   }
 
-  const accessKey = process.env.AMAZON_PAAPI_ACCESS_KEY;
-  const secretKey = process.env.AMAZON_PAAPI_SECRET_KEY;
-  if (!accessKey || !secretKey) {
-    throw new Error(
-      "AMAZON_PAAPI_ACCESS_KEY / AMAZON_PAAPI_SECRET_KEY are not set",
-    );
+  let token: string;
+  try {
+    token = await getAccessToken();
+  } catch (e: any) {
+    return {
+      ok: false,
+      httpStatus: e?.httpStatus ?? 0,
+      items: asins.map((asin) => ({ asin, found: false, hasOffer: false })),
+      requestErrors: [{ code: "TokenRequestFailed", message: e?.message ?? String(e) }],
+      rawSample: e?.body,
+    };
   }
 
-  const requestBody = {
-    ItemIds: asins,
-    PartnerTag: PARTNER_TAG,
-    PartnerType: "Associates",
-    Marketplace: "www.amazon.com",
-    Resources: [
-      "ItemInfo.Title",
-      "Offers.Listings.Availability.Message",
-      "Offers.Listings.Availability.Type",
-    ],
-  };
-  const payload = JSON.stringify(requestBody);
-
-  const now = new Date();
-  const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, ""); // YYYYMMDDTHHMMSSZ
-  const dateStamp = amzDate.slice(0, 8);
-
-  const canonicalHeaders =
-    `content-encoding:amz-1.0\n` +
-    `content-type:application/json; charset=utf-8\n` +
-    `host:${HOST}\n` +
-    `x-amz-date:${amzDate}\n` +
-    `x-amz-target:${TARGET}\n`;
-  const signedHeaders =
-    "content-encoding;content-type;host;x-amz-date;x-amz-target";
-  const payloadHash = sha256Hex(payload);
-
-  const canonicalRequest = [
-    "POST",
-    URI_PATH,
-    "",
-    canonicalHeaders,
-    signedHeaders,
-    payloadHash,
-  ].join("\n");
-
-  const credentialScope = `${dateStamp}/${REGION}/${SERVICE}/aws4_request`;
-  const stringToSign = [
-    "AWS4-HMAC-SHA256",
-    amzDate,
-    credentialScope,
-    sha256Hex(canonicalRequest),
-  ].join("\n");
-
-  const signingKey = getSigningKey(secretKey, dateStamp);
-  const signature = hmac(signingKey, stringToSign).toString("hex");
-
-  const authorization =
-    `AWS4-HMAC-SHA256 Credential=${accessKey}/${credentialScope}, ` +
-    `SignedHeaders=${signedHeaders}, Signature=${signature}`;
-
-  const res = await fetch(`https://${HOST}${URI_PATH}`, {
+  const res = await fetch(`${API_HOST}${GET_ITEMS_PATH}`, {
     method: "POST",
     headers: {
-      "content-encoding": "amz-1.0",
-      "content-type": "application/json; charset=utf-8",
-      host: HOST,
-      "x-amz-date": amzDate,
-      "x-amz-target": TARGET,
-      authorization,
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+      "x-marketplace": MARKETPLACE,
     },
-    body: payload,
+    body: JSON.stringify({
+      itemIds: asins,
+      partnerTag: PARTNER_TAG,
+      partnerType: "Associates",
+      marketplace: MARKETPLACE,
+      resources: [
+        "itemInfo.title",
+        "offersV2.listings.availability.message",
+        "offersV2.listings.availability.type",
+      ],
+    }),
   });
 
   const text = await res.text();
@@ -142,45 +153,31 @@ export async function getItemsAvailability(
   try {
     data = JSON.parse(text);
   } catch {
-    // Non-JSON response (rare) — surface raw text via rawSample below.
+    // Non-JSON response — surfaced via rawSample below.
   }
 
   const requestErrors: Array<{ code?: string; message?: string }> = (
-    data?.Errors ?? []
-  ).map((e: any) => ({ code: e?.Code, message: e?.Message }));
+    data?.errors ?? data?.Errors ?? []
+  ).map((e: any) => ({ code: e?.code ?? e?.Code, message: e?.message ?? e?.Message }));
 
-  const returnedItems: any[] = data?.ItemsResult?.Items ?? [];
-  const byAsin = new Map(returnedItems.map((it) => [it.ASIN, it]));
-
-  // PA-API can also report per-item errors without an ItemsResult entry.
-  const itemErrors: Map<string, { code?: string; message?: string }> =
-    new Map();
-  for (const e of data?.Errors ?? []) {
-    // Some error shapes echo the offending ASIN; best-effort match.
-    const asinMatch = asins.find((a) => (e?.Message ?? "").includes(a));
-    if (asinMatch) itemErrors.set(asinMatch, { code: e?.Code, message: e?.Message });
-  }
+  const returnedItems: any[] =
+    data?.itemsResult?.items ?? data?.ItemsResult?.Items ?? [];
+  const byAsin = new Map(returnedItems.map((it) => [it.asin ?? it.ASIN, it]));
 
   const items: PaapiItemResult[] = asins.map((asin) => {
     const item = byAsin.get(asin);
     if (!item) {
-      const err = itemErrors.get(asin);
-      return {
-        asin,
-        found: false,
-        hasOffer: false,
-        errorCode: err?.code,
-        errorMessage: err?.message,
-      };
+      return { asin, found: false, hasOffer: false };
     }
-    const listing = item?.Offers?.Listings?.[0];
+    const listing = item?.offersV2?.listings?.[0] ?? item?.Offers?.Listings?.[0];
+    const availability = listing?.availability ?? listing?.Availability;
     return {
       asin,
       found: true,
-      title: item?.ItemInfo?.Title?.DisplayValue,
+      title: item?.itemInfo?.title?.displayValue ?? item?.ItemInfo?.Title?.DisplayValue,
       hasOffer: !!listing,
-      availabilityType: listing?.Availability?.Type,
-      availabilityMessage: listing?.Availability?.Message,
+      availabilityType: availability?.type ?? availability?.Type,
+      availabilityMessage: availability?.message ?? availability?.Message,
     };
   });
 

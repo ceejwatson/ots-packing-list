@@ -90,7 +90,7 @@ export async function GET(req: NextRequest) {
     requestFailures,
     note:
       requestFailures.length === batches.length
-        ? "Every batch failed at the request level — this is a credentials or account-eligibility problem (PA-API requires 3 qualifying sales in the trailing 180 days), not evidence about individual product links. None of the items below could actually be checked."
+        ? "Every batch failed at the request level — this is a credentials or account-eligibility problem (Creators API reportedly requires 10 qualifying sales in the trailing 30 days), not evidence about individual product links. None of the items below could actually be checked."
         : undefined,
   });
 }
