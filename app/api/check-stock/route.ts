@@ -5,6 +5,9 @@ import { defaultOTSPackingList } from "@/lib/packing-list-data";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Confirmed against live Creators API responses (not guessed).
+const PURCHASABLE_TYPES = new Set(["IN_STOCK", "IN_STOCK_SCARCE"]);
+
 /**
  * Internal diagnostic endpoint — audits every Amazon affiliate link on the
  * site via the Product Advertising API instead of scraping product pages
@@ -62,10 +65,11 @@ export async function GET(req: NextRequest) {
     for (const item of result.items) {
       const name = nameByAsin.get(item.asin) ?? item.asin;
       if (item.found) {
-        // Confirmed via a live response: Creators API's availability.type
-        // for a purchasable listing is "IN_STOCK" (not the old PA-API
-        // "Now"). Anything else, or no listing at all, is unavailable.
-        if (item.hasOffer && item.availabilityType === "IN_STOCK") {
+        // Confirmed via live responses: purchasable listings come back as
+        // either "IN_STOCK" or "IN_STOCK_SCARCE" ("Only N left in stock").
+        // "OUT_OF_STOCK" ("Currently unavailable.") and "AVAILABLE_DATE"
+        // (future/preorder availability) are genuinely not purchasable now.
+        if (item.hasOffer && PURCHASABLE_TYPES.has(item.availabilityType ?? "")) {
           ok.push(name);
         } else {
           unavailable.push({
