@@ -10,12 +10,12 @@
  * environment (names predate this rewrite; they now hold the Creators API
  * client_id / client_secret, not AWS keys).
  *
- * CAVEAT: the exact endpoint paths and JSON field names below are
- * reconstructed from third-party documentation of a fairly new API, not
- * exhaustively verified against Amazon's primary docs. Response parsing
- * checks both the documented lowerCamelCase field names and the old PA-API
- * PascalCase ones defensively, in case the source material is imprecise.
- * `rawSample` in the result always carries the real response for diagnosis.
+ * Endpoint, headers, and request/response field names are verified against
+ * Amazon's own creatorsapi-nodejs-sdk source (OAuth2Config.js, ApiClient.js,
+ * DefaultApi.js, GetItemsRequestContent.js, GetItemsResource.js) — not
+ * reimplemented from third-party docs. Response parsing still checks the
+ * old PA-API PascalCase field names as a defensive fallback, and
+ * `rawSample` always carries the real response for diagnosis.
  */
 
 const TOKEN_ENDPOINT = "https://api.amazon.com/auth/o2/token";
@@ -138,13 +138,7 @@ export async function getItemsAvailability(
     body: JSON.stringify({
       itemIds: asins,
       partnerTag: PARTNER_TAG,
-      partnerType: "Associates",
-      marketplace: MARKETPLACE,
-      resources: [
-        "itemInfo.title",
-        "offersV2.listings.availability.message",
-        "offersV2.listings.availability.type",
-      ],
+      resources: ["itemInfo.title", "offersV2.listings.availability"],
     }),
   });
 
