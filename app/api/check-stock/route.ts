@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
   const batches = chunkAsins(asins, 10);
   const dead: Array<{ asin: string; name: string; error?: string }> = [];
-  const unavailable: Array<{ asin: string; name: string; message?: string }> = [];
+  const unavailable: Array<{ asin: string; name: string; message?: string; rawType?: string }> = [];
   const unverified: Array<{ asin: string; name: string }> = [];
   const ok: string[] = [];
   const requestFailures: Array<{ batch: number; status: number; errors: unknown; sample?: unknown }> = [];
@@ -72,6 +72,7 @@ export async function GET(req: NextRequest) {
             asin: item.asin,
             name,
             message: item.availabilityMessage ?? "no buyable offer",
+            rawType: item.hasOffer ? item.availabilityType : undefined,
           });
         }
       } else if (item.errorCode || item.errorMessage) {
