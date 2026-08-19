@@ -221,7 +221,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Required",
     item_name: "Shower shoes/flip flops",
     quantity: 1,
-    amazon_asin: "B07FDB7GMZ",
+    amazon_asin: "B0CW1JJ95W",
     image_url: "/images/shower-slides.jpg",
   },
   {
@@ -259,22 +259,19 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Black backpack",
     quantity: 1,
     notes: "IAW DAFI 36-2903, for 72-hour bag",
-    amazon_asin: "B01MYV8VZU",
-    // Thumbnail intentionally omitted: this ASIN was swapped from the old SOG
-    // Ninja pack (skull patch on the front pocket) to the REEBOW GEAR Tactical
-    // Backpack, 34L Black — same plain MOLLE tactical look at a much lower
-    // price than the 5.11 RUSH24 2.0 this replaced. Amazon's most-reviewed
-    // tactical backpack (24k+ ratings, 4.7 stars). Retail sites are
-    // network-blocked in this environment, so a matching product photo
-    // couldn't be fetched. The UI falls back to a plain "Amazon" link when
-    // image_url is absent. Swap in a real photo of B01MYV8VZU when available.
+    // Previous pick (REEBOW GEAR 34L) went out of stock. Swapped to a 45L
+    // MOLLE assault pack, plain black with only a small removable flag
+    // patch (no skull/edgy graphics), confirmed in stock via a live,
+    // logged-in Amazon session.
+    amazon_asin: "B0C13GFY7N",
+    image_url: "/images/backpack.jpg",
   },
   {
     category: "Required",
     item_name: "Hydration pack (1.5L minimum)",
     quantity: 1,
     notes: 'Max 18"x12"x5", must have document pouch, include electrolytes',
-    amazon_asin: "B0DZ6GB89C",
+    amazon_asin: "B074M9CNM4",
     image_url: "/images/hydration-pack.jpg",
   },
   {
@@ -304,7 +301,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Towels and washcloths",
     quantity: 2,
     notes: 'Min: 2 towels - No wider than 24" x 44", includes washcloths',
-    amazon_asin: "B0B2X5KRDM",
+    amazon_asin: "B09X35SJRC",
     image_url: "/images/washcloth.jpg",
   },
   {
@@ -336,7 +333,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Eye protection (wrap-around)",
     quantity: 1,
     notes: "Must have fully enclosed sides",
-    amazon_asin: "B0DH4LH7YK",
+    amazon_asin: "B08VRMSJ8W",
     image_url: "/images/sunglasses.jpg",
   },
   {
@@ -779,7 +776,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Sports bras",
     quantity: 4,
     notes: "Min: 3, Recommended: 5 - High-impact for daily PT",
-    amazon_asin: "B0D18BD5GB",
+    amazon_asin: "B0BMPFH9PH",
     image_url: "/images/sports-bras.jpg",
   },
   {
@@ -815,7 +812,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Strong-hold hairspray or gel",
     quantity: 1,
     notes: "Keeps the bun within regs through PT and field days",
-    amazon_asin: "B00GMZL6M8",
+    amazon_asin: "B08X976H6W",
     image_url: "/images/hairspray.jpg",
   },
   {
