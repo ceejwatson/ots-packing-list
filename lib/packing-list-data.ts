@@ -151,7 +151,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Required",
     item_name: "Laptop",
     quantity: 1,
-    amazon_asin: "B0FRMLQ9BF",
+    amazon_asin: "B0BS4BP8FB",
     image_url: "/images/laptop.jpg",
   },
   {
@@ -159,7 +159,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Running shoes",
     quantity: 1,
     notes: "Min: 1, Recommended: 2 - MUST be broken in before arrival",
-    amazon_asin: "B0D43J3N8B",
+    amazon_asin: "B087TC5YWM",
     image_url: "/images/running-shoes.jpg",
   },
   {
@@ -228,7 +228,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     category: "Required",
     item_name: "Toiletry bag",
     quantity: 1,
-    amazon_asin: "B0747N45S5",
+    amazon_asin: "B0815BBB5B",
     image_url: "/images/toiletry-bag.jpg",
   },
   {
@@ -620,7 +620,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Rechargeable fan",
     quantity: 1,
     notes: "AC goes out often at OTS, life saver item",
-    amazon_asin: "B0CYGRBQ3Y",
+    amazon_asin: "B0G6L6BZ6Y",
     image_url: "/images/rechargeable-fan.jpg",
   },
   {
@@ -824,7 +824,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     item_name: "Nude hosiery",
     quantity: 2,
     notes: "Optional with the blues skirt",
-    amazon_asin: "B08L4N32FG",
+    amazon_asin: "B00LVNVN4C",
     image_url: "/images/nude-hosiery.jpg",
   },
 
