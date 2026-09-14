@@ -10,7 +10,7 @@ export default function PackingItemCard({ item, excluded, ready, onChange }: {
   const [imageFailed, setImageFailed] = useState(false);
   const url = item.aafes_only ? '' : getAmazonLink(item.amazon_search, item.amazon_asin);
   const image = <span className="relative flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-lg bg-white">
-    {item.image_url && !imageFailed ? <Image src={item.image_url} alt={item.item_name} fill sizes="88px" loading="lazy" onError={() => setImageFailed(true)} className="object-contain p-0.5" /> : <span className="text-xs text-slate-400">No image</span>}
+    {item.image_url && !imageFailed ? <Image src={item.image_url} alt={item.item_name} fill sizes="88px" loading="lazy" onError={() => setImageFailed(true)} className="object-contain p-0.5" /> : null}
   </span>;
   return <article id={item.id} className={`flex items-start gap-2 border-l-4 p-3 sm:gap-3 sm:p-4 ${excluded ? 'border-l-slate-200 bg-slate-50' : item.is_packed ? 'border-l-emerald-600 bg-emerald-50' : 'border-l-slate-200'}`}>
     <button role="checkbox" aria-checked={item.is_packed} aria-label={`Mark ${item.item_name} complete`} disabled={!ready || excluded} onClick={() => onChange(item.id, 'is_packed')} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg">
@@ -29,3 +29,4 @@ export default function PackingItemCard({ item, excluded, ready, onChange }: {
     </div>
   </article>;
 }
+
