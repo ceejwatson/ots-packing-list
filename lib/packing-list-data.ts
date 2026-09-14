@@ -1005,18 +1005,21 @@ export const defaultOTSPackingList: Omit<PackingItem, "is_packed">[] = [
   },
 ];
 
-// Helper function to generate Amazon link - handles both ASIN and search
-export function getAmazonLink(searchQuery?: string, asin?: string): string {
-  const associateId = "otspackinglis-20";
+export const AMAZON_ASSOCIATE_ID = "otspackinglis-20";
 
-  // If ASIN is provided, use direct product link (higher conversion)
+// The single source for every Amazon destination shown by the site.
+export function getAmazonLink(searchQuery?: string, asin?: string): string {
   if (asin) {
-    return `https://www.amazon.com/dp/${asin}?tag=${associateId}`;
+    const url = new URL(`https://www.amazon.com/dp/${asin}`);
+    url.searchParams.set("tag", AMAZON_ASSOCIATE_ID);
+    return url.toString();
   }
 
-  // Otherwise use search link (more flexible)
   if (searchQuery) {
-    return `https://www.amazon.com/s?k=${encodeURIComponent(searchQuery)}&tag=${associateId}`;
+    const url = new URL("https://www.amazon.com/s");
+    url.searchParams.set("k", searchQuery);
+    url.searchParams.set("tag", AMAZON_ASSOCIATE_ID);
+    return url.toString();
   }
 
   return "";

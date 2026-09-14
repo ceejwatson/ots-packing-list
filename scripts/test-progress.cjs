@@ -4,11 +4,19 @@ const assert = require('node:assert/strict');
 require.extensions['.ts'] = (module, file) => module._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText, file);
 const p = require('../lib/progress.ts');
 const { authorizeAudit } = require('../lib/audit-guard.ts');
+const { AMAZON_ASSOCIATE_ID, defaultOTSPackingList, getAmazonLink } = require('../lib/packing-list-data.ts');
 const data = new Map();
 global.localStorage = { getItem: key => data.get(key) ?? null, setItem: (key, value) => data.set(key, value) };
 async function main() {
   const plan = p.emptyPlan();
   assert.equal(new Set(plan.items.map(i => i.id)).size, plan.items.length);
+  const shoppingItems = defaultOTSPackingList.filter(i => !i.aafes_only && (i.amazon_asin || i.amazon_search));
+  assert.ok(shoppingItems.length > 0);
+  for (const item of shoppingItems) {
+    const url = new URL(getAmazonLink(item.amazon_search, item.amazon_asin));
+    assert.equal(url.hostname, 'www.amazon.com');
+    assert.deepEqual(url.searchParams.getAll('tag'), [AMAZON_ASSOCIATE_ID]);
+  }
   data.set('ots-packing-list-v4', JSON.stringify([{ item_name: 'Laptop', is_packed: true }]));
   assert.equal(p.readPlan().plan.items.find(i => i.id === 'laptop').is_packed, true);
   const renamed = p.emptyPlan(); renamed.items[0].item_name = 'Edited display name'; renamed.items[0].is_packed = true;
@@ -38,3 +46,4 @@ async function main() {
   console.log('PASS: stable IDs, migration, seasonal boundaries, exclusions, optional readiness, dates, backup validation, storage failures, audit auth and distributed cooldown.');
 }
 main().catch(e => { console.error(e); process.exitCode = 1; });
+

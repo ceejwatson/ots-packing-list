@@ -7,6 +7,9 @@ const fs = require('fs');
   const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message));
   await page.goto((process.env.BASE_URL || 'http://localhost:3001'));
   await page.getByRole('checkbox', { name: /Mark .* complete/ }).first().waitFor();
+  const amazonLinks = await page.locator('a[href*="amazon.com"]').evaluateAll(links => links.map(link => link.href));
+  assert.ok(amazonLinks.length > 0);
+  for (const href of amazonLinks) assert.deepEqual(new URL(href).searchParams.getAll('tag'), ['otspackinglis-20']);
   await page.getByRole('checkbox', { name: /Mark .* complete/ }).first().click();
   const marks = page.getByRole('checkbox', { name: /Mark .* complete/ });
   await marks.nth(1).click();
@@ -80,5 +83,6 @@ const fs = require('fs');
   console.log('PASS: mobile navigation, no horizontal overflow, checkmarks/reload, filters, exclusions, no reset controls and automatic saving, desktop navigation, fail-closed API, storage failure warning, failed-image shopping fallback, no page errors.');
   await browser.close();
 })().catch(error => { console.error(error); process.exit(1); });
+
 
 
