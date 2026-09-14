@@ -1,67 +1,31 @@
 "use client";
-
 import Image from 'next/image';
 import { useState } from 'react';
 import { getAmazonLink, type PackingItem } from '@/lib/packing-list-data';
 
-type StatusField = 'is_owned' | 'is_packed' | 'not_applicable';
-
 export default function PackingItemCard({ item, excluded, ready, onChange }: {
-  item: PackingItem;
-  excluded: boolean;
-  ready: boolean;
-  onChange: (id: string, field: StatusField) => void;
+  item: PackingItem; excluded: boolean; ready: boolean;
+  onChange: (id: string, field: 'is_packed' | 'not_applicable') => void;
 }) {
   const [imageFailed, setImageFailed] = useState(false);
-  const affiliateUrl = item.aafes_only ? '' : getAmazonLink(item.amazon_search, item.amazon_asin);
-
-  return (
-    <article className={`relative isolate p-3 transition-colors sm:p-5 ${excluded ? 'bg-slate-50' : item.is_packed ? 'bg-emerald-50/30' : ''} ${affiliateUrl ? 'hover:bg-blue-50/40' : ''}`}>
-      <div className="flex items-center gap-3 sm:gap-4">
-        <div className="min-w-0 flex-1">
-          {(item.section || item.seasonal || item.not_applicable) && (
-            <div className="mb-1 flex flex-wrap gap-2">
-              {item.section && <span className="item-tag">{item.section === 'Womens' ? "Women's" : "Men's"}</span>}
-              {item.seasonal && <span className="item-tag">Oct–May required</span>}
-              {item.not_applicable && <span className="item-tag">Not applicable</span>}
-            </div>
-          )}
-          <h3 className={`text-sm font-semibold leading-6 ${item.is_packed ? 'text-emerald-800' : 'text-slate-900'}`}>
-            {affiliateUrl ? (
-              <a href={affiliateUrl} target="_blank" rel="noopener noreferrer sponsored"
-                aria-label={`View ${item.item_name} on Amazon`}
-                className="after:absolute after:inset-0 after:cursor-pointer focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-blue-700">
-                {item.item_name}
-              </a>
-            ) : item.item_name}
-            {!item.notes?.includes('Min:') && item.quantity > 1 && <span className="ml-2 text-xs text-slate-500">×{item.quantity}</span>}
-          </h3>
-          {item.notes && <p className="mt-1 text-xs leading-5 text-slate-500">{item.notes}</p>}
-          {affiliateUrl && <span className="mt-1 block text-[11px] font-semibold text-blue-800" aria-hidden="true">Amazon ↗</span>}
-          {item.aafes_only && <span className="mt-1 block text-[10px] font-bold tracking-wider text-slate-500">AAFES</span>}
-        </div>
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-white p-1">
-          {item.image_url && !imageFailed ? (
-            <Image src={item.image_url} alt="" width={68} height={68} sizes="68px"
-              onError={() => setImageFailed(true)} className="h-[68px] w-[68px] object-contain" />
-          ) : (
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-7 w-7 text-slate-300">
-              <path d="m12 3 9 5-9 5-9-5 9-5ZM3 8v9l9 5 9-5V8M12 13v9" />
-            </svg>
-          )}
-        </div>
-      </div>
-      <div className="mt-2 flex flex-wrap items-center gap-2">
-        <button disabled={!ready} aria-pressed={!!item.is_owned} onClick={() => onChange(item.id, 'is_owned')}
-          className={`status-button relative z-10 ${item.is_owned ? 'owned' : ''}`}>
-          <span aria-hidden="true">{item.is_owned ? '✓ ' : '+ '}</span>Have it
-        </button>
-        <button disabled={!ready} aria-pressed={item.is_packed} onClick={() => onChange(item.id, 'is_packed')}
-          className={`status-button relative z-10 ${item.is_packed ? 'packed' : ''}`}>{item.is_packed ? '✓ Packed' : 'Pack item'}</button>
-        <button disabled={!ready} aria-pressed={!!item.not_applicable} onClick={() => onChange(item.id, 'not_applicable')}
-          className="relative z-10 ml-auto min-h-11 px-2 text-xs text-slate-500 hover:text-slate-900">{item.not_applicable ? 'Include again' : 'Not applicable'}</button>
-      </div>
-    </article>
-  );
+  const url = item.aafes_only ? '' : getAmazonLink(item.amazon_search, item.amazon_asin);
+  const image = <span className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-white p-1">
+    {item.image_url && !imageFailed ? <Image src={item.image_url} alt={item.item_name} width={68} height={68} sizes="68px" loading="lazy" onError={() => setImageFailed(true)} className="h-[68px] w-[68px] object-contain" /> : <span className="text-xs text-slate-400">No image</span>}
+  </span>;
+  return <article id={item.id} className={`flex items-start gap-2 border-l-4 p-3 sm:gap-3 sm:p-4 ${excluded ? 'border-l-slate-200 bg-slate-50' : item.is_packed ? 'border-l-emerald-600 bg-emerald-50/30' : 'border-l-slate-200'}`}>
+    <button role="checkbox" aria-checked={item.is_packed} aria-label={`Mark ${item.item_name} complete`} disabled={!ready || excluded} onClick={() => onChange(item.id, 'is_packed')} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg">
+      <span aria-hidden="true" className={`flex h-6 w-6 items-center justify-center rounded-md border-2 text-sm ${item.is_packed ? 'border-emerald-700 bg-emerald-700 text-white' : 'border-slate-300 bg-white'}`}>{item.is_packed ? '✓' : ''}</span>
+    </button>
+    <div className="min-w-0 flex-1 pt-2">
+      <h3 className={`text-sm font-semibold leading-5 ${item.is_packed ? 'text-slate-500 line-through' : 'text-slate-900'}`}>{item.item_name}{!item.notes?.includes('Min:') && item.quantity > 1 && <span className="ml-1 text-xs text-slate-500">×{item.quantity}</span>}</h3>
+      {item.notes && <p className="mt-1 text-xs leading-5 text-slate-500">{item.notes}</p>}
+      {item.section && <span className="item-tag mt-1 inline-block">{item.section === 'Womens' ? "Women's" : "Men's"}</span>}
+      {item.seasonal && <span className="item-tag mt-1 inline-block">Oct–May required</span>}
+    </div>
+    <div className="flex w-20 shrink-0 flex-col items-center">
+      {url ? <a href={url} target="_blank" rel="noopener noreferrer sponsored" aria-label={`View ${item.item_name} image on Amazon`}>{image}</a> : image}
+      {url ? <a href={url} target="_blank" rel="noopener noreferrer sponsored" aria-label={`View ${item.item_name} on Amazon`} className="flex min-h-11 items-center text-xs font-semibold text-blue-800">Amazon ↗</a> : item.aafes_only ? <span className="flex min-h-11 items-center text-xs text-slate-500">AAFES</span> : null}
+      <button disabled={!ready} aria-pressed={!!item.not_applicable} aria-label={`N/A for ${item.item_name}`} onClick={() => onChange(item.id, 'not_applicable')} className={`min-h-11 w-full rounded-lg border text-xs font-semibold ${item.not_applicable ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-200 text-slate-500'}`}>N/A</button>
+    </div>
+  </article>;
 }
-

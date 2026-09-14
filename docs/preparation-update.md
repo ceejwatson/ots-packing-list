@@ -21,3 +21,11 @@ Use a Redis database shared by all production instances. An atomic `SET NX EX` p
 - `node scripts/browser-check.cjs`: requires a running app on port 3000, Playwright available as a Node module (or `PLAYWRIGHT_MODULE` set to its installed path), and Chrome. Uses isolated browser contexts. Checks mobile/desktop navigation, search/filtering, exclusions, persistence, reset, dates, failed-image links, storage errors and the unconfigured audit response. Writes screenshots locally.
 
 The design includes navy surfaces, consistent controls, visible shopping links, a responsive desktop header, safe-area-aware mobile bottom navigation, and a resource footer. Mobile content reserves space for the fixed navigation.
+
+## Simplified checklist update
+
+The interface now has one completion checkbox per item, with N/A and an Amazon link under its image. Separate owned/packed controls and reset have been removed. The legacy is_packed storage field is retained only for compatibility and now represents a checkmark; previously owned or packed items migrate as complete. Unchecking clears both legacy flags. N/A items are excluded from required progress and can be restored through Show excluded.
+
+The footer slash was removed and trailingSlash is explicitly false. The search title is more descriptive, structured list entries include stable item anchors, and the sitemap omits the noindex personal overview and artificial last-modified timestamps. Images remain lazy-loaded and now have a 68px optimization size. Apple touch icons use the current shield. Official emblem adoption is pending confirmation of commercial-use permission from its Air Force source: https://www.af.mil/News/Photos/igphoto/2000397249/.
+
+Verified production build, TypeScript, unit checks, and mobile/desktop browser flows. These technical SEO changes do not guarantee rankings or traffic.

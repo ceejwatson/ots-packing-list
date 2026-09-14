@@ -24,7 +24,7 @@ export function parsePlan(value: unknown): Plan {
   const saved = new Map(data.items.map(i => [i.id, i]));
   return { version: 5, profile: { classDate: '', section: 'All' }, items: buildDefaultItems().map(i => {
     const s = saved.get(i.id);
-    return s ? { ...i, is_packed: s.is_packed, is_owned: s.is_owned || s.is_packed, not_applicable: s.not_applicable } : i;
+    return s ? { ...i, is_packed: s.is_packed || !!s.is_owned, is_owned: s.is_owned || s.is_packed, not_applicable: s.not_applicable } : i;
   }) };
 }
 
@@ -68,3 +68,4 @@ export function deadline(classDate: string, days: number) {
   date.setUTCDate(date.getUTCDate() - days);
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(date);
 }
+

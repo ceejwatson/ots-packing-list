@@ -3,7 +3,7 @@ import ChecklistClient from "@/components/PackingChecklist";
 import { defaultOTSPackingList } from "@/lib/packing-list-data";
 
 export const metadata: Metadata = {
-  title: "Packing Checklist",
+  title: "Air Force OTS Packing List & Checklist (2026)",
   description:
     "Interactive Air Force OTS packing checklist covering required documents, required gear, and recommended items, current to the CAO 27 March 2026 Orientation Guide.",
   alternates: { canonical: "/" },
@@ -23,11 +23,11 @@ export default function ChecklistPage() {
     description:
       "Required and recommended items to bring to Air Force Officer Training School.",
     itemListElement: defaultOTSPackingList
-      .filter((item) => item.category !== "Documents")
       .map((item, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: item.item_name,
+        url: `https://otspackinglist.com/#${item.id}`,
       })),
   };
 
