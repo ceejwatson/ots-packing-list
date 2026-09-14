@@ -2,7 +2,7 @@
 const nextConfig = {
   trailingSlash: false,
   images: {
-    imageSizes: [32, 48, 68, 96, 128, 192, 256, 384],
+    imageSizes: [32, 48, 68, 88, 96, 128, 192, 256, 384],
     formats: ['image/webp'],
     remotePatterns: [
       {

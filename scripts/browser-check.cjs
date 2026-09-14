@@ -8,20 +8,45 @@ const fs = require('fs');
   await page.goto((process.env.BASE_URL || 'http://localhost:3001'));
   await page.getByRole('checkbox', { name: /Mark .* complete/ }).first().waitFor();
   await page.getByRole('checkbox', { name: /Mark .* complete/ }).first().click();
+  const marks = page.getByRole('checkbox', { name: /Mark .* complete/ });
+  await marks.nth(1).click();
+  await marks.nth(2).click();
+  for (let i = 0; i < 3; i++) {
+    assert.equal(await marks.nth(i).getAttribute('aria-checked'), 'true');
+    assert.equal(await marks.nth(i).evaluate(el => getComputedStyle(el.closest('article')).backgroundColor), 'rgb(236, 253, 245)');
+  }
   await page.reload();
   await page.getByRole('checkbox', { name: /Mark .* complete/, checked: true }).first().waitFor();
+  assert.equal(await page.getByRole('checkbox', { name: /Mark .* complete/, checked: true }).count(), 3);
   await page.getByRole('button', { name: 'Unchecked', exact: true }).click();
   assert.equal(await page.getByRole('checkbox', { name: /Mark .* complete/, checked: true }).count(), 0);
   await page.getByRole('button', { name: 'All items', exact: true }).click();
   await page.getByRole('searchbox').fill('Laptop');
   const laptop = page.locator('article').filter({ has: page.getByRole('link', { name: 'View Laptop on Amazon', exact: true }) });
   assert.equal(await laptop.count(), 1);
-  await laptop.getByRole('button', { name: 'N/A for Laptop', exact: true }).click();
+  assert.equal(await page.getByRole('button', { name: /N.A/ }).count(), 0);
+  await page.evaluate(() => {
+    const key = 'ots-preparation-v5';
+    const saved = JSON.parse(localStorage.getItem(key));
+    const item = saved.items.find(i => i.item_name === 'Laptop');
+    item.not_applicable = true; item.is_packed = true; item.is_owned = true;
+    localStorage.setItem(key, JSON.stringify(saved));
+  });
+  await page.reload();
+  await page.getByRole('button', { name: /Documents/ }).click();
+  await page.getByRole('button', { name: 'Unchecked', exact: true }).click();
+  await page.getByRole('searchbox').fill('unrelated search');
+  await page.getByLabel(/Show excluded/).check();
+  await laptop.getByRole('button', { name: 'Include item', exact: true }).click();
   assert.equal(await laptop.count(), 0);
-  await page.getByLabel('Show excluded').check();
-  await laptop.getByRole('button', { name: 'N/A for Laptop', exact: true }).click();
-  await page.getByRole('searchbox').fill('');
-  await page.getByLabel('Show excluded').uncheck();
+  await page.getByText('No excluded items. All your items are included in the checklist.', { exact: true }).waitFor();
+  await page.getByRole('button', { name: /Required/ }).click();
+  await page.getByRole('button', { name: 'All items', exact: true }).click();
+  for (const width of [375, 390, 430]) {
+    await page.setViewportSize({ width, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: 'mobile-checklist.png' });
   const dock = await page.getByRole('navigation', { name: 'Mobile navigation', exact: true }).boundingBox();
