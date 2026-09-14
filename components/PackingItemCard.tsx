@@ -19,7 +19,7 @@ export default function PackingItemCard({ item, excluded, ready, onChange }: {
     <div className="min-w-0 flex-1 pt-2">
       <h3 className={`text-sm font-semibold leading-5 ${item.is_packed ? 'text-slate-500 line-through' : 'text-slate-900'}`}>{item.item_name}{!item.notes?.includes('Min:') && item.quantity > 1 && <span className="ml-1 text-xs text-slate-500">×{item.quantity}</span>}</h3>
       {item.notes && <p className="mt-1 text-xs leading-5 text-slate-500">{item.notes}</p>}
-      {item.section && <span className="item-tag mt-1 inline-block">{item.section === 'Womens' ? "Women's" : "Men's"}</span>}
+      {item.section && <span className={`item-tag mt-1 inline-block ${item.section === 'Womens' ? 'item-tag-womens' : 'item-tag-mens'}`}>{item.section === 'Womens' ? "Women's" : "Men's"}</span>}
       {item.seasonal && <span className="item-tag mt-1 inline-block">Oct–May required</span>}
       {excluded && <button disabled={!ready} onClick={() => onChange(item.id, 'not_applicable')} className="mt-2 min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-xs font-semibold text-slate-700">Include item</button>}
     </div>

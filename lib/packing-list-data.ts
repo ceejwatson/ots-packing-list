@@ -787,8 +787,9 @@ export const defaultOTSPackingList: Omit<PackingItem, "is_packed">[] = [
     id: "bug-spray",
     item_name: "Bug spray",
     quantity: 1,
-    amazon_asin: "B001ANQVYU",
-    image_url: "/images/bug-spray.jpg",
+    notes: "Aerosol can",
+    amazon_search: "OFF Deep Woods insect repellent aerosol can",
+    image_url: "/images/bug-spray-can.jpg",
   },
   {
     category: "Recommended",
@@ -1020,3 +1021,4 @@ export function getAmazonLink(searchQuery?: string, asin?: string): string {
 
   return "";
 }
+

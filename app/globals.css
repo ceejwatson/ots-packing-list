@@ -15,6 +15,8 @@
   .status-button.owned { @apply border-blue-200 bg-blue-50 text-blue-800; }
   .status-button.packed { @apply border-emerald-700 bg-emerald-700 text-white; }
   .item-tag { @apply rounded bg-slate-100 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-500; }
+  .item-tag-womens { @apply bg-pink-100 text-pink-700; }
+  .item-tag-mens { @apply bg-sky-100 text-sky-700; }
   .shop-link { @apply flex min-h-11 items-center text-[11px] font-semibold text-blue-800 hover:underline; }
   .mobile-dock { @apply fixed bottom-0 left-0 right-0 z-50 grid grid-cols-4 border-t border-slate-200 bg-white/95 px-3 pt-2 backdrop-blur-xl; padding-bottom: max(8px, env(safe-area-inset-bottom)); box-shadow: 0 -6px 24px #0f172a0a; }
   .dock-link { @apply flex min-h-[52px] flex-col items-center justify-center gap-1 text-[10px] font-semibold text-slate-500; }
@@ -67,3 +69,4 @@ body {
   html { scroll-padding-top: 72px; scroll-padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   button, a, input { touch-action: manipulation; }
 }
+
