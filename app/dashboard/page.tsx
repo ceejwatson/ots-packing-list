@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import DashboardClient from "@/components/DashboardClient";
+import DashboardClient from "@/components/PreparationOverview";
 
 export const metadata: Metadata = {
   title: "Overview",
+  robots: { index: false, follow: true },
   description:
     "Track your Air Force OTS packing readiness, key pre-arrival deadlines, and quick links to reporting instructions and the official Orientation Guide.",
   alternates: { canonical: "/dashboard" },

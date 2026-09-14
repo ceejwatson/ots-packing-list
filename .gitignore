@@ -38,3 +38,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local review artifacts
+/.pnpm-store/
+/original-source.zip
+/test-backup.json
+/mobile-*.png
+/desktop-*.png
