@@ -47,6 +47,7 @@ async function getAccessToken(): Promise<string> {
   }
 
   const res = await fetch(TOKEN_ENDPOINT, {
+    signal: AbortSignal.timeout(10000),
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
@@ -129,6 +130,7 @@ export async function getItemsAvailability(
   }
 
   const res = await fetch(`${API_HOST}${GET_ITEMS_PATH}`, {
+    signal: AbortSignal.timeout(15000),
     method: "POST",
     headers: {
       "content-type": "application/json",

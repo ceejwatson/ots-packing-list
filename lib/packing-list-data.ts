@@ -1,5 +1,8 @@
 export interface PackingItem {
-  id?: string;
+  id: string;
+  is_owned?: boolean;
+  not_applicable?: boolean;
+  seasonal?: boolean;
   category: "Documents" | "Required" | "Recommended";
   /** Sex-specific items are grouped into Women's / Men's sub-sections */
   section?: "Womens" | "Mens";
@@ -13,10 +16,11 @@ export interface PackingItem {
   aafes_only?: boolean;
 }
 
-export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
+export const defaultOTSPackingList: Omit<PackingItem, "is_packed">[] = [
   // REQUIRED DOCUMENTS & IDENTIFICATION (from official guide pages 11-12)
   {
     category: "Documents",
+    id: "two-forms-of-valid-government-id",
     item_name: "Two forms of valid government ID",
     quantity: 2,
     notes:
@@ -24,12 +28,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "five-copies-of-orders",
     item_name: "Five copies of orders",
     quantity: 5,
     notes: "1 in envelope, 4 additional copies for first week",
   },
   {
     category: "Documents",
+    id: "copy-of-amendments-if-applicable",
     item_name: "Copy of amendments (if applicable)",
     quantity: 5,
     notes:
@@ -37,12 +43,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "record-of-emergency-data-vred",
     item_name: "Record of Emergency Data (vRED)",
     quantity: 1,
     notes: "Certified within 12 months or DD Form 93",
   },
   {
     category: "Documents",
+    id: "dd-form-2983",
     item_name: "DD Form 2983",
     quantity: 1,
     notes:
@@ -50,6 +58,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "ots-form-1",
     item_name: "OTS Form 1",
     quantity: 1,
     notes:
@@ -57,6 +66,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "sgli-if-applicable",
     item_name: "SGLI (if applicable)",
     quantity: 1,
     notes:
@@ -64,6 +74,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "deers-information-worksheet",
     item_name: "DEERS Information Worksheet",
     quantity: 1,
     notes:
@@ -71,18 +82,21 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "marriage-certificate-spouse-id-ssn-card",
     item_name: "Marriage certificate, spouse ID & SSN card",
     quantity: 1,
     notes: "Only if DEERS updates needed - place copies in envelope",
   },
   {
     category: "Documents",
+    id: "children-birth-certificates-ssn-cards",
     item_name: "Children birth certificates & SSN cards",
     quantity: 1,
     notes: "Only if DEERS updates needed - place copies in envelope",
   },
   {
     category: "Documents",
+    id: "dd-form-4-and-dd-form-214",
     item_name: "DD Form 4 and DD Form 214",
     quantity: 1,
     notes:
@@ -90,6 +104,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Documents",
+    id: "af-form-56",
     item_name: "AF Form 56",
     quantity: 1,
     notes:
@@ -99,48 +114,56 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // MEDICAL DOCUMENTS (to upload to intakeQ - DO NOT hand carry)
   {
     category: "Documents",
+    id: "medical-records-uploaded-to-intakeq",
     item_name: "Medical records uploaded to intakeQ",
     quantity: 1,
     notes: "Upload 14 days prior - DO NOT hand carry or add to envelope",
   },
   {
     category: "Documents",
+    id: "immunization-records",
     item_name: "Immunization records",
     quantity: 1,
     notes: "Upload to intakeQ",
   },
   {
     category: "Documents",
+    id: "titer-results",
     item_name: "Titer results",
     quantity: 1,
     notes: "Upload to intakeQ",
   },
   {
     category: "Documents",
+    id: "af-form-422",
     item_name: "AF Form 422",
     quantity: 1,
     notes: "Completed within last 12 months - upload to intakeQ",
   },
   {
     category: "Documents",
+    id: "asims-myimr-records",
     item_name: "ASIMS/MyIMR records",
     quantity: 1,
     notes: "Upload to intakeQ",
   },
   {
     category: "Documents",
+    id: "sickle-cell-trait-sct-test-results",
     item_name: "Sickle Cell Trait (SCT) test results",
     quantity: 1,
     notes: "Upload to intakeQ to prevent PT restrictions",
   },
   {
     category: "Documents",
+    id: "g6pd-test-results",
     item_name: "G6PD test results",
     quantity: 1,
     notes: "Upload to intakeQ to prevent PT restrictions",
   },
   {
     category: "Documents",
+    id: "questionnaires-from-intakeq",
     item_name: "Questionnaires from intakeQ",
     quantity: 1,
     notes: "Complete all required questionnaires",
@@ -149,6 +172,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // REQUIRED PERSONAL ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
   {
     category: "Required",
+    id: "laptop",
     item_name: "Laptop",
     quantity: 1,
     amazon_asin: "B0BS4BP8FB",
@@ -156,6 +180,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "running-shoes",
     item_name: "Running shoes",
     quantity: 1,
     notes: "Min: 1, Recommended: 2 - MUST be broken in before arrival",
@@ -164,6 +189,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "white-v-neck-undershirts",
     item_name: "White V-neck undershirts",
     quantity: 2,
     notes: "Min: 2, Recommended: 3",
@@ -172,6 +198,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "underwear",
     item_name: "Underwear",
     quantity: 6,
     amazon_asin: "B086L4BXZC",
@@ -179,6 +206,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "coyote-brown-crew-neck-t-shirts",
     item_name: "Coyote brown crew neck t-shirts",
     quantity: 5,
     notes: "Min: 5, Recommended: 7",
@@ -187,6 +215,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "black-dress-socks",
     item_name: "Black dress socks",
     quantity: 2,
     notes: "Min: 2, Recommended: 4",
@@ -195,6 +224,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "pt-socks",
     item_name: "PT socks",
     quantity: 5,
     notes: "Min: 5, Recommended: 7",
@@ -203,6 +233,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "coyote-brown-or-dla-green-ocp-socks",
     item_name: "Coyote brown or DLA green OCP socks",
     quantity: 5,
     notes: "Min: 5, Recommended: 7",
@@ -211,6 +242,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "blousing-straps",
     item_name: "Blousing straps",
     quantity: 2,
     notes: "Min: 2, Recommended: 4",
@@ -219,6 +251,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "shower-shoes-flip-flops",
     item_name: "Shower shoes/flip flops",
     quantity: 1,
     amazon_asin: "B0CW1JJ95W",
@@ -226,6 +259,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "toiletry-bag",
     item_name: "Toiletry bag",
     quantity: 1,
     amazon_asin: "B0815BBB5B",
@@ -233,6 +267,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "hard-soap-with-case-or-shower-gel",
     item_name: "Hard soap with case or shower gel",
     quantity: 1,
     amazon_asin: "B002TSA91Q",
@@ -240,6 +275,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "shampoo-and-conditioner",
     item_name: "Shampoo and conditioner",
     quantity: 1,
     amazon_asin: "B076JK8PXX",
@@ -247,6 +283,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "personal-hygiene-items",
     item_name: "Personal hygiene items",
     quantity: 1,
     notes:
@@ -256,6 +293,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "black-backpack",
     item_name: "Black backpack",
     quantity: 1,
     notes: "IAW DAFI 36-2903, for 72-hour bag",
@@ -268,6 +306,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "hydration-pack-1-5l-minimum",
     item_name: "Hydration pack (1.5L minimum)",
     quantity: 1,
     notes: 'Max 18"x12"x5", must have document pouch, include electrolytes',
@@ -276,6 +315,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "black-ball-point-pens",
     item_name: "Black ball point pens",
     quantity: 5,
     amazon_asin: "B00006IE7K",
@@ -283,6 +323,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "notepaper-pocket-notebook",
     item_name: "Notepaper/pocket notebook",
     quantity: 2,
     amazon_asin: "B00BQM0UEM",
@@ -290,6 +331,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "duffel-bag",
     item_name: "Duffel bag",
     quantity: 1,
     notes: "For field deployments",
@@ -298,6 +340,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "towels-and-washcloths",
     item_name: "Towels and washcloths",
     quantity: 2,
     notes: 'Min: 2 towels - No wider than 24" x 44", includes washcloths',
@@ -306,6 +349,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "wristwatch",
     item_name: "Wristwatch",
     quantity: 1,
     notes: "Smart watches authorized with restrictions",
@@ -314,6 +358,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "flashlight",
     item_name: "Flashlight",
     quantity: 1,
     notes: "Less than 5 inches long",
@@ -322,6 +367,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "mouthguard",
     item_name: "Mouthguard",
     quantity: 1,
     notes: "Required for combatives training",
@@ -330,6 +376,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "eye-protection-wrap-around",
     item_name: "Eye protection (wrap-around)",
     quantity: 1,
     notes: "Must have fully enclosed sides",
@@ -338,6 +385,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "eyeglass-strap",
     item_name: "Eyeglass strap",
     quantity: 1,
     notes: "Required to secure glasses during field events",
@@ -346,6 +394,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "combination-lock",
     item_name: "Combination lock",
     quantity: 1,
     notes: "For security drawer",
@@ -354,6 +403,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "gallon-sized-ziplock-bags",
     item_name: "Gallon-sized ziplock bags",
     quantity: 5,
     notes: "For organization",
@@ -362,6 +412,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "sandwich-sized-ziplock-bags",
     item_name: "Sandwich-sized ziplock bags",
     quantity: 5,
     notes: "For organization",
@@ -370,6 +421,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "mesh-laundry-bag",
     item_name: "Mesh laundry bag",
     quantity: 1,
     notes: "Plus regular laundry bag for duffel",
@@ -378,6 +430,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "laundry-detergent",
     item_name: "Laundry detergent",
     quantity: 1,
     amazon_asin: "B0BJMV9BXJ",
@@ -385,17 +438,20 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "cell-phone-and-charger",
     item_name: "Cell phone and charger",
     quantity: 1,
   },
   {
     category: "Required",
+    id: "prescription-medications",
     item_name: "Prescription medications",
     quantity: 1,
     notes: "90-day supply in original containers",
   },
   {
     category: "Required",
+    id: "prescription-eyeglasses",
     item_name: "Prescription eyeglasses",
     quantity: 2,
     notes: "If needed, military-approved frames",
@@ -404,6 +460,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // REQUIRED UNIFORMS - AAFES ONLY (grouped at bottom of Required)
   {
     category: "Required",
+    id: "coyote-brown-boots",
     item_name: "Coyote brown boots",
     quantity: 1,
     notes: "Min: 1, Recommended: 2 - MUST be broken in before arrival",
@@ -411,6 +468,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "ocp-pants",
     item_name: "OCP pants",
     quantity: 2,
     notes: "Min: 2, Recommended: 4 - Sex specific",
@@ -418,6 +476,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "ocp-blouse",
     item_name: "OCP blouse",
     quantity: 2,
     notes: "Min: 2, Recommended: 4 - Sex specific",
@@ -425,6 +484,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "ocp-patrol-cap",
     item_name: "OCP patrol cap",
     quantity: 2,
     notes: "Min: 2, Recommended: 3 - 6-point and ball cap NOT authorized",
@@ -432,12 +492,14 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "rigger-belt-tan-499",
     item_name: "Rigger belt (Tan 499)",
     quantity: 1,
     aafes_only: true,
   },
   {
     category: "Required",
+    id: "black-dress-oxford-shoes",
     item_name: "Black dress oxford shoes",
     quantity: 1,
     notes: "Plain toe, no high heels",
@@ -445,6 +507,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "officer-service-coat",
     item_name: "Officer service coat",
     quantity: 1,
     notes: "Must have dark braid and epaulets",
@@ -452,6 +515,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "blues-pants-skirt",
     item_name: "Blues pants/skirt",
     quantity: 2,
     notes: "Min: 2 - Wool or polyester with minimum 1 wool",
@@ -459,6 +523,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "long-sleeve-blues-shirt",
     item_name: "Long sleeve blues shirt",
     quantity: 1,
     notes: "Min: 1, Recommended: 2",
@@ -466,6 +531,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "short-sleeve-blues-shirt",
     item_name: "Short sleeve blues shirt",
     quantity: 1,
     notes: "Min: 1, Recommended: 2",
@@ -473,6 +539,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "flight-cap",
     item_name: "Flight cap",
     quantity: 1,
     notes: "Silver/blue braiding, sex specific",
@@ -480,6 +547,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "blues-necktie-tab",
     item_name: "Blues necktie/tab",
     quantity: 1,
     notes: "Sex specific",
@@ -487,18 +555,21 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "blue-belt-with-chrome-buckle",
     item_name: "Blue belt with chrome buckle",
     quantity: 1,
     aafes_only: true,
   },
   {
     category: "Required",
+    id: "shirt-garters",
     item_name: "Shirt garters",
     quantity: 1,
     aafes_only: true,
   },
   {
     category: "Required",
+    id: "lightweight-blue-jacket",
     item_name: "Lightweight blue jacket",
     quantity: 1,
     notes: "May be embroidered",
@@ -506,6 +577,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "pt-shorts",
     item_name: "PT shorts",
     quantity: 3,
     notes: "Min: 3, Recommended: 5 - IAW USAF/USSF regs",
@@ -513,6 +585,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "pt-shirts",
     item_name: "PT shirts",
     quantity: 3,
     notes: "Min: 3, Recommended: 5 - IAW USAF/USSF regs",
@@ -520,6 +593,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "pt-pants",
     item_name: "PT pants",
     quantity: 1,
     notes: "Min: 1, Recommended: 2 - Running suit or sweats (not mixed)",
@@ -527,6 +601,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "pt-jacket",
     item_name: "PT jacket",
     quantity: 1,
     notes: "Min: 1, Recommended: 2 - Running suit or sweats (not mixed)",
@@ -534,6 +609,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: 'name-tapes',
     item_name: 'Name tapes (1" wide)',
     quantity: 2,
     notes: "Spice brown on OCP (or blue for USSF)",
@@ -541,6 +617,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: 'service-tapes',
     item_name: 'USAF/USSF service tapes (1" wide)',
     quantity: 2,
     notes: "Spice brown (or blue for USSF)",
@@ -548,6 +625,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "us-flag-patch",
     item_name: "US Flag patch",
     quantity: 2,
     notes: "Spice brown embroidered (full color for USSF)",
@@ -555,6 +633,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "velcro-rank-insignia",
     item_name: "Velcro rank insignia",
     quantity: 2,
     notes: "Spice brown embroidered (blue for USSF)",
@@ -562,6 +641,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "blues-name-tag",
     item_name: "Blues name tag",
     quantity: 1,
     notes: "Blue plastic",
@@ -569,6 +649,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "service-dress-name-tag",
     item_name: "Service dress name tag",
     quantity: 1,
     notes: "Silver metal",
@@ -576,6 +657,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "us-officer-lapel-pins",
     item_name: "US Officer lapel pins",
     quantity: 1,
     notes: "Set of 2 for service coat",
@@ -583,6 +665,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "metal-rank-insignia",
     item_name: "Metal rank insignia",
     quantity: 3,
     notes: "For service coat epaulet and flight cap",
@@ -590,6 +673,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "epaulet-rank",
     item_name: "Epaulet rank",
     quantity: 1,
     notes: "Set of 2, sex specific",
@@ -597,6 +681,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "ribbon-rack",
     item_name: "Ribbon rack",
     quantity: 1,
     aafes_only: true,
@@ -605,6 +690,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // RECOMMENDED ITEMS (Non-AAFES items first) - Direct ASIN links for high-value items
   {
     category: "Recommended",
+    id: "airpods-pro-3rd-generation",
     item_name: "AirPods Pro (3rd generation)",
     quantity: 1,
     notes:
@@ -614,6 +700,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "rechargeable-fan",
     item_name: "Rechargeable fan",
     quantity: 1,
     notes: "AC goes out often at OTS, life saver item",
@@ -622,6 +709,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Required",
+    id: "electrolytes",
     item_name: "Electrolytes",
     quantity: 1,
     notes: "Required to reduce heat-related issues - include in hydration pack",
@@ -630,6 +718,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "cac-reader",
     item_name: "CAC reader",
     quantity: 1,
     notes: "For laptop access to military systems",
@@ -638,6 +727,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "surge-protector-power-strip",
     item_name: "Surge protector power strip",
     quantity: 1,
     notes: "In the field, limited outlets are available",
@@ -646,6 +736,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "starch",
     item_name: "Starch",
     quantity: 1,
     amazon_asin: "B06XJBGJFF",
@@ -653,6 +744,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "hangers",
     item_name: "Hangers",
     quantity: 10,
     amazon_asin: "B07FP199PF",
@@ -660,6 +752,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "garment-bag",
     item_name: "Garment bag",
     quantity: 1,
     amazon_asin: "B00VR74W8Q",
@@ -667,6 +760,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "sewing-kit",
     item_name: "Sewing kit",
     quantity: 1,
     amazon_asin: "B09CLR4SJ3",
@@ -674,6 +768,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "scissors",
     item_name: "Scissors",
     quantity: 1,
     amazon_asin: "B002YIP97K",
@@ -681,6 +776,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "lint-roller",
     item_name: "Lint roller",
     quantity: 1,
     amazon_asin: "B0798B7CQZ",
@@ -688,6 +784,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "bug-spray",
     item_name: "Bug spray",
     quantity: 1,
     amazon_asin: "B001ANQVYU",
@@ -695,6 +792,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "sunscreen",
     item_name: "Sunscreen",
     quantity: 1,
     amazon_asin: "B01MQXX9US",
@@ -702,6 +800,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "blister-prevention",
     item_name: "Blister prevention",
     quantity: 1,
     notes: "Your feet will get blistered",
@@ -710,6 +809,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "ibuprofen",
     item_name: "Ibuprofen",
     quantity: 1,
     amazon_asin: "B07R1DMNK4",
@@ -717,7 +817,9 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "gloves",
     item_name: "Gloves",
+    seasonal: true,
     quantity: 1,
     notes:
       "Min: 1, Recommended: 2 (1 warm, 1 work) - Black or coyote brown - REQUIRED for Oct-May, not needed June-Sept",
@@ -726,6 +828,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "earplugs",
     item_name: "Earplugs",
     quantity: 1,
     amazon_asin: "B0D3V61JC8",
@@ -733,6 +836,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "antichafe-stick",
     item_name: "Antichafe stick",
     quantity: 1,
     amazon_asin: "B00288L2N6",
@@ -740,6 +844,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "religious-items",
     item_name: "Religious items",
     quantity: 1,
     notes: "Faith books, prayer mats, rosary, etc.",
@@ -748,14 +853,18 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   // RECOMMENDED ITEMS - AAFES ONLY (grouped at bottom of Recommended)
   {
     category: "Recommended",
+    id: "ocp-fleece-jacket",
     item_name: "OCP fleece jacket",
+    seasonal: true,
     quantity: 1,
     notes: "Coyote brown - REQUIRED for Oct-May, not needed June-Sept",
     aafes_only: true,
   },
   {
     category: "Recommended",
+    id: "watch-cap",
     item_name: "Watch cap",
+    seasonal: true,
     quantity: 1,
     notes:
       "Min: 1, Recommended: 2 - Black or coyote brown - REQUIRED for Oct-May, not needed June-Sept",
@@ -763,6 +872,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   },
   {
     category: "Recommended",
+    id: "ocp-rain-gear",
     item_name: "OCP rain gear",
     quantity: 1,
     notes: "All-Purpose Environmental Clothing System",
@@ -773,6 +883,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Required",
     section: "Womens",
+    id: "sports-bras",
     item_name: "Sports bras",
     quantity: 4,
     notes: "Min: 3, Recommended: 5 - High-impact for daily PT",
@@ -782,6 +893,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Required",
     section: "Womens",
+    id: "feminine-hygiene-supplies",
     item_name: "Feminine hygiene supplies",
     quantity: 1,
     notes: "60-day supply - part of required hygiene items",
@@ -791,6 +903,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Required",
     section: "Womens",
+    id: "hair-ties-and-bobby-pins",
     item_name: "Hair ties and bobby pins",
     quantity: 1,
     notes: "Must match your hair color IAW DAFI 36-2903",
@@ -800,6 +913,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Womens",
+    id: "hair-bun-maker-kit",
     item_name: "Hair bun maker kit",
     quantity: 1,
     notes: "Fast regulation bun on early mornings",
@@ -809,6 +923,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Womens",
+    id: "strong-hold-hairspray-or-gel",
     item_name: "Strong-hold hairspray or gel",
     quantity: 1,
     notes: "Keeps the bun within regs through PT and field days",
@@ -818,6 +933,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Womens",
+    id: "nude-hosiery",
     item_name: "Nude hosiery",
     quantity: 2,
     notes: "Optional with the blues skirt",
@@ -829,6 +945,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Required",
     section: "Mens",
+    id: "razor-and-spare-blades",
     item_name: "Razor and spare blades",
     quantity: 1,
     notes: "Daily shaving required unless you have a shaving waiver",
@@ -838,6 +955,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Required",
     section: "Mens",
+    id: "shaving-cream-or-gel",
     item_name: "Shaving cream or gel",
     quantity: 1,
     notes: "60-day supply",
@@ -847,6 +965,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Mens",
+    id: "aftershave-balm",
     item_name: "Aftershave balm",
     quantity: 1,
     notes: "Helps with daily-shave irritation",
@@ -856,6 +975,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Mens",
+    id: "razor-bump-treatment",
     item_name: "Razor bump treatment",
     quantity: 1,
     notes: "If prone to ingrown hairs from daily shaving",
@@ -865,6 +985,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Mens",
+    id: "travel-electric-shaver",
     item_name: "Travel electric shaver",
     quantity: 1,
     notes: "Quick touch-ups before inspections",
@@ -874,6 +995,7 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
   {
     category: "Recommended",
     section: "Mens",
+    id: "hair-clippers",
     item_name: "Hair clippers",
     quantity: 1,
     notes: "Stay within regs between barber visits",
@@ -881,49 +1003,6 @@ export const defaultOTSPackingList: Omit<PackingItem, "id" | "is_packed">[] = [
     image_url: "/images/hair-clippers.jpg",
   },
 ];
-
-export const STORAGE_KEY = "ots-packing-list-v4";
-const LEGACY_STORAGE_KEY = "ots-packing-list-v3";
-
-export function buildDefaultItems(): PackingItem[] {
-  return defaultOTSPackingList.map((item, index) => ({
-    ...item,
-    id: `item-${index}`,
-    is_packed: false,
-  }));
-}
-
-// Load saved progress, carrying checkmarks over from older versions of the
-// list (matched by item name) so new items can be added without wiping state.
-export function loadItems(): PackingItem[] {
-  const defaults = buildDefaultItems();
-  try {
-    const stored =
-      localStorage.getItem(STORAGE_KEY) ??
-      localStorage.getItem(LEGACY_STORAGE_KEY);
-    if (!stored) return defaults;
-    const packedByName = new Map(
-      (JSON.parse(stored) as PackingItem[]).map((i) => [
-        i.item_name,
-        !!i.is_packed,
-      ]),
-    );
-    return defaults.map((item) => ({
-      ...item,
-      is_packed: packedByName.get(item.item_name) ?? false,
-    }));
-  } catch {
-    return defaults;
-  }
-}
-
-export function saveItems(items: PackingItem[]): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  } catch {
-    // localStorage unavailable (private browsing, etc.)
-  }
-}
 
 // Helper function to generate Amazon link - handles both ASIN and search
 export function getAmazonLink(searchQuery?: string, asin?: string): string {

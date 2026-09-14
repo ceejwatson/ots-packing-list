@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ChecklistClient from "@/components/ChecklistClient";
+import ChecklistClient from "@/components/PackingChecklist";
 import { defaultOTSPackingList } from "@/lib/packing-list-data";
 
 export const metadata: Metadata = {

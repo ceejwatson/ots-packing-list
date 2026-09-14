@@ -4,15 +4,20 @@ A comprehensive packing list application for Officer Training School (OTS) candi
 
 ## Features
 
-- Comprehensive OTS packing list with 40+ items across 7 categories
-- Track packing progress with visual progress bar
-- Category filtering
+- Comprehensive OTS packing list with required gear, optional items, and documents
+- Personalized required readiness with class-date seasonal requirements
+- Search, unpacked/shopping filters, and separate owned/packed status
+- Profile exclusions and per-item Not applicable controls
+- Validated progress backup export/import and visible storage errors
+- Professional responsive layout with fixed mobile bottom navigation
 - "Buy on Amazon" buttons for purchasable items
 - Data stored locally in browser (no account needed)
 - Responsive design
 - Reset and clear data options
 
 ## Tech Stack
+
+See [the preparation update](docs/preparation-update.md) for progress migration, verification commands, and required stock-audit configuration.
 
 - **Frontend**: Next.js 15 with TypeScript
 - **Styling**: Tailwind CSS

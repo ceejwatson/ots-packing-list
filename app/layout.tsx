@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow_Condensed, Public_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import Nav from "@/components/Nav";
+import Nav from "@/components/Navigation";
+import PlanProvider from "@/components/PlanProvider";
+import SiteFooter from "@/components/SiteFooter";
 import "./globals.css";
 
 const publicSans = Public_Sans({
@@ -81,30 +83,11 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <PlanProvider>
         <Nav />
         {children}
-        <footer
-          className="border-t border-stone-200 mt-16 print:hidden"
-          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-        >
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 text-center space-y-3">
-            <p className="font-display uppercase tracking-widest text-sm text-stone-500">
-              Always with Honor
-            </p>
-            <p className="text-xs text-stone-500">
-              Officer Training School &middot; Maxwell AFB, Alabama
-            </p>
-            <p className="text-xs leading-relaxed text-stone-500 max-w-2xl mx-auto">
-              This site participates in the Amazon Services LLC Associates
-              Program. Purchases through our links may earn a small commission
-              at no cost to you, which helps keep this resource free. Product
-              recommendations are based on utility for OTS, not affiliate
-              relationships. Not an official Department of the Air Force site
-              &mdash; always defer to the official Orientation Guide and your
-              welcome email.
-            </p>
-          </div>
-        </footer>
+        <SiteFooter />
+        </PlanProvider>
         <Analytics />
       </body>
     </html>

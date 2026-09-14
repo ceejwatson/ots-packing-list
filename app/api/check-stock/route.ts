@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { chunkAsins, getItemsAvailability } from "@/lib/paapi";
 import { defaultOTSPackingList } from "@/lib/packing-list-data";
+import { authorizeAudit } from "@/lib/audit-guard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 300;
 
 // Confirmed against live Creators API responses (not guessed).
 const PURCHASABLE_TYPES = new Set(["IN_STOCK", "IN_STOCK_SCARCE"]);
@@ -13,14 +15,12 @@ const PURCHASABLE_TYPES = new Set(["IN_STOCK", "IN_STOCK_SCARCE"]);
  * site via the Product Advertising API instead of scraping product pages
  * (which gets bot-blocked). Not linked from the UI.
  *
- * Optional protection: if AUDIT_API_SECRET is set in the environment, this
- * route requires a matching `x-audit-key` header. If unset, it's open.
+ * Requires an audit key and a shared Redis rate-limit gate.
+ * Disabled when either is missing. At most one audit per five minutes.
  */
 export async function GET(req: NextRequest) {
-  const requiredKey = process.env.AUDIT_API_SECRET;
-  if (requiredKey && req.headers.get("x-audit-key") !== requiredKey) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
+  const status = await authorizeAudit(req.headers.get('x-audit-key'));
+  if (status) return NextResponse.json({ error: status === 401 ? 'unauthorized' : status === 429 ? 'Audit cooldown active. Try again in five minutes.' : 'Stock audits are unavailable.' }, { status, headers: { 'Cache-Control': 'no-store', ...(status === 429 ? { 'Retry-After': '300' } : {}) } });
 
   const nameByAsin = new Map<string, string>();
   for (const item of defaultOTSPackingList) {
@@ -43,7 +43,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(
         {
           error: "PA-API call threw before returning a response",
-          detail: e instanceof Error ? e.message : String(e),
         },
         { status: 500 },
       );
@@ -107,5 +106,5 @@ export async function GET(req: NextRequest) {
         : unverified.length > 0
           ? `${unverified.length} item(s) could not be verified due to a request-level failure in their batch; see requestFailures. dead[] only lists items Amazon specifically flagged as inaccessible.`
           : undefined,
-  });
+  }, { headers: { 'Cache-Control': 'no-store' } });
 }
