@@ -22,11 +22,25 @@ export default function PackingChecklist() {
   const items = plan.items.filter(i => (showExcluded || applicable(i, plan.profile)) && (query.trim() || categoryFor(i, plan.profile) === category) && `${i.item_name} ${i.notes ?? ''}`.toLowerCase().includes(query.trim().toLowerCase()) && (filter !== 'unpacked' || !i.is_packed) && (filter !== 'shopping' || !i.is_owned));
   const change = (id: string, field: 'is_packed' | 'is_owned' | 'not_applicable') => update(p => ({ ...p, items: p.items.map(i => i.id !== id ? i : { ...i, [field]: !i[field], ...(field === 'is_packed' && !i.is_packed ? { is_owned: true } : {}), ...(field === 'is_owned' && i.is_owned ? { is_packed: false } : {}) }) }));
   return <>
-    <section className="hero-panel mb-7">
-      <div className="relative z-10"><p className="eyebrow text-blue-200">YOUR NEXT CHAPTER STARTS PREPARED</p><h1 className="mt-3 font-display text-4xl font-semibold uppercase tracking-wide sm:text-5xl">Ready for what&apos;s next.</h1><p className="mt-3 max-w-md text-sm leading-6 text-slate-300">One checklist. Every essential. Build your kit and arrive at Officer Training School with confidence.</p><div className="mt-6 flex flex-wrap gap-3"><Link href="/dashboard" className="rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-slate-900">Personalize your plan ↗</Link><Link href="/print" className="rounded-lg border border-white/25 px-4 py-2.5 text-sm font-medium text-white">Print checklist</Link></div></div>
-      <div className="relative z-10 mt-7 border-t border-white/15 pt-5"><div className="mb-3 flex justify-between gap-3 text-sm"><span className="text-slate-300">Required gear & documents</span><span className="font-semibold">{ready ? `${stats.packed} / ${stats.total} packed` : 'Loading your progress…'}</span></div><div role="progressbar" aria-label="Required packing readiness" aria-valuenow={stats.percent} aria-valuemin={0} aria-valuemax={100} className="h-1.5 overflow-hidden rounded-full bg-white/15"><div className="h-full rounded-full bg-blue-300 transition-all" style={{ width: `${stats.percent}%` }} /></div></div>
+    <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 className="font-display text-3xl font-semibold uppercase text-slate-900">Your packing checklist</h1>
+        <p className="mt-1 text-xs text-slate-500">Guide edition · 27 Mar 2026</p>
+      </div>
+      <div className="flex gap-4 text-xs font-semibold text-blue-800">
+        <Link href="/dashboard" className="py-2">Personalize</Link>
+        <Link href="/print" className="py-2">Print checklist</Link>
+      </div>
+    </div>
+    <section aria-label="Packing progress" className="surface mb-5 p-4">
+      <div className="mb-3 flex flex-wrap justify-between gap-2 text-sm">
+        <span className="text-slate-600">Required gear & documents</span>
+        <span className="font-semibold text-slate-900">{ready ? `${stats.packed} / ${stats.total} packed` : 'Loading your progress…'}</span>
+      </div>
+      <div role="progressbar" aria-label="Required packing readiness" aria-valuenow={stats.percent} aria-valuemin={0} aria-valuemax={100} className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+        <div className="h-full rounded-full bg-slate-900 transition-all" style={{ width: `${stats.percent}%` }} />
+      </div>
     </section>
-    <div className="mb-5 flex flex-wrap items-end justify-between gap-3"><div><p className="eyebrow text-slate-500">THE ESSENTIALS</p><h2 className="mt-1 font-display text-3xl font-semibold uppercase text-slate-900">Your packing checklist</h2></div><p className="text-xs text-slate-500">Guide edition · 27 Mar 2026</p></div>
     <div className="surface mb-5 p-3 sm:p-4"><label className="block"><span className="sr-only">Search all items</span><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search all gear, documents, or notes…" className="field w-full" /></label><div className="mt-3 flex flex-wrap items-center gap-2">{[['all','All items'],['unpacked','Show unpacked'],['shopping','Need to buy']].map(([value,label]) => <button key={value} aria-pressed={filter === value} onClick={() => setFilter(value)} className={`filter-chip ${filter === value ? 'selected' : ''}`}>{label}</button>)}<label className="ml-auto flex min-h-11 items-center gap-2 text-xs text-slate-600"><input type="checkbox" checked={showExcluded} onChange={e => setShowExcluded(e.target.checked)} /> Show excluded</label></div></div>
     <div className="mb-5 grid grid-cols-3 gap-2" aria-label="Categories">{['Required','Recommended','Documents'].map(cat => { const group = plan.items.filter(i => applicable(i, plan.profile) && categoryFor(i, plan.profile) === cat); return <button key={cat} aria-pressed={category === cat && !query.trim()} onClick={() => { setCategory(cat); setQuery(''); }} className={`category-button ${category === cat && !query.trim() ? 'selected' : ''}`}><span>{cat}</span><span className="block mt-1 text-xs opacity-70">{group.filter(i => i.is_packed).length} / {group.length}</span></button>; })}</div>
     <div className="mb-3 flex justify-between text-xs text-slate-500"><span role="status">{items.length} {query ? 'matching' : 'visible'} items</span><span>Have it → Pack it → Ready</span></div>
@@ -38,3 +52,4 @@ export default function PackingChecklist() {
     <aside className="mt-6 rounded-xl border border-blue-100 bg-blue-50/60 p-5 text-sm leading-6 text-slate-600"><h2 className="font-semibold text-slate-900">A little preparation goes a long way.</h2><p className="mt-1">Break in your boots, check your documents, and review your arrival instructions. Your welcome email and the official guide always take priority.</p><Link href="/reporting" className="mt-2 inline-block font-semibold text-blue-800">Review reporting instructions →</Link></aside>
   </>;
 }
+
