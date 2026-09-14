@@ -13,12 +13,12 @@ export function validDate(value: unknown): value is string {
 }
 
 export function parsePlan(value: unknown): Plan {
-  if (!value || typeof value !== 'object') throw new Error('Choose an OTS preparation backup file.');
+  if (!value || typeof value !== 'object') throw new Error('Invalid saved progress.');
   const data = value as Partial<Plan>;
-  if (data.version !== 5 || !Array.isArray(data.items) || data.items.length > 1000 || !data.profile || !validDate(data.profile.classDate) || !['All', 'Womens', 'Mens'].includes(data.profile.section)) throw new Error('This backup has an unsupported format.');
+  if (data.version !== 5 || !Array.isArray(data.items) || data.items.length > 1000 || !data.profile || !validDate(data.profile.classDate) || !['All', 'Womens', 'Mens'].includes(data.profile.section)) throw new Error('Saved progress has an unsupported format.');
   const seen = new Set<string>();
   for (const item of data.items) {
-    if (!item || typeof item.id !== 'string' || seen.has(item.id) || typeof item.is_packed !== 'boolean' || typeof item.is_owned !== 'boolean' || typeof item.not_applicable !== 'boolean') throw new Error('The backup contains invalid progress.');
+    if (!item || typeof item.id !== 'string' || seen.has(item.id) || typeof item.is_packed !== 'boolean' || typeof item.is_owned !== 'boolean' || typeof item.not_applicable !== 'boolean') throw new Error('Saved progress contains invalid values.');
     seen.add(item.id);
   }
   const saved = new Map(data.items.map(i => [i.id, i]));
@@ -41,12 +41,12 @@ export function readPlan(): { plan: Plan; error: string } {
       plan.items = plan.items.map(i => ({ ...i, is_packed: packed.get(i.item_name) ?? false, is_owned: packed.get(i.item_name) ?? false }));
     }
     return { plan, error: '' };
-  } catch { return { plan: emptyPlan(), error: 'Saved progress could not be read. Your previous data has not been overwritten. Restore a backup or export this session before leaving.' }; }
+  } catch { return { plan: emptyPlan(), error: 'Saved progress could not be read. Your previous data has not been overwritten.' }; }
 }
 
 export function writePlan(plan: Plan): string {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(plan)); return ''; }
-  catch { return 'Changes are only in this session: your browser could not save them. Export a backup before leaving.'; }
+  catch { return 'Changes are only in this session: your browser could not save them. Progress may be lost when you leave this page.'; }
 }
 export const loadItems = () => readPlan().plan.items;
 export function saveItems(items: PackingItem[]) { return writePlan({ ...readPlan().plan, items }); }

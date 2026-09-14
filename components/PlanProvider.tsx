@@ -16,6 +16,6 @@ export default function PlanProvider({ children }: { children: ReactNode }) {
   const update = (fn: (plan: Plan) => Plan) => {
     const next = fn(current.current); current.current = next; setPlan(next); setError(writePlan(next));
   };
-  return <Context.Provider value={{ plan, ready, error, update }}>{error && <div role="alert" className="mx-auto max-w-5xl m-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">{error} <a href="/dashboard" className="underline font-semibold">Backup controls</a></div>}{children}</Context.Provider>;
+  return <Context.Provider value={{ plan, ready, error, update }}>{error && <div role="alert" className="mx-auto max-w-5xl m-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">{error}</div>}{children}</Context.Provider>;
 }
 export function usePlan() { const context = useContext(Context); if (!context) throw new Error('PlanProvider required'); return context; }

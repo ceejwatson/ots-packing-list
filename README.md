@@ -8,7 +8,7 @@ A comprehensive packing list application for Officer Training School (OTS) candi
 - Personalized required readiness with class-date seasonal requirements
 - Search, unpacked/shopping filters, and separate owned/packed status
 - Profile exclusions and per-item Not applicable controls
-- Validated progress backup export/import and visible storage errors
+- Automatic browser saving and visible storage errors
 - Professional responsive layout with fixed mobile bottom navigation
 - "Buy on Amazon" buttons for purchasable items
 - Data stored locally in browser (no account needed)
