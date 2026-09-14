@@ -14,8 +14,8 @@ export default function Navigation() {
   const pathname = usePathname(); const { plan, ready } = usePlan(); const progress = readiness(plan);
   return <>
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-xl print:hidden">
-      <div className="mx-auto flex h-20 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-3"><Image src="/ots-shield.png" alt="" width={38} height={44} priority /><span><span className="block font-display text-xl font-semibold uppercase tracking-wide text-slate-900">OTS Packing List</span><span className="block text-[10px] font-semibold uppercase tracking-[.18em] text-slate-500">Prepare with confidence</span></span></Link>
+      <div className="mx-auto flex h-[60px] sm:h-20 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
+        <Link href="/" className="flex items-center gap-3"><Image src="/ots-shield.png" alt="" width={38} height={44} priority /><span><span className="block font-display text-xl font-semibold uppercase tracking-wide text-slate-900">OTS Packing List</span><span className="hidden sm:block text-[10px] font-semibold uppercase tracking-[.18em] text-slate-500">Prepare with confidence</span></span></Link>
         <nav aria-label="Primary" className="hidden sm:flex gap-1">{links.map(l => <Link key={l.href} href={l.href} aria-current={pathname === l.href ? 'page' : undefined} className={`rounded-lg px-3 py-3 text-sm font-semibold ${pathname === l.href ? 'bg-slate-900 text-white' : 'text-slate-500 hover:bg-slate-100'}`}>{l.label}</Link>)}</nav>
         <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600" aria-label="Required items packed">{ready ? `${progress.percent}%` : '—'} <span className="hidden md:inline">ready</span></span>
       </div>

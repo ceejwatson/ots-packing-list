@@ -6,15 +6,15 @@ const fs = require('fs');
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
   const page = await context.newPage(); const errors = []; page.on('pageerror', e => errors.push(e.message));
   await page.goto('http://localhost:3000');
-  await page.getByRole('button', { name: '+ Have it', exact: true }).first().waitFor();
+  await page.getByRole('button', { name: 'Have it', exact: true }).first().waitFor();
   await page.getByRole('button', { name: 'Pack item', exact: true }).first().click();
   await page.reload();
   await page.getByRole('button', { name: '✓ Packed', exact: true }).first().waitFor();
-  await page.getByRole('button', { name: 'Show unpacked', exact: true }).click();
+  await page.getByRole('button', { name: 'Unpacked', exact: true }).click();
   assert.equal(await page.getByRole('button', { name: '✓ Packed', exact: true }).count(), 0);
   await page.getByRole('button', { name: 'All items', exact: true }).click();
   await page.getByRole('searchbox').fill('Laptop');
-  const laptop = page.locator('article').filter({ has: page.getByRole('heading', { name: 'Laptop', exact: true }) });
+  const laptop = page.locator('article').filter({ has: page.getByRole('link', { name: 'View Laptop on Amazon', exact: true }) });
   assert.equal(await laptop.count(), 1);
   await laptop.getByRole('button', { name: 'Not applicable', exact: true }).click();
   assert.equal(await laptop.count(), 0);
@@ -57,3 +57,5 @@ const fs = require('fs');
   console.log('PASS: mobile navigation, no horizontal overflow, packing/reload, filters, exclusions, reset and automatic saving, desktop navigation, fail-closed API, storage failure warning, failed-image shopping fallback, no page errors.');
   await browser.close();
 })().catch(error => { console.error(error); process.exit(1); });
+
+

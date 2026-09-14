@@ -34,7 +34,7 @@ export default function ChecklistPage() {
   return (
     <main
       id="main-content"
-      className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10"
+      className="max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-10"
     >
       <script
         type="application/ld+json"
