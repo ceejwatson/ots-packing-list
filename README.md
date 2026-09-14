@@ -5,9 +5,9 @@ A comprehensive packing list application for Officer Training School (OTS) candi
 ## Features
 
 - Comprehensive OTS packing list with required gear, optional items, and documents
-- Personalized required readiness with class-date seasonal requirements
+- Required readiness with per-item exclusions and seasonal notes
 - Search, unpacked/shopping filters, and separate owned/packed status
-- Profile exclusions and per-item Not applicable controls
+- Per-item Not applicable controls
 - Automatic browser saving and visible storage errors
 - Professional responsive layout with fixed mobile bottom navigation
 - "Buy on Amazon" buttons for purchasable items
