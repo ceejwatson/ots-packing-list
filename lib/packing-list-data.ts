@@ -353,7 +353,10 @@ export const defaultOTSPackingList: Omit<PackingItem, "is_packed">[] = [
     item_name: "Wristwatch",
     quantity: 1,
     notes: "Smart watches authorized with restrictions",
-    amazon_asin: "B004IYZ17Q",
+    // Casio F-91W-1: simple black digital watch with alarm, stopwatch,
+    // water resistance, and a 7-year battery. Amazon product page and
+    // Buy Now offer verified live on 2026-09-16.
+    amazon_asin: "B000GAWSDG",
     image_url: "/images/watch.jpg",
   },
   {
