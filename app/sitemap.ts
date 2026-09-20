@@ -4,6 +4,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://otspackinglist.com";
 
   return [
+    { url: `${baseUrl}/about`, changeFrequency: "monthly", priority: 0.3 },
     {
       url: baseUrl,
       changeFrequency: "weekly",

@@ -2,13 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { chunkAsins, getItemsAvailability } from "@/lib/paapi";
 import { defaultOTSPackingList } from "@/lib/packing-list-data";
 import { authorizeAudit } from "@/lib/audit-guard";
+import { classifyProduct } from "@/lib/product-status";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
-
-// Confirmed against live Creators API responses (not guessed).
-const PURCHASABLE_TYPES = new Set(["IN_STOCK", "IN_STOCK_SCARCE"]);
 
 /**
  * Internal diagnostic endpoint — audits every Amazon affiliate link on the
@@ -63,12 +61,13 @@ export async function GET(req: NextRequest) {
 
     for (const item of result.items) {
       const name = nameByAsin.get(item.asin) ?? item.asin;
-      if (item.found) {
+      const classification = classifyProduct(item);
+      if (classification === 'ok' || classification === 'unavailable') {
         // Confirmed via live responses: purchasable listings come back as
         // either "IN_STOCK" or "IN_STOCK_SCARCE" ("Only N left in stock").
         // "OUT_OF_STOCK" ("Currently unavailable.") and "AVAILABLE_DATE"
         // (future/preorder availability) are genuinely not purchasable now.
-        if (item.hasOffer && PURCHASABLE_TYPES.has(item.availabilityType ?? "")) {
+        if (classification === 'ok') {
           ok.push(name);
         } else {
           unavailable.push({
@@ -78,7 +77,7 @@ export async function GET(req: NextRequest) {
             rawType: item.hasOffer ? item.availabilityType : undefined,
           });
         }
-      } else if (item.errorCode || item.errorMessage) {
+      } else if (classification === 'dead') {
         // Amazon named this specific ASIN in an error (ItemNotAccessible,
         // InvalidParameterValue, etc.) — a real, item-specific problem.
         dead.push({ asin: item.asin, name, error: item.errorMessage ?? item.errorCode });
@@ -95,10 +94,12 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     totalAsins: asins.length,
+    checkedAt: new Date().toISOString(),
     okCount: ok.length,
     dead,
     unavailable,
     unverifiedCount: unverified.length,
+    unverified,
     requestFailures,
     note:
       unverified.length === asins.length

@@ -1,0 +1,40 @@
+import type { Metadata } from 'next';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { headers } from 'next/headers';
+import { timingSafeEqual } from 'node:crypto';
+import { defaultOTSPackingList } from '@/lib/packing-list-data';
+import { growthConfigured, readGrowthDays, type DayMetrics } from '@/lib/growth-store';
+import { contentOpportunities, recommendations } from '@/lib/growth-insights';
+
+export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Growth dashboard', robots: { index: false, follow: false } };
+export default async function GrowthDashboard() {
+  // Defense in depth: protect data even if middleware is bypassed.
+  const secret = process.env.GROWTH_ADMIN_PASSWORD;
+  const authorization = (await headers()).get('authorization') || '';
+  const supplied = Buffer.from(authorization.startsWith('Basic ') ? Buffer.from(authorization.slice(6), 'base64').toString('utf8') : '');
+  const expected = Buffer.from(`admin:${secret || ''}`);
+  if (!secret || secret.length < 24 || supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) return <main id="main-content" className="p-8">Authentication required.</main>;
+  let days: DayMetrics[] = []; let status = 'Measurement is disabled or storage is not configured.';
+  if (growthConfigured()) {
+    try { days = await readGrowthDays(); status = 'Aggregate measurements · last 14 UTC dates, including today'; }
+    catch { status = 'Measurement storage is unavailable. This is not zero traffic.'; }
+  }
+  const available = days.length > 0;
+  const counts: Record<string, number> = {};
+  days.forEach(day => Object.entries(day.counters).forEach(([key, value]) => counts[key] = (counts[key] || 0) + value));
+  const metric = (key: string) => available ? (counts[key] || 0).toLocaleString() : 'Unavailable';
+  const impressions = counts['event:product_view'] || 0;
+  const products = defaultOTSPackingList.filter(i => !i.aafes_only && (i.amazon_asin || i.amazon_search));
+  const insights = recommendations(counts, available);
+  return <main id="main-content" className="mx-auto max-w-5xl px-4 py-8 space-y-8">
+    <header><p className="text-sm text-blue-800">Private workspace</p><h1 className="text-3xl font-semibold">Growth dashboard</h1><p className="mt-2 text-sm text-slate-600">{status}</p></header>
+    <section aria-labelledby="overview"><h2 id="overview" className="text-xl font-semibold">Overview</h2><div className="mt-3 grid gap-3 sm:grid-cols-3">{[['Page views', metric('event:page_view')], ['Affiliate clicks', metric('event:affiliate_click')], ['Visible product impressions', metric('event:product_view')], ['Clicks per 100 product impressions', available && impressions ? ((counts['event:affiliate_click'] || 0) / impressions * 100).toFixed(1) : 'Unavailable'], ['Search interactions', metric('event:search')], ['Checklist interactions', metric('event:checklist_change')]].map(([name, value]) => <div className="surface p-4" key={name}><p className="text-sm text-slate-600">{name}</p><p className="mt-2 text-2xl font-semibold">{value}</p></div>)}</div><p className="mt-3 text-sm text-slate-600">Impressions mean at least 50% of a product card was visible, once per route visit. Repeat clicks are counted; this is an event ratio, not visitor conversion rate. Visitors, returning visitors, affiliate orders, revenue, revenue per visitor and search rankings are unavailable. Client events may be blocked, lost or automated.</p></section>
+    <section><h2 className="text-xl font-semibold">Traffic and trends</h2><div className="mt-3 grid gap-4 sm:grid-cols-2"><div className="surface p-4"><h3 className="font-semibold">Sources and devices · page views</h3>{['source:direct', 'source:search', 'source:referral', 'device:mobile', 'device:desktop'].map(key => <p className="mt-2 text-sm" key={key}>{key.replace(':', ' / ')}: {metric(key)}</p>)}<p className="mt-3 text-xs text-slate-500">Referrer classification is approximate and cannot distinguish paid from organic search. These are page visits, not session landing pages.</p></div><div className="surface p-4"><h3 className="font-semibold">Pages</h3>{['/', '/reporting', '/faqs', '/print', '/dashboard', '/about'].map(page => <p className="mt-2 text-sm" key={page}>{page}: {metric(`page:${page}:page_view`)}</p>)}</div></div>{available && <div className="mt-4 overflow-x-auto"><table className="w-full text-left text-sm"><caption className="sr-only">Daily measured traffic and affiliate clicks</caption><thead><tr><th className="p-2">UTC date</th><th>Page views</th><th>Affiliate clicks</th></tr></thead><tbody>{days.map(day => <tr key={day.date} className="border-t"><td className="p-2">{day.date}</td><td>{day.counters['event:page_view'] || 0}</td><td>{day.counters['event:affiliate_click'] || 0}</td></tr>)}</tbody></table></div>}</section>
+    <section><h2 className="text-xl font-semibold">Products</h2><p className="mt-2 text-sm text-slate-600">{products.length} shopping items. Live availability and prices are unverified here. Run the protected stock audit separately; it never replaces links automatically. Missing image warnings below check local files.</p><div className="mt-4 space-y-2">{products.map(item => <details key={item.id} className="surface p-3"><summary className="cursor-pointer text-sm font-semibold">{item.item_name} · {metric(`item:${item.id}:affiliate_click`)} clicks</summary><p className="mt-2 text-sm">Product ID: {item.amazon_asin || 'Amazon search link'} · Impressions: {metric(`item:${item.id}:product_view`)}</p><p className="text-sm">Image: {item.image_url && existsSync(path.join(process.cwd(), 'public', item.image_url)) ? 'Local file present' : 'Review missing image'}. Suitability, availability and price last verified: unavailable.</p></details>)}</div></section>
+    <section><h2 className="text-xl font-semibold">SEO and content</h2><p className="mt-2 text-sm">Existing resources: checklist, FAQs and reporting guide. Search Console queries, indexing coverage and field Core Web Vitals require external data. No rankings or search volumes are estimated.</p><div className="mt-3 space-y-3">{contentOpportunities.map(opportunity => <article key={opportunity.topic} className="surface p-4"><h3 className="font-semibold">{opportunity.topic}</h3><p className="mt-2 text-sm">Intent: {opportunity.intent} {opportunity.reason}</p><p className="mt-2 text-sm">Supports {opportunity.parent}. Incoming links: {opportunity.incoming}. Outgoing links: {opportunity.outgoing}.</p><p className="mt-2 text-sm">Sources: {opportunity.source}. Refresh: {opportunity.refresh}. {opportunity.status}.</p></article>)}</div></section>
+    <section><h2 className="text-xl font-semibold">Recommendations</h2><p className="mt-2 text-sm">Evidence rules generate these suggestions; an LLM is not connected. No arbitrary confidence scores or automatic publishing.</p><div className="mt-3 space-y-3">{insights.map(insight => <article key={insight.title} className="surface p-4"><h3 className="font-semibold">{insight.title}</h3><dl className="mt-2 text-sm space-y-2">{[['Why', insight.why], ['Evidence', insight.evidence], ['Expected mechanism', insight.mechanism], ['Difficulty', insight.difficulty], ['Measurement', insight.measurement]].map(([label, value]) => <div key={label}><dt className="font-semibold">{label}</dt><dd>{value}</dd></div>)}</dl></article>)}</div></section>
+    <section className="surface p-4"><h2 className="text-xl font-semibold">Experiments</h2><p className="mt-2 text-sm">No active experiment. Proposed variant: verified product selection guidance in one category. Hypothesis: clearer suitability information increases affiliate clicks per product impression. Start date and result: not set. Status: awaiting baseline and a pre-registered test design. Aggregate before/after changes alone cannot establish causality.</p></section>
+  </main>;
+}

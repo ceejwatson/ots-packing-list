@@ -71,7 +71,7 @@ export const faqs: FAQ[] = [
   {
     question: "What about haircuts?",
     answer:
-      "Males must maintain military hair standards (short). Females must ensure hair is within regulations (can't touch collar when in uniform). Barbershop is available on base. Arrive clean-shaven - moustaches and beards are not authorized except for approved religious accommodations or medical profiles.",
+      "Review the current DAF dress and appearance instruction and your class reporting guidance for hair and grooming standards. Confirm how any approved religious accommodation or medical profile applies before arrival. Do not rely on a general packing tip for detailed grooming rules.",
   },
   {
     question: "Will I have roommates?",
@@ -111,7 +111,7 @@ export const faqs: FAQ[] = [
   {
     question: "What should I know about bedding?",
     answer:
-      "Sheets and blankets are provided by OTS. Bring an extra blanket (extra pillow is optional). Important: You are NO LONGER ALLOWED to sleep in a sleeping bag on top of your bed. Instead, make your bed once, then sleep on top with just the blanket covering you. This saves you from having to make your bed every morning.",
+      "Check the current Orientation Guide and class instructions for bedding provided, permitted personal bedding and room standards. Follow staff instructions for making and using your bed; packing tips are not permission to bypass those standards.",
   },
   {
     question: "What should I do with my dress blues?",
@@ -131,7 +131,7 @@ export const faqs: FAQ[] = [
   {
     question: "What medicine should I bring?",
     answer:
-      "Beyond your 90-day prescription supply, prioritize decongestants - you will likely get sick around Week 2. Bring ibuprofen, Tylenol, behind-the-counter Sudafed, and electrolyte mix. A small stash is sufficient.",
+      "Confirm medication requirements in your current class guidance. Ask your clinician or pharmacist which medicines and quantities are appropriate for you, and how to transport and store them. This checklist does not recommend starting or combining medicines.",
   },
   {
     question: "What items are must-haves?",
@@ -141,7 +141,7 @@ export const faqs: FAQ[] = [
   {
     question: "What should I avoid doing?",
     answer:
-      "Don't let prior service members in the groupchat or Facebook page intimidate you - blend in and stay confident. Don't overpack. Don't push yourself to injury during PT. Don't keep unauthorized items in your security drawer (they inspect it during Week 2). Remember: the only ways to get recycled (set back to another class) are failing the PFA, failing the academic test in Mod 3, or getting injured.",
+      "Avoid overpacking, ignoring staff instructions or treating informal advice as policy. Follow the current prohibited-items rules, report health concerns, and ask staff when unsure. Academic, fitness, conduct and medical decisions depend on current OTS policy and your circumstances.",
   },
   {
     question: "Any tips for success?",
