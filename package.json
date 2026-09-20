@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node scripts/test-progress.cjs && node scripts/test-growth.cjs"
+    "test": "node scripts/test-progress.cjs && node scripts/test-growth.cjs && node scripts/test-growth-operations.cjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

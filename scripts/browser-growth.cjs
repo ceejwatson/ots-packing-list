@@ -5,12 +5,20 @@ const { spawn } = require('node:child_process');
 const origin = 'http://localhost:3002';
 const password = 'local-test-password-32-characters-only';
 const counters = new Map(); let server; let app; let browser;
+const experiments = new Map();
 // In-memory Redis protocol double: no real traffic, secrets or remote services.
 async function main() {
   server = http.createServer(async (req, res) => {
     let text = ''; for await (const chunk of req) text += chunk;
     const cmd = JSON.parse(text); let result;
-    if (cmd[0] === 'EVAL') {
+    if (cmd[0] === 'EVAL' && cmd[1].includes('HLEN')) {
+      experiments.set(cmd[4], cmd[5]); result = 1;
+    } else if (cmd[0] === 'EVAL' && cmd[1].includes('HGET')) {
+      if (experiments.get(cmd[4]) === cmd[5]) { experiments.set(cmd[4], cmd[6]); result = 1; } else result = 0;
+    } else if (cmd[0] === 'HVALS') result = [...experiments.values()];
+    else if (cmd[0] === 'HGET') result = experiments.get(cmd[2]) || null;
+    else if (cmd[0] === 'GET') result = null;
+    else if (cmd[0] === 'EVAL') {
       for (const key of cmd.slice(5)) counters.set(key, (counters.get(key) || 0) + 1);
       result = 1;
     } else if (cmd[0] === 'HGETALL') result = Array.from(counters).flat();
@@ -29,6 +37,7 @@ async function main() {
   assert.equal((await send({ event: 'page_view', page: '/' })).status, 204);
   assert.equal(counters.get('event:page_view'), 1);
   assert.equal((await fetch(`${origin}/admin/growth`)).status, 401);
+  assert.equal((await fetch(`${origin}/api/growth-review`)).status, 401);
   assert.equal((await fetch(`${origin}/admin/growth`, { headers: { authorization: 'Basic ' + Buffer.from('admin:wrong').toString('base64') } })).status, 401);
   const authorized = await fetch(`${origin}/admin/growth`, { headers: { authorization: 'Basic ' + Buffer.from(`admin:${password}`).toString('base64') } });
   assert.equal(authorized.status, 200); assert.match(authorized.headers.get('cache-control'), /no-store/); assert.match(await authorized.text(), /Growth dashboard/);
@@ -51,6 +60,15 @@ async function main() {
   await page.getByRole('heading', { name: 'Sources, disclosure and privacy', exact: true }).waitFor();
   const admin = await browser.newContext({ viewport: { width: 390, height: 844 }, httpCredentials: { username: 'admin', password } });
   const adminPage = await admin.newPage(); await adminPage.goto(`${origin}/admin/growth`);
+  await adminPage.getByRole('main').getByText('Register an experiment', { exact: true }).click();
+  for (const [label, value] of [['Title', 'Synthetic experiment'], ['Hypothesis', 'Clearer selection may improve clicks'], ['Control and proposed variant', 'Existing card versus explained suitability'], ['Primary metric', 'Clicks per product impression'], ['Success criterion, sample size, duration and guardrails', 'Plan sample size and fixed duration before starting']]) await adminPage.getByRole('main').getByLabel(label, { exact: true }).fill(value);
+  await adminPage.getByRole('main').getByRole('button', { name: 'Save draft experiment', exact: true }).click();
+  await adminPage.getByRole('main').getByRole('heading', { name: 'Synthetic experiment · draft', exact: true }).waitFor();
+  await adminPage.getByRole('combobox').selectOption('active');
+  await adminPage.getByRole('main').getByRole('button', { name: 'Save status', exact: true }).click();
+  await adminPage.getByRole('main').getByRole('heading', { name: 'Synthetic experiment · active', exact: true }).waitFor();
+  await adminPage.getByRole('main').getByRole('button', { name: 'Generate evidence review', exact: true }).click();
+  await adminPage.getByRole('main').getByRole('status').filter({ hasText: 'AI review needs' }).waitFor();
   assert.equal(await adminPage.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   await adminPage.screenshot({ path: '../../outputs/ots-growth-admin.png' });
   const privateContext = await browser.newContext();

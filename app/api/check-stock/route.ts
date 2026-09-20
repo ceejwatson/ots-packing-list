@@ -3,6 +3,7 @@ import { chunkAsins, getItemsAvailability } from "@/lib/paapi";
 import { defaultOTSPackingList } from "@/lib/packing-list-data";
 import { authorizeAudit } from "@/lib/audit-guard";
 import { classifyProduct } from "@/lib/product-status";
+import { saveStockRecord } from "@/lib/growth-records";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -92,9 +93,14 @@ export async function GET(req: NextRequest) {
     if (i < batches.length - 1) await new Promise((r) => setTimeout(r, 1100));
   }
 
+  const checkedAt = new Date().toISOString();
+  let persisted = false;
+  try { await saveStockRecord({ checkedAt, totalAsins: asins.length, okCount: ok.length, dead, unavailable, unverified }); persisted = true; }
+  catch { console.warn('Stock audit completed but history storage is unavailable'); }
   return NextResponse.json({
     totalAsins: asins.length,
-    checkedAt: new Date().toISOString(),
+    checkedAt,
+    persisted,
     okCount: ok.length,
     dead,
     unavailable,

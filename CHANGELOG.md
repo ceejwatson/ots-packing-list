@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-20 — Operational growth tools
+
+- Add saved experiment drafts, status transitions and owner-recorded results with validation and concurrent-update protection.
+- Add protected on-demand stock audit controls and compact dated audit history without retaining provider response bodies.
+- Add optional structured AI reviews grounded in an explicit aggregate evidence list. Validate evidence IDs, limit output, disable provider-side response storage and enforce one attempted request per 24 hours.
+- Add authenticated daily production review scheduling, disabled unless explicitly configured; no publishing or campaign tools are available to the reviewer.
+- Keep credentials server-side and require authorization plus origin validation on every dashboard mutation. Preview aliases are accepted only from Vercel-provided environment values.
+- Validate provider behavior with mocked responses; live AI and storage activation still require configuration.
+
 ## 2026-09-20 — Growth measurement and trust foundation
 
 - Preserve the existing Next.js application, product destinations, affiliate ID and saved progress.

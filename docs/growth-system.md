@@ -1,5 +1,18 @@
 # Growth foundation — 20 September 2026
 
+## Continuation: operational dashboard
+
+The dashboard now includes an experiment register, a stock-audit button with saved history, and an optional structured AI reviewer. The earlier baseline-only notes below describe the first commit; this section supersedes those implementation limitations.
+
+- Experiment forms save drafts and update status/result notes in Redis, bounded to 100 records. Updates use compare-and-set so simultaneous edits cannot silently overwrite each other. A completed record requires a result note; status does not deploy a variant or prove success.
+- Stock audits preserve their existing shared cooldown and authentication. A compact last-result record and up to 30 recent audit records expire after 90 days. Provider response content is not retained. Availability remains a dated observation.
+- AI reviews require `GROWTH_AI_ENABLED=true`, `OPENAI_API_KEY`, `OPENAI_GROWTH_MODEL` and working growth Redis. The selected model must support Responses structured outputs. Only aggregate evidence is sent; no user search text or checklist contents. Requests use `store:false`, cap output at 2,000 tokens, and allow one attempted call per rolling 24 hours. This bounds calls/tokens, not dollar cost; choose a model and provider account spending limit before enabling.
+- Reviews require measured page views and valid evidence IDs. Output remains a hypothesis needing human review, not verified advice or a test winner. No tools can publish, spend advertising budget or change product links. Provider behavior has been tested with mock responses only; no live key was supplied.
+- The daily production cron calls `/api/growth-review` at 13:00 UTC and requires `CRON_SECRET` plus `GROWTH_SCHEDULED_REVIEW_ENABLED=true`. Without enablement it makes no AI request. Previews do not execute Vercel cron schedules.
+- Vercel's connector still returns a team-scope authorization error after reconnection. The browser session can reach project settings. Password setup was stopped at the user's request and no dashboard password was saved by the agent. Hosted admin remains protected; live storage and provider configuration remain pending.
+
+API reference used: https://developers.openai.com/api/docs/guides/structured-outputs . New validation: `node scripts/test-growth-operations.cjs` and the extended browser growth workflow.
+
 ## Audit and priorities
 
 Repository: ceejwatson/ots-packing-list. Public site: https://otspackinglist.com.

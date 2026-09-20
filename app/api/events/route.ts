@@ -2,6 +2,7 @@ import { createHmac } from 'node:crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { counterFields, validateEvent } from '@/lib/growth-events';
 import { growthConfigured, redis } from '@/lib/growth-store';
+import { allowedGrowthOrigin } from '@/lib/growth-origin';
 
 export const runtime = 'nodejs';
 const headers = { 'Cache-Control': 'no-store' };
@@ -15,8 +16,7 @@ redis.call('EXPIRE', KEYS[2], 7776000)
 return 1`;
 export async function POST(req: NextRequest) {
   if (!growthConfigured() || !process.env.GROWTH_RATE_SECRET) return new NextResponse(null, { status: 204, headers });
-  const allowedOrigin = process.env.GROWTH_SITE_ORIGIN || 'https://otspackinglist.com';
-  if (req.headers.get('origin') !== allowedOrigin) return new NextResponse(null, { status: 403, headers });
+  if (!allowedGrowthOrigin(req.headers.get('origin'))) return new NextResponse(null, { status: 403, headers });
   if (req.headers.get('sec-gpc') === '1' || req.headers.get('dnt') === '1') return new NextResponse(null, { status: 204, headers });
   if (!req.headers.get('content-type')?.startsWith('application/json')) return new NextResponse(null, { status: 415, headers });
   try {
