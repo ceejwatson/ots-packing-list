@@ -20,13 +20,14 @@ export default function PackingChecklist() {
   return <>
     <div className="mb-3 flex items-center justify-between gap-2">
       <div>
-        <h1 className="font-display text-2xl sm:text-3xl font-semibold uppercase text-slate-900">Packing checklist</h1>
+        <h1 className="font-display text-2xl sm:text-3xl font-semibold uppercase text-slate-900">Air Force OTS packing checklist</h1>
         <p className="mt-1 text-xs text-slate-500">Guide edition · 27 Mar 2026</p>
       </div>
       <div className="flex gap-4 text-xs font-semibold text-blue-800">
         <Link href="/print" className="py-2">Print</Link>
       </div>
     </div>
+    <p className="mb-3 text-xs leading-5 text-slate-600">Independent preparation resource. <a className="underline text-blue-800" href="https://www.afaccessionscenter.af.mil/Holm-Center/OTS/">Current official OTS instructions</a> and your welcome email take priority. Recommended extras are site suggestions. As an Amazon Associate, we earn from qualifying purchases. <Link href="/about" className="underline text-blue-800">Sources, disclosure & privacy</Link>.</p>
     <section aria-label="Packing progress" className="surface mb-3 p-3 sm:p-4">
       <div className="mb-2 flex flex-wrap justify-between gap-2 text-sm">
         <span className="text-slate-600">Required gear & documents</span>

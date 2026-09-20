@@ -16,8 +16,8 @@ export default function FAQsPage() {
           FAQs
         </h1>
         <p className="mt-1 text-sm text-stone-500">
-          Answers from the official guide and trainees who&apos;ve been through
-          it. Updated for the CAO 27 March 2026 Orientation Guide.
+          Preparation notes referencing the CAO 27 March 2026 Orientation Guide.
+          General tips are suggestions; check current official and class instructions before relying on a requirement.
         </p>
       </div>
 

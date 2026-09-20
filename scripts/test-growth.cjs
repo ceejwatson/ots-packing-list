@@ -1,0 +1,31 @@
+const ts = require('typescript');
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+require.extensions['.ts'] = (module, file) => module._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText, file);
+const { validateEvent, counterFields } = require('../lib/growth-events.ts');
+const { classifyProduct } = require('../lib/product-status.ts');
+const { recommendations } = require('../lib/growth-insights.ts');
+const { defaultOTSPackingList, getAmazonLink } = require('../lib/packing-list-data.ts');
+const product = defaultOTSPackingList.find(i => i.amazon_asin && !i.aafes_only);
+assert.ok(validateEvent({ event: 'affiliate_click', page: '/', item: product.id }));
+assert.equal(validateEvent({ event: 'affiliate_click', page: '/', item: 'invented' }), null);
+assert.equal(validateEvent({ event: 'search', page: '/', query: 'private medical information' }), null);
+assert.equal(validateEvent({ event: 'page_view', page: '/?email=private@example.com' }), null);
+assert.equal(validateEvent({ event: 'page_view', page: '/admin/growth' }), null);
+assert.equal(validateEvent({ event: 'page_view', page: '/', source: 'unbounded' }), null);
+assert.equal(validateEvent({ event: 'search', page: '/', item: product.id }), null);
+assert.deepEqual(counterFields({ event: 'affiliate_click', page: '/', item: product.id }), ['event:affiliate_click', 'page:/:affiliate_click', `item:${product.id}:affiliate_click`]);
+assert.equal(classifyProduct({ found: true, hasOffer: true, availabilityType: 'IN_STOCK' }), 'ok');
+assert.equal(classifyProduct({ found: true, hasOffer: true, availabilityType: 'OUT_OF_STOCK' }), 'unavailable');
+assert.equal(classifyProduct({ found: true, hasOffer: false }), 'unverified');
+assert.equal(classifyProduct({ found: true, hasOffer: true, availabilityType: 'NEW_UNKNOWN_ENUM' }), 'unverified');
+assert.equal(classifyProduct({ found: false, errorCode: 'TooManyRequests' }), 'unverified');
+assert.equal(classifyProduct({ found: false, errorCode: 'ItemNotAccessible' }), 'dead');
+assert.match(recommendations({}, false)[0].evidence, /not connected/);
+assert.match(recommendations({ 'event:product_view': 201, 'event:affiliate_click': 9 }, true)[0].evidence, /201.*9/);
+for (const item of defaultOTSPackingList) {
+  const link = item.aafes_only ? '' : getAmazonLink(item.amazon_search, item.amazon_asin);
+  if (link) assert.deepEqual(new URL(link).searchParams.getAll('tag'), ['otspackinglis-20']);
+  if (item.image_url) assert.ok(fs.existsSync(`public${item.image_url}`), `Missing image: ${item.id}`);
+}
+console.log('PASS: event allowlist and privacy, bounded dimensions, stock uncertainty, evidence rules, affiliate tags and all referenced local images.');

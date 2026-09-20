@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Nav from "@/components/Navigation";
 import PlanProvider from "@/components/PlanProvider";
 import SiteFooter from "@/components/SiteFooter";
+import GrowthMeasurement from "@/components/GrowthMeasurement";
 import "./globals.css";
 
 const publicSans = Public_Sans({
@@ -90,6 +91,7 @@ export default function RootLayout({
         <SiteFooter />
         </PlanProvider>
         <Analytics />
+        <GrowthMeasurement enabled={process.env.GROWTH_MEASUREMENT_ENABLED === 'true'} />
       </body>
     </html>
   );
