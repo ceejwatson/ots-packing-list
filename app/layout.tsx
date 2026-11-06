@@ -40,6 +40,9 @@ export const metadata: Metadata = {
     "Maxwell AFB OTS",
     "OTS reporting instructions",
     "OTS FAQ",
+    "what to bring to OTS",
+    "Air Force OTS packing list 2026",
+    "OTS reporting day",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -84,6 +87,18 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: siteTitle,
+              url: siteUrl,
+              description: siteDescription,
+            }),
+          }}
+        />
         <PlanProvider>
         <Nav />
         {children}
