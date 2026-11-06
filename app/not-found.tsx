@@ -12,7 +12,7 @@ export default function NotFound() {
       <h1 className="mt-2 font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
         Page not found
       </h1>
-      <p className="mt-3 text-sm text-stone-500 max-w-md mx-auto">
+      <p className="mt-3 text-sm text-slate-500 max-w-md mx-auto">
         That page doesn&apos;t exist or may have moved. Try the checklist, or
         head back to the homepage.
       </p>
@@ -25,7 +25,7 @@ export default function NotFound() {
         </Link>
         <Link
           href="/faqs"
-          className="px-4 py-2.5 rounded-md text-sm font-medium text-stone-600 hover:bg-stone-100 transition-colors"
+          className="px-4 py-2.5 rounded-md text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
         >
           Browse FAQs
         </Link>

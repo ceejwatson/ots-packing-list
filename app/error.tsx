@@ -24,7 +24,7 @@ export default function ErrorBoundary({
       <h1 className="mt-2 font-display text-3xl sm:text-4xl font-semibold uppercase tracking-wide">
         Unexpected error
       </h1>
-      <p className="mt-3 text-sm text-stone-500 max-w-md mx-auto">
+      <p className="mt-3 text-sm text-slate-500 max-w-md mx-auto">
         This page hit a snag loading. Your saved packing progress is safe
         &mdash; it lives in your browser, not on this page.
       </p>
@@ -37,7 +37,7 @@ export default function ErrorBoundary({
         </button>
         <a
           href="/"
-          className="px-4 py-2.5 rounded-md text-sm font-medium text-stone-600 hover:bg-stone-100 transition-colors"
+          className="px-4 py-2.5 rounded-md text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
         >
           Go to checklist
         </a>
