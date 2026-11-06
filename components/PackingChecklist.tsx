@@ -58,6 +58,5 @@ export default function PackingChecklist() {
       {items.length === 0 && <div className="p-10 text-center"><h3 className="font-semibold">No items to show</h3><p className="mt-2 text-sm text-slate-500">{showExcluded ? "No excluded items. All your items are included in the checklist." : "Try another category or clear your filters."}</p><button className="mt-4 min-h-11 rounded-full bg-[#007AFF] px-5 text-[15px] font-semibold text-white" onClick={() => { setQuery(''); setFilter('all'); setShowExcluded(false); }}>Clear filters</button></div>}
       {items.map(item => <PackingItemCard key={item.id} item={item} excluded={!applicable(item, plan.profile)} ready={ready} onChange={change} />)}
     </div>
-    <aside className="mt-6 px-1 text-[13px] leading-5 text-slate-500"><p>Break in your boots, check your documents, and review your arrival instructions. Your welcome email and the official guide always take priority.</p><div className="mt-1 flex flex-wrap gap-x-5 font-medium text-[#007AFF]"><Link href="/reporting" className="py-2">Reporting instructions</Link><Link href="/what-to-bring" className="py-2">Full list as text</Link></div></aside>
   </>;
 }
