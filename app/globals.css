@@ -3,46 +3,54 @@
 @tailwind utilities;
 
 @layer components {
-  .surface { @apply rounded-2xl border border-slate-200 bg-white shadow-sm; }
+  .surface { @apply rounded-xl bg-white shadow-[0_0_0_1px_rgb(15_23_42/0.04)]; }
   .eyebrow { @apply text-[10px] font-bold tracking-[.18em]; }
   .hero-panel { @apply relative overflow-hidden rounded-2xl bg-slate-900 p-6 text-white shadow-lg sm:p-8; background-image: radial-gradient(ellipse at top right, #244866, transparent 65%); }
   .field { @apply min-h-11 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-base sm:text-sm text-slate-900; }
   .filter-chip { @apply min-h-11 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50; }
   .filter-chip.selected { @apply border-slate-900 bg-slate-900 text-white; }
-  .category-button { @apply rounded-xl border border-slate-200 bg-white px-2 py-2 text-xs font-semibold text-slate-500 transition-colors sm:text-sm; }
-  .category-button.selected { @apply border-slate-900 bg-slate-900 text-white shadow-sm; }
-  .status-button { @apply min-h-11 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600; }
-  .status-button.owned { @apply border-blue-200 bg-blue-50 text-blue-800; }
-  .status-button.packed { @apply border-emerald-700 bg-emerald-700 text-white; }
-  .item-tag { @apply rounded bg-slate-100 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-500; }
+  .search-field { @apply flex min-h-10 items-center gap-2 rounded-[10px] bg-[#7676801f] px-3 text-slate-500; }
+  .search-field input { @apply min-h-10 w-full bg-transparent text-[17px] text-slate-900 outline-none placeholder:text-slate-500; }
+  .search-field input::-webkit-search-cancel-button { -webkit-appearance: none; display: none; }
+  .segmented { @apply grid grid-cols-3 gap-0.5 rounded-[9px] bg-[#7676801f] p-0.5; }
+  .segmented button { @apply min-h-11 py-1 rounded-[7px] px-1 text-[13px] font-semibold text-slate-900 transition-all; }
+  .segmented button.selected { @apply bg-white shadow-[0_3px_8px_rgb(0_0_0/0.12),0_3px_1px_rgb(0_0_0/0.04)]; }
+  .ios-switch { appearance: none; -webkit-appearance: none; position: relative; width: 51px; height: 31px; flex-shrink: 0; border-radius: 9999px; background: #78788029; transition: background .2s; cursor: pointer; }
+  .ios-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 9999px; background: #fff; box-shadow: 0 3px 8px rgb(0 0 0/0.15), 0 1px 1px rgb(0 0 0/0.16); transition: transform .2s; }
+  .ios-switch:checked { background: #34C759; }
+  .ios-switch:checked::after { transform: translateX(20px); }
+  .item-tag { @apply rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-500; }
   .item-tag-womens { @apply bg-pink-100 text-pink-700; }
   .item-tag-mens { @apply bg-sky-100 text-sky-700; }
   .shop-link { @apply flex min-h-11 items-center text-[11px] font-semibold text-blue-800 hover:underline; }
-  .mobile-dock { @apply fixed bottom-0 left-0 right-0 z-50 grid grid-cols-4 border-t border-slate-200 bg-white/95 px-3 pt-2 backdrop-blur-xl; padding-bottom: max(8px, env(safe-area-inset-bottom)); box-shadow: 0 -6px 24px #0f172a0a; }
-  .dock-link { @apply flex min-h-[52px] flex-col items-center justify-center gap-1 text-[10px] font-semibold text-slate-500; }
-  .dock-icon { @apply flex h-8 w-14 items-center justify-center rounded-full; }
-  .dock-icon svg { @apply h-5 w-5; }
-  .dock-link.is-active { @apply text-slate-900; }
-  .dock-link.is-active .dock-icon { @apply bg-slate-900 text-white; }
+  .mobile-dock { @apply fixed bottom-0 left-0 right-0 z-50 grid grid-cols-4 border-t border-black/10 bg-[#f9f9f9]/80 px-2 pt-1.5 backdrop-blur-xl backdrop-saturate-150; padding-bottom: max(6px, env(safe-area-inset-bottom)); }
+  .dock-link { @apply flex min-h-[49px] flex-col items-center justify-center gap-0.5 text-[10px] font-medium text-slate-500; }
+  .dock-icon { @apply flex h-7 w-10 items-center justify-center; }
+  .dock-icon svg { @apply h-6 w-6; }
+  .dock-link.is-active { color: #007AFF; }
 }
-body { background: #f5f7fa !important; }
+body { background: #f2f2f7 !important; }
 button:disabled { opacity: .5; cursor: wait; }
 @media (max-width: 639px) { body { padding-bottom: calc(88px + env(safe-area-inset-bottom)); } }
 
 body {
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .font-display {
-  font-family: var(--font-display);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-body), system-ui, sans-serif;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
 }
 
 ::selection {
-  background: #bfdbfe;
+  background: #b3d7ff;
 }
 
 :focus-visible {
-  outline: 2px solid #1d4ed8;
+  outline: 2px solid #007AFF;
   outline-offset: 2px;
 }
 

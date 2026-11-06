@@ -13,11 +13,11 @@ const links = [
 export default function Navigation() {
   const pathname = usePathname(); const { plan, ready } = usePlan(); const progress = readiness(plan);
   return <>
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-xl print:hidden">
-      <div className="mx-auto flex h-[60px] sm:h-20 max-w-3xl items-center justify-between gap-3 px-4 sm:px-6">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-xl backdrop-saturate-150 print:hidden">
+      <div className="mx-auto flex h-[52px] sm:h-16 max-w-3xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-3"><Image src="/ots-shield.png" alt="" width={38} height={44} priority /><span><span className="block font-display text-xl font-semibold uppercase tracking-wide text-slate-900">OTS Packing List</span><span className="hidden lg:block text-[10px] font-semibold uppercase tracking-[.18em] text-slate-500">Prepare with confidence</span></span></Link>
-        <nav aria-label="Primary" className="hidden sm:flex gap-1">{links.map(l => <Link key={l.href} href={l.href} aria-current={pathname === l.href ? 'page' : undefined} className={`rounded-lg px-3 py-3 text-sm font-semibold ${pathname === l.href ? 'bg-slate-900 text-white' : 'text-slate-500 hover:bg-slate-100'}`}>{l.label}</Link>)}</nav>
-        <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600" aria-label="Required items complete">{ready ? `${progress.percent}%` : '—'} <span className="hidden sm:inline">ready</span></span>
+        <nav aria-label="Primary" className="hidden sm:flex gap-1">{links.map(l => <Link key={l.href} href={l.href} aria-current={pathname === l.href ? 'page' : undefined} className={`rounded-lg px-3 py-3 text-sm font-semibold ${pathname === l.href ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'text-slate-500 hover:bg-slate-100'}`}>{l.label}</Link>)}</nav>
+        <span className="rounded-full bg-[#007AFF]/10 px-3 py-1.5 text-xs font-semibold text-[#007AFF]" aria-label="Required items complete">{ready ? `${progress.percent}%` : '—'} <span className="hidden sm:inline">ready</span></span>
       </div>
     </header>
     <nav aria-label="Mobile navigation" className="mobile-dock sm:hidden print:hidden">{links.map(l => <Link key={l.href} href={l.href} aria-current={pathname === l.href ? 'page' : undefined} className={`dock-link ${pathname === l.href ? 'is-active' : ''}`}><span className="dock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={l.path} /></svg></span><span>{l.label}</span></Link>)}</nav>
