@@ -9,6 +9,7 @@ You are building a production-ready Black Friday and Christmas gift guide websit
 ## 0. Setup and ground rules
 
 - Check the current repo first. If it already contains a Next.js (App Router) + TypeScript + Tailwind app, build inside it as a new section (`/holiday`) and reuse its layout, components and Vercel config. If it is empty or unrelated, scaffold a new Next.js 14+ App Router project with TypeScript and Tailwind.
+- The site domain is `dealsunderthetree.com` (use it for canonical URLs, sitemap, Open Graph and `NEXT_PUBLIC_SITE_URL`). If it has been taken by the time you deploy, use `giftpickdaily.com` or `giftdealdaily.com` instead. Make the domain a single env var so it can be changed in one place.
 - Deploy target is Vercel. Keep it compatible with `vercel.json` and env vars (never commit secrets; update `.env.example` for every new variable).
 - Develop on the branch you are given, commit in small logical steps, and open a draft PR when done.
 - Use a persistent store that works on Vercel: Supabase (Postgres) if available, otherwise Vercel Postgres or a typed JSON/KV fallback behind a repository interface so storage can be swapped. Include SQL migrations and a seed script with realistic sample data (clearly marked as sample).
